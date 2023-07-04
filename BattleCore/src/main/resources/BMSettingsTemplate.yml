@@ -1,0 +1,44 @@
+lobbyplayerlimit: 24
+gameplayerlimit: 12
+pmresetinterval: 4
+servertitle: BattleMania
+serverip: play.battlemania.net
+websiteurl: web.battlemania.net
+version: '8.1'
+news: 'Upgraded to 1.19'
+playerCount: 0 # TODO: what is this used for
+
+settingList: ['public.showswears', 'public.partyrequests', 'public.privatemsgs', 'public.playerchat', 'game.leaveondeath', 'game.particles', 'hub.showplayers', 'hub.playerlaunch', 'hub.forcefield', 'hub.antivelocity', 'hub.fastsprint']
+
+settingDefaults:
+  public:
+    showswears: false
+    partyrequests: true
+    privatemsgs: true
+    playerchat: true
+  game:
+    leaveondeath: false
+    particles: false
+  hub:
+    showplayers: true
+    playerlaunch: true
+    forcefield: false
+    antivelocity: false
+    fastsprint: true
+
+# Display names still need to be uniquely identifiable
+settingDisplayNames:
+  public:
+    showswears: 'Show Swear Words'
+    partyrequests: 'Party Requests'
+    privatemsgs: 'Private Messages'
+    playerchat: 'Player Chat'
+  game:
+    leaveondeath: 'Leave on Death'
+    particles: 'Ingame Particles'
+  hub:
+    showplayers: 'Lobby Player Visibility'
+    playerlaunch: 'Player Launching'
+    forcefield: 'Force Field'
+    antivelocity: 'Anti-Velocity'
+    fastsprint: 'Fast Sprint'

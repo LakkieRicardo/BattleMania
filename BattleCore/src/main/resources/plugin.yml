@@ -1,0 +1,4 @@
+main: net.battle.core.BMCorePlugin
+version: 1
+name: BattleCore
+api-version: 1.19

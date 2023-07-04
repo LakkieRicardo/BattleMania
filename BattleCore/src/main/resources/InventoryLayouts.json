@@ -1,0 +1,117 @@
+[
+    {
+        "id": "particles_manager",
+        "title": "Particles",
+        "slots": 54,
+        "layout_rows": [
+            "D00000000",
+            "000000000",
+            "000000000",
+            "000000000",
+            "000000000",
+            "IIIIIIIPN"
+        ],
+        "definitions": {
+            "D": {
+                "type": "PROP",
+                "material": "BARRIER",
+                "name": "§aDisable",
+                "lore": [
+                    "§7Disable currently active particle."
+                ]
+            },
+            "0": {
+                "type": "NAVIGATOR_CONTENT",
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "§0"
+                }
+            },
+            "I": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "§0"
+            },
+            "P": {
+                "type": "NAVIGATOR_PREVIOUS",
+                "active": {
+                    "material": "STONE_BUTTON",
+                    "name": "§aGo to previous",
+                    "lore": [
+                        "§7Navigate to previous page"
+                    ]
+                },
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "§0"
+                }
+            },
+            "N": {
+                "type": "NAVIGATOR_NEXT",
+                "active": {
+                    "material": "STONE_BUTTON",
+                    "name": "§aGo to next",
+                    "lore": [
+                        "§7Navigate to next page"
+                    ]
+                },
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "§0"
+                }
+            }
+        }
+    },
+    {
+        "id": "settings",
+        "title": "Settings",
+        "slots": 27,
+        "layout_rows": [
+            "0000C0000",
+            "CCCCCCCCC",
+            "0000000PN"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "§0"
+            },
+            "C": {
+                "type": "NAVIGATOR_CONTENT",
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "§0"
+                }
+            },
+            "P": {
+                "type": "NAVIGATOR_PREVIOUS",
+                "active": {
+                    "material": "STONE_BUTTON",
+                    "name": "§aGo to previous",
+                    "lore": [
+                        "§7Navigate to previous page"
+                    ]
+                },
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "§0"
+                }
+            },
+            "N": {
+                "type": "NAVIGATOR_NEXT",
+                "active": {
+                    "material": "STONE_BUTTON",
+                    "name": "§aGo to next",
+                    "lore": [
+                        "§7Navigate to next page"
+                    ]
+                },
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "§0"
+                }
+            }
+        }
+    }
+]

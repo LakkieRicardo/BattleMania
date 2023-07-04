@@ -1,0 +1,35 @@
+BMMessages
+
+Server -> Proxy:
+
+    TrySendMessage
+    target player: UUID
+    message contents: String
+
+    KickPlayer
+    target: UUID
+    kick message: String
+
+    ConnectPlayers
+    players: String (comma-separated list of UUIDs)
+    target server name: String
+
+    ConnectAllPlayers
+    target server name: String
+
+    GetCommands
+
+    GetPlayerServer
+    target: UUID
+
+Proxy -> Server:
+
+    GetCommands_Reply (note: each index of the 3 parameters will match up to the same command)
+    command labels: comma-separated list of command labels
+    command aliases: comma-separated list of aliases, separated by semicolons
+    command usages: comma-separated list of command usages, commas are escaped using "\" if they are part of usage
+    command descriptions: comma-separated list of command descriptions, commas are escaped using "\" if they are part of usage
+
+    GetPlayerServer_Reply
+    target: UUID
+    server name: String

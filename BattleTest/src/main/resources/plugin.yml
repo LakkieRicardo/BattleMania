@@ -1,0 +1,5 @@
+main: net.battle.test.BMTestPlugin
+version: 1
+name: BattleTest
+api-version: 1.19
+depend: [BattleCore]

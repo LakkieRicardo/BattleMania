@@ -1,0 +1,7 @@
+sql:
+  address: '127.0.0.1:10010'
+  password: 'c3po7gh45hjf93jf9dj2395jf823'
+server type: 'ts'
+
+hunger: true
+settingsfile: 'BMSettings.yml'

@@ -1,0 +1,12 @@
+sql:
+  SQL Password: 'c3po7gh45hjf93jf9dj2395jf823'
+  SQL IP: '127.0.0.1:10010'
+server type: 'ts'
+
+hunger: true
+pvp: false
+pve: true
+allow: false
+lockdown: false
+
+allowed: []
