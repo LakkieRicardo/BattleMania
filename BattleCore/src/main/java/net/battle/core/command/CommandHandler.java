@@ -57,13 +57,8 @@ public class CommandHandler implements Listener {
             List<String> labels = new ArrayList<>();
             labels.add(cmd.getLabel());
             if (cmd.getAliases() != null) {
-                byte b;
-                int j;
-                String[] arrayOfString;
-                for (j = (arrayOfString = cmd.getAliases()).length, b = 0; b < j;) {
-                    String s = arrayOfString[b];
-                    labels.add(s);
-                    b++;
+                for (String alias : cmd.getAliases()) {
+                    labels.add(alias);
                 }
 
             }
@@ -138,13 +133,8 @@ public class CommandHandler implements Listener {
             List<String> labels = new ArrayList<>();
             labels.add(cmd.getLabel());
             if (cmd.getAliases() != null) {
-                byte b;
-                int i;
-                String[] arrayOfString;
-                for (i = (arrayOfString = cmd.getAliases()).length, b = 0; b < i;) {
-                    String s = arrayOfString[b];
-                    labels.add(s);
-                    b++;
+                for (String alias : cmd.getAliases()) {
+                    labels.add(alias);
                 }
 
             }
