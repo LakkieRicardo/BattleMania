@@ -34,7 +34,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BMTestPlugin extends JavaPlugin {
-    
+
     public static BMTestPlugin ACTIVE_PLUGIN;
 
     public static final String CONFIG_HUNGER = "hunger";
@@ -94,7 +94,7 @@ public class BMTestPlugin extends JavaPlugin {
         }
         return w;
     }
-    
+
     public synchronized void setConfigBoolean(String key, boolean value) {
         getConfig().set(key, value);
     }

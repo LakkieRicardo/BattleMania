@@ -18,8 +18,8 @@ import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 
 /**
- * Utility class which handles various actions which commands may need access
- * to, firing of commands, and command registration.
+ * Utility class which handles various actions which commands may need access to, firing of commands, and command
+ * registration.
  */
 public class CommandHandler implements Listener {
 
@@ -43,10 +43,8 @@ public class CommandHandler implements Listener {
         }
         String label = components[0].replaceFirst("/", "");
 
-        if ((label.toLowerCase().startsWith("bukkit:") || label.toLowerCase().startsWith("minecraft:")
-                || label.equalsIgnoreCase("plugins")
-                || label.equalsIgnoreCase("pl") || label.equalsIgnoreCase("me") || label.equalsIgnoreCase("say")
-                || label.equalsIgnoreCase("about")
+        if ((label.toLowerCase().startsWith("bukkit:") || label.toLowerCase().startsWith("minecraft:") || label.equalsIgnoreCase("plugins")
+                || label.equalsIgnoreCase("pl") || label.equalsIgnoreCase("me") || label.equalsIgnoreCase("say") || label.equalsIgnoreCase("about")
                 || label.equalsIgnoreCase("version")) && !RankHandler.ownerPermission(pl)) {
             e.setCancelled(true);
             pl.sendMessage("§4§lERROR§8 > §cThis command is blocked by the server.");
@@ -73,8 +71,7 @@ public class CommandHandler implements Listener {
     }
 
     public static List<ICommandInfo> getAllCmdsWithProxyCmds() {
-        List<ICommandInfo> commandInfoList = new ArrayList<>(
-                CommandHandler.getAllCommands().size() + ProxyHandler.PROXY_COMMANDS.size());
+        List<ICommandInfo> commandInfoList = new ArrayList<>(CommandHandler.getAllCommands().size() + ProxyHandler.PROXY_COMMANDS.size());
 
         commandInfoList.addAll(CommandHandler.getAllCommands());
         commandInfoList.addAll(ProxyHandler.PROXY_COMMANDS);
@@ -83,12 +80,13 @@ public class CommandHandler implements Listener {
 
     /**
      * Searches for an existing command using an ICommandInfo
+     * 
      * @param labelList Search term
      * @return ICommandInfo if found, null if not
      */
     public static ICommandInfo getExistingCommandInfo(List<String> labels) {
         for (ICommandInfo existingInfo : getAllCmdsWithProxyCmds()) {
-            List<String> existingLbls = Arrays.asList(existingInfo.getLabel());
+            List<String> existingLbls = new ArrayList<>(Arrays.asList(existingInfo.getLabel()));
             if (existingInfo.getAliases() != null) {
                 existingLbls.addAll(Arrays.asList(existingInfo.getAliases()));
             }
@@ -107,20 +105,19 @@ public class CommandHandler implements Listener {
     public static void registerCommand(CommandBase cmd) {
         Validate.notNull(cmd);
 
-        List<String> labelsList = Arrays.asList(cmd.getLabel());
+        List<String> labelsList = new ArrayList<>(Arrays.asList(cmd.getLabel()));
         if (cmd.getAliases() != null) {
             labelsList.addAll(Arrays.asList(cmd.getAliases()));
         }
         ICommandInfo oldCommand = getExistingCommandInfo(labelsList);
-        
+
         if (oldCommand != null) {
             if (cmd.getAliases() == null) {
-                BMLogger.severe("Unable to register command " + cmd.getLabel()
-                        + " because command label was already taken by command " + oldCommand.getLabel() + "!");
+                BMLogger.severe("Unable to register command " + cmd.getLabel() + " because command label was already taken by command " + oldCommand.getLabel()
+                        + "!");
             } else {
-                BMLogger.severe("Unable to register command " + cmd.getLabel() + "("
-                        + String.join(", ", cmd.getAliases()) + ") because command label was already taken by command "
-                        + oldCommand.getLabel() + "!");
+                BMLogger.severe("Unable to register command " + cmd.getLabel() + "(" + String.join(", ", cmd.getAliases())
+                        + ") because command label was already taken by command " + oldCommand.getLabel() + "!");
             }
         }
 
