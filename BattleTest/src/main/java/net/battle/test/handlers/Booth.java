@@ -3,6 +3,7 @@ package net.battle.test.handlers;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
 
 import net.battle.core.handlers.BMLogger;
 import net.battle.core.supplydrop.Region;
@@ -54,8 +55,8 @@ public class Booth {
 
     public void updateSign() {
         Sign sign = (Sign) this.signPosition.world.getBlockAt(this.signPosition.x, this.signPosition.y, this.signPosition.z).getState();
-        sign.line(0, Component.text("Status:").decorate(TextDecoration.BOLD).color(NamedTextColor.BLACK));
-        sign.line(1, isOccupied() ? Component.text("OCCUPIED").decorate(TextDecoration.BOLD).color(NamedTextColor.DARK_RED) : Component.text("OPEN").decorate(TextDecoration.BOLD).color(NamedTextColor.GREEN));
+        sign.getSide(Side.FRONT).line(0, Component.text("Status:").decorate(TextDecoration.BOLD).color(NamedTextColor.BLACK));
+        sign.getSide(Side.FRONT).line(1, isOccupied() ? Component.text("OCCUPIED").decorate(TextDecoration.BOLD).color(NamedTextColor.DARK_RED) : Component.text("OPEN").decorate(TextDecoration.BOLD).color(NamedTextColor.GREEN));
         sign.update();
     }
 }
