@@ -2,3 +2,6 @@ JarsAndSources/
 OldFiles/
 Instance/
 dump.sql
+
+# Temporary file
+CopyToInstance.ps1
