@@ -7,7 +7,7 @@ import net.battle.core.sql.impl.PlayerInfoSql;
 
 public final class RankHandler {
     public static Rank getPlayerRank(Player pl) {
-        String rank = PlayerInfoSql.getPlayerInfo((OfflinePlayer) pl).getSqlRank();
+        String rank = PlayerInfoSql.getPlayerInfo((OfflinePlayer) pl).sqlRank();
         for (Rank r : Rank.values()) {
             if (r.getSQLName().equalsIgnoreCase(rank)) {
                 return r;
@@ -79,50 +79,50 @@ public final class RankHandler {
     }
 
     public static boolean explorerPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.EXPLORER && r != Rank.EMPEROR && r != Rank.KING && r != Rank.HELPER && r != Rank.BUILDER && r != Rank.MODERATOR && r != Rank.EXPMOD
                 && r != Rank.DEVELOPER && r != Rank.OPERATOR && r != Rank.OWNER);
     }
 
     public static boolean emperorPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.EMPEROR && r != Rank.KING && r != Rank.HELPER && r != Rank.BUILDER && r != Rank.MODERATOR && r != Rank.EXPMOD && r != Rank.DEVELOPER
                 && r != Rank.OPERATOR && r != Rank.OWNER);
     }
 
     public static boolean kingPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.KING && r != Rank.HELPER && r != Rank.BUILDER && r != Rank.MODERATOR && r != Rank.EXPMOD && r != Rank.DEVELOPER && r != Rank.OPERATOR
                 && r != Rank.OWNER);
     }
 
     public static boolean helperPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.HELPER && r != Rank.MODERATOR && r != Rank.EXPMOD && r != Rank.DEVELOPER && r != Rank.OPERATOR && r != Rank.OWNER);
     }
 
     public static boolean moderatorPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.MODERATOR && r != Rank.EXPMOD && r != Rank.DEVELOPER && r != Rank.OPERATOR && r != Rank.OWNER);
     }
 
     public static boolean expModPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.EXPMOD && r != Rank.DEVELOPER && r != Rank.OPERATOR && r != Rank.OWNER);
     }
 
     public static boolean developerPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.DEVELOPER && r != Rank.OPERATOR && r != Rank.OWNER);
     }
 
     public static boolean operatorPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return !(r != Rank.OPERATOR && r != Rank.OWNER);
     }
 
     public static boolean ownerPermission(String uuid) {
-        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).getSqlRank());
+        Rank r = getRankFromSQLName(PlayerInfoSql.getPlayerInfo(uuid).sqlRank());
         return (r == Rank.OWNER);
     }
 

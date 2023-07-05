@@ -57,7 +57,7 @@ public class SetRankCommand implements CommandBase {
         }
 
         PlayerInfo info = PlayerInfoSql.getPlayerInfo((OfflinePlayer) pl);
-        info.setSqlRank(r.getSQLName());
+        info = info.withRank(r.getSQLName());
         PlayerInfoSql.setRank(target, r.getSQLName());
         pl.sendMessage(
                 Prefixes.UPDATE + "You updated §c" + target.getName() + "§f's rank to §c" + r.getSQLName() + "§f.");
@@ -67,7 +67,7 @@ public class SetRankCommand implements CommandBase {
                     Prefixes.UPDATE + "Your rank has been updated to §c" + r.getSQLName() + " §fby §c" + pl.getName()
                             + "§f.");
             targetOnline
-                    .playerListName(Component.text(RankHandler.getRankFromSQLName(info.getSqlRank()).getGameName() + " §a"
+                    .playerListName(Component.text(RankHandler.getRankFromSQLName(info.sqlRank()).getGameName() + " §a"
                             + targetOnline.getName()));
             targetOnline.playerListName(Component.text(BMTextConvert.CTS.serialize(targetOnline.playerListName()).trim()));
         } else {

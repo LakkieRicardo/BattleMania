@@ -1,71 +1,25 @@
 package net.battle.core.sql.pod;
 
-public class PlayerInfo {
-    private String pl;
-    private String sqlRank;
-    private int level;
+public record PlayerInfo(String playerUUID, String sqlRank, int level, int ingot, int token, float ingameHours) {
 
-    public PlayerInfo(String pl, int level, String rank, int ingot, int token, float time) {
-        this.pl = pl;
-        this.level = level;
-        this.sqlRank = rank;
-        this.ingot = ingot;
-        this.token = token;
-        this.time = time;
+    public PlayerInfo withRank(String sqlRank) {
+        return new PlayerInfo(playerUUID, sqlRank, level, ingot, token, ingameHours);
     }
 
-    private int ingot;
-    private int token;
-    private float time;
-
-    public PlayerInfo() {
+    public PlayerInfo withLevel(int level) {
+        return new PlayerInfo(playerUUID, sqlRank, level, ingot, token, ingameHours);
     }
 
-    public String getPlayerUUID() {
-        return this.pl;
+    public PlayerInfo withIngot(int ingot) {
+        return new PlayerInfo(playerUUID, sqlRank, level, ingot, token, ingameHours);
     }
 
-    public void setPlayer(String pl) {
-        this.pl = pl;
+    public PlayerInfo withToken(int token) {
+        return new PlayerInfo(playerUUID, sqlRank, level, ingot, token, ingameHours);
     }
 
-    public String getSqlRank() {
-        return this.sqlRank;
+    public PlayerInfo withIngameHours(float ingameHours) {
+        return new PlayerInfo(playerUUID, sqlRank, level, ingot, token, ingameHours);
     }
 
-    public void setSqlRank(String sqlRank) {
-        this.sqlRank = sqlRank;
-    }
-
-    public int getLevel() {
-        return this.level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getIngot() {
-        return this.ingot;
-    }
-
-    public void setIngot(int ingot) {
-        this.ingot = ingot;
-    }
-
-    public int getToken() {
-        return this.token;
-    }
-
-    public void setToken(int token) {
-        this.token = token;
-    }
-
-    public float getTime() {
-        return this.time;
-    }
-
-    public void setTime(float time) {
-        this.time = time;
-    }
 }

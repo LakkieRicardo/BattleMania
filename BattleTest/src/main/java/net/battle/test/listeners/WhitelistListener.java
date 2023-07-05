@@ -21,7 +21,7 @@ public class WhitelistListener implements Listener {
         if (BMTestPlugin.ACTIVE_PLUGIN.getConfigBoolean(BMTestPlugin.CONFIG_ALLOW_MODE)) {
             return;
         }
-        Rank r = RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(e.getUniqueId().toString()).getSqlRank());
+        Rank r = RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(e.getUniqueId().toString()).sqlRank());
         if (ShutdownCommand.shutdown && r != Rank.OWNER) {
             e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST,
                     Component.text("§cThis server is currently in shutdown mode."));

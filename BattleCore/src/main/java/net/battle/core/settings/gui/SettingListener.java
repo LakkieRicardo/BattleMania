@@ -63,7 +63,7 @@ public class SettingListener implements Listener {
             String targetUsername = invTitle.substring("Public Stats: ".length());
             OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(targetUsername);
             if (InventoryUtils.compareItemNames(clicked, SettingHandler.getSettingDisplayName("public.showswears"), false)) {
-                if (PlayerInfoSql.getPlayerInfo(pl).getTime() < 5.0F && !RankHandler.ownerPermission(pl)) {
+                if (PlayerInfoSql.getPlayerInfo(pl).ingameHours() < 5.0F && !RankHandler.ownerPermission(pl)) {
                     if (pl.getName().equals(targetUsername)) {
                         pl.sendMessage(Prefixes.ERROR + "You cannot your swear setting yet");
                     }

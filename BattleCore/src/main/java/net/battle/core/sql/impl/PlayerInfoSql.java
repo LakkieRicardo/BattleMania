@@ -23,8 +23,7 @@ public class PlayerInfoSql {
         try {
             ResultSet rs = BMCorePlugin.ACTIVE_PLUGIN.sqlConn.queryAndFetch("SELECT * FROM player WHERE UUID=?", uuid);
             if (rs.next()) {
-                return new PlayerInfo(uuid, rs.getInt("LEVEL"), rs.getString("RANK"), rs.getInt("INGOT"),
-                        rs.getInt("TOKEN"), rs.getFloat("TIME"));
+                return new PlayerInfo(uuid, rs.getString("RANK"), rs.getInt("LEVEL"), rs.getInt("INGOT"), rs.getInt("TOKEN"), rs.getFloat("TIME"));
             }
             return null;
         } catch (Exception e) {
@@ -35,27 +34,23 @@ public class PlayerInfoSql {
 
     /**
      * Either inserts new player information if there is no row in the DB, or updates all the existing information
+     * 
      * @param pi New player info whose values will be used to update the SQL DB
      */
     public static synchronized void updateOrInsertInfo(PlayerInfo pi) {
         try {
-            ResultSet rsSearch = BMCorePlugin.ACTIVE_PLUGIN.sqlConn
-                    .queryAndFetch("SELECT uuid FROM player WHERE UUID=?", pi.getPlayerUUID());
+            ResultSet rsSearch = BMCorePlugin.ACTIVE_PLUGIN.sqlConn.queryAndFetch("SELECT uuid FROM player WHERE UUID=?", pi.playerUUID());
             if (rsSearch.next()) {
                 // This row exists, update it
-                BMCorePlugin.ACTIVE_PLUGIN.sqlConn.execute(
-                        "UPDATE player SET `LEVEL`=?, `RANK`=?, `INGOT`=?, `TOKEN`=?, `TIME`=? WHERE `UUID`=?",
-                        pi.getLevel(), pi.getSqlRank(), pi.getIngot(), pi.getToken(), pi.getTime(), pi.getPlayerUUID());
+                BMCorePlugin.ACTIVE_PLUGIN.sqlConn.execute("UPDATE player SET `LEVEL`=?, `RANK`=?, `INGOT`=?, `TOKEN`=?, `TIME`=? WHERE `UUID`=?", pi.level(), pi.sqlRank(), pi.ingot(), pi.token(), pi.ingameHours(), pi.playerUUID());
             } else {
-                BMCorePlugin.ACTIVE_PLUGIN.sqlConn.execute(
-                        "INSERT INTO player (`UUID`, `LEVEL`, `RANK`, `INGOT`, `TOKEN`, `TIME`) VALUES (?, ?, ?, ?, ?, ?)",
-                        pi.getPlayerUUID(), pi.getLevel(), pi.getSqlRank(), pi.getIngot(), pi.getToken(), pi.getTime());
+                BMCorePlugin.ACTIVE_PLUGIN.sqlConn.execute("INSERT INTO player (`UUID`, `LEVEL`, `RANK`, `INGOT`, `TOKEN`, `TIME`) VALUES (?, ?, ?, ?, ?, ?)", pi.playerUUID(), pi.level(), pi.sqlRank(), pi.ingot(), pi.token(), pi.ingameHours());
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        if (Bukkit.getOfflinePlayer(UUID.fromString(pi.getPlayerUUID())).isOnline()) {
-            ScoreboardHandler.updateScoreboard((Player) Bukkit.getOfflinePlayer(UUID.fromString(pi.getPlayerUUID())));
+        if (Bukkit.getOfflinePlayer(UUID.fromString(pi.playerUUID())).isOnline()) {
+            ScoreboardHandler.updateScoreboard((Player) Bukkit.getOfflinePlayer(UUID.fromString(pi.playerUUID())));
         }
     }
 
@@ -66,8 +61,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setLevel(level);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withLevel(level));
     }
 
     public static void setRank(OfflinePlayer pl, String rank) {
@@ -75,8 +69,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setSqlRank(rank);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withRank(rank));
     }
 
     public static void setIngot(OfflinePlayer pl, int ingot) {
@@ -84,8 +77,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setIngot(ingot);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withIngot(ingot));
     }
 
     public static void setToken(String pl, int token) {
@@ -93,8 +85,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setToken(token);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withToken(token));
     }
 
     public static void setTime(String pl, float time) {
@@ -102,8 +93,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setTime(time);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withIngameHours(time));
     }
 
     public static void setLevel(String uuid, int level) {
@@ -111,8 +101,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setLevel(level);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withLevel(level));
     }
 
     public static void setRank(String pl, String rank) {
@@ -120,8 +109,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setSqlRank(rank);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withRank(rank));
     }
 
     public static void setIngot(String pl, int ingot) {
@@ -129,8 +117,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setIngot(ingot);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withIngot(ingot));
     }
 
     public static void setToken(OfflinePlayer pl, int token) {
@@ -138,8 +125,7 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setToken(token);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withToken(token));
     }
 
     public static void setTime(OfflinePlayer pl, float time) {
@@ -147,7 +133,6 @@ public class PlayerInfoSql {
         if (info == null) {
             return;
         }
-        info.setTime(time);
-        updateOrInsertInfo(info);
+        updateOrInsertInfo(info.withIngameHours(time));
     }
 }

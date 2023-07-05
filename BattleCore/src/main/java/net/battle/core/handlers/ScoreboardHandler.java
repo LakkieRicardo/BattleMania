@@ -34,11 +34,11 @@ public class ScoreboardHandler {
         Team time = board.getTeam("%time");
 
         PlayerInfo info = PlayerInfoSql.getPlayerInfo(pl);
-        rank.suffix(Component.text(RankHandler.getRankFromSQLName(info.getSqlRank()).name()));
-        level.suffix(Component.text(info.getLevel()));
-        ingot.suffix(Component.text(info.getIngot()));
-        token.suffix(Component.text(info.getToken()));
-        time.suffix(Component.text(info.getTime() + " hours"));
+        rank.suffix(Component.text(RankHandler.getRankFromSQLName(info.sqlRank()).name()));
+        level.suffix(Component.text(info.level()));
+        ingot.suffix(Component.text(info.ingot()));
+        token.suffix(Component.text(info.token()));
+        time.suffix(Component.text(info.ingameHours() + " hours"));
         NametagHandler.integrateWithScoreboardNametag(board, pl, RankHandler.getPlayerRank(pl));
     }
 

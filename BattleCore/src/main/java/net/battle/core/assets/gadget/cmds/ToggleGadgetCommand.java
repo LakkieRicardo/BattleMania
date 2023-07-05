@@ -38,11 +38,11 @@ public class ToggleGadgetCommand implements CommandBase {
                     g.unselectGadget(g.getUsers().get(i));
                 }
             }
-            Bukkit.broadcast(Component.text(Prefixes.ALERT + "" + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank()).getGameName()
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "" + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).sqlRank()).getGameName()
                     + " §f" + pl.getName() + " §fhas §cdisabled§f gadgets"));
         } else {
             BMCorePlugin.ACTIVE_PLUGIN.setGadgetsAllowed(true);
-            Bukkit.broadcast(Component.text(Prefixes.ALERT + "" + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank()).getGameName()
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "" + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).sqlRank()).getGameName()
                     + " §f" + pl.getName() + " §fhas §cenabled§f gadgets"));
         }
     }

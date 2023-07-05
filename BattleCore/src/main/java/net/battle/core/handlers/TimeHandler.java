@@ -9,6 +9,6 @@ import net.battle.core.sql.impl.PlayerInfoSql;
 public class TimeHandler {
     public static void updateTime() {
         for (Player pl : Bukkit.getOnlinePlayers())
-            PlayerInfoSql.setTime((OfflinePlayer) pl, PlayerInfoSql.getPlayerInfo((OfflinePlayer) pl).getTime() + 0.1F);
+            PlayerInfoSql.setTime((OfflinePlayer) pl, PlayerInfoSql.getPlayerInfo((OfflinePlayer) pl).ingameHours() + 0.1F);
     }
 }

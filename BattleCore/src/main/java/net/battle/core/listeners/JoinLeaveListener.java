@@ -39,12 +39,12 @@ public class JoinLeaveListener implements Listener {
         // Initialize player info
         PlayerInfo info = PlayerInfoSql.getPlayerInfo(pl);
         if (info == null) {
-            info = new PlayerInfo(pl.getUniqueId().toString(), 0, "player", 500, 100, 0.0F);
+            info = new PlayerInfo(pl.getUniqueId().toString(), "player", 0, 500, 100, 0.0F);
             PlayerInfoSql.updateOrInsertInfo(info);
         }
 
         // Initialize news, scoreboard, and tab list
-        pl.playerListName(Component.text((RankHandler.getRankFromSQLName(info.getSqlRank()).getGameName() + " §a" + pl.getName()).trim()));
+        pl.playerListName(Component.text((RankHandler.getRankFromSQLName(info.sqlRank()).getGameName() + " §a" + pl.getName()).trim()));
         pl.setScoreboard(ScoreboardHandler.BLANK_BOARD);
         NewsHelper.DisplayNews(pl);
         HeaderFooterHandler.updateHeaderFooter(pl);

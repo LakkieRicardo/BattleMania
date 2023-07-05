@@ -21,7 +21,7 @@ public class ChatListener implements Listener {
     public void onPlayerChat(AsyncChatEvent e) {
         Player pl = e.getPlayer();
         PlayerInfo info = PlayerInfoSql.getPlayerInfo((OfflinePlayer) pl);
-        Rank r = RankHandler.getRankFromSQLName(info.getSqlRank());
+        Rank r = RankHandler.getRankFromSQLName(info.sqlRank());
         String message;
         if (RankHandler.getPlayerRank(pl) == Rank.OWNER) {
             message = BMTextConvert.CTS.serialize(e.message()).replaceAll("%", "%%").replaceAll("&", "§");
@@ -44,7 +44,7 @@ public class ChatListener implements Listener {
                 filteredMessage = SwearHandler.processString(SwearHandler.PROCESS_MODE_UNDERLINE, "ssa-1", message);
             }
 
-            return Component.text(String.format("§8(§7%d§8) %s §a%s§7: §f%s", info.getLevel(), r.getGameName(),
+            return Component.text(String.format("§8(§7%d§8) %s §a%s§7: §f%s", info.level(), r.getGameName(),
                     pl.getName(), filteredMessage).trim().replaceAll("  ", " "));
         });
     }
