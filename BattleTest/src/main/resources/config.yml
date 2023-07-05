@@ -8,5 +8,6 @@ pvp: false
 pve: true
 allow: false
 lockdown: false
+fadeevents: false
 
 allowed: []

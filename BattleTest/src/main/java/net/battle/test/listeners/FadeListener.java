@@ -4,13 +4,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFadeEvent;
 
-public class FadeListener
-        implements Listener {
-    private static final boolean enabled = true; // TODO figure out what this should be set to
+import net.battle.test.BMTestPlugin;
+
+public class FadeListener implements Listener {
 
     @EventHandler
     public void onBlockFade(BlockFadeEvent e) {
-        if (enabled) {
+        if (!BMTestPlugin.ACTIVE_PLUGIN.getConfigBoolean(BMTestPlugin.CONFIG_FADE)) {
             e.setCancelled(true);
         }
     }

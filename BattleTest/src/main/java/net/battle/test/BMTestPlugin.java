@@ -13,6 +13,7 @@ import net.battle.test.cmds.LockdownCommand;
 import net.battle.test.cmds.NewsCommand;
 import net.battle.test.cmds.ShutdownCommand;
 import net.battle.test.cmds.TeleportAllCommand;
+import net.battle.test.cmds.ToggleFadeCommand;
 import net.battle.test.cmds.UtilityCommand;
 import net.battle.test.cmds.WorldTPCommand;
 import net.battle.test.listeners.BoothListener;
@@ -43,6 +44,7 @@ public class BMTestPlugin extends JavaPlugin {
     public static final String CONFIG_ALLOW_MODE = "allow";
     public static final String CONFIG_ALLOWED_LIST = "allowed";
     public static final String CONFIG_LOCKDOWN = "lockdown";
+    public static final String CONFIG_FADE = "fadeevents";
 
     public void onEnable() {
         getConfig().options().copyDefaults(true);
@@ -62,6 +64,7 @@ public class BMTestPlugin extends JavaPlugin {
         CommandHandler.registerCommand(new HealCommand());
         CommandHandler.registerCommand(new AllowCommand());
         CommandHandler.registerCommand(new TeleportAllCommand());
+        CommandHandler.registerCommand(new ToggleFadeCommand());
 
         BMLogger.info("Creating test server listeners...");
         registerListener(new WhitelistListener());
