@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
 import net.kyori.adventure.text.Component;
@@ -39,7 +39,7 @@ public class PotionHandler implements Listener {
         ItemStack clicked = e.getCurrentItem();
         Material m = clicked.getType();
 
-        if (BMMacro.CTS.serialize(inv.title()).startsWith("Potion Type: ")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).startsWith("Potion Type: ")) {
             e.setCancelled(true);
             if (m == Material.BARRIER) {
                 byte b;
@@ -66,14 +66,14 @@ public class PotionHandler implements Listener {
                 String name = InventoryUtils.getItemName(clicked);
 
                 pl.closeInventory();
-                pl.openInventory(getEditInventory(name.replaceFirst("§c", ""), BMMacro.CTS.serialize(inv.title()).replaceFirst("Potion Type: ", "")));
+                pl.openInventory(getEditInventory(name.replaceFirst("§c", ""), BMTextConvert.CTS.serialize(inv.title()).replaceFirst("Potion Type: ", "")));
                 pl.sendMessage("§9§lCOMMAND§8 > §fOpening edit inventory");
 
                 return;
             }
             return;
         }
-        if (BMMacro.CTS.serialize(inv.title()).contains(" ") && PotionEffectType.getByName(BMMacro.CTS.serialize(inv.title()).split(" ")[0]) != null) {
+        if (BMTextConvert.CTS.serialize(inv.title()).contains(" ") && PotionEffectType.getByName(BMTextConvert.CTS.serialize(inv.title()).split(" ")[0]) != null) {
             e.setCancelled(true);
             if (m == Material.POTION) {
                 return;
@@ -112,7 +112,7 @@ public class PotionHandler implements Listener {
                 }
 
                 PotionEffect potion = new PotionEffect(PotionEffectType.getByName(type), 600, 0, false, false);
-                Player t = CommandHandler.getPlayer(BMMacro.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
+                Player t = CommandHandler.getPlayer(BMTextConvert.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
                 if (t == null) {
                     pl.sendMessage("§4§lERROR§8 > §cPlayer left");
                     return;
@@ -208,7 +208,7 @@ public class PotionHandler implements Listener {
                 }
 
                 PotionEffect potion = new PotionEffect(PotionEffectType.getByName(type), duration * 20, amplifier, (visible == 1), (visible == 1));
-                Player t = CommandHandler.getPlayer(BMMacro.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
+                Player t = CommandHandler.getPlayer(BMTextConvert.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
                 if (t == null) {
                     pl.sendMessage("§4§lERROR§8 > §cPlayer left");
                     return;
@@ -233,7 +233,7 @@ public class PotionHandler implements Listener {
                         type = InventoryUtils.getItemName(content).replaceFirst("§c", "");
                 }
 
-                Player t = CommandHandler.getPlayer(BMMacro.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
+                Player t = CommandHandler.getPlayer(BMTextConvert.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
                 if (t == null) {
                     pl.sendMessage("§4§lERROR§8 > §cPlayer left");
                     return;

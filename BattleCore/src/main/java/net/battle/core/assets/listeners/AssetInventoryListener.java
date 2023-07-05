@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.assets.hats.gui.HatInventoryBuilder;
 import net.battle.core.assets.particle.gui.ParticleInventoryBuilder;
@@ -28,7 +28,7 @@ public class AssetInventoryListener implements Listener {
         Player pl = (Player) e.getWhoClicked();
         InventoryView inv = e.getView();
         ItemStack item = e.getCurrentItem();
-        if (BMMacro.CTS.serialize(inv.title()).equalsIgnoreCase("Assets")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Assets")) {
             e.setCancelled(true);
             if (item.getType() == Material.GHAST_TEAR) {
                 pl.closeInventory();

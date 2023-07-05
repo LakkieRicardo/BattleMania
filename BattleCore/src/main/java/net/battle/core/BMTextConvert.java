@@ -1,11 +1,12 @@
 package net.battle.core;
 
+
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
-public class BMMacro {
+public class BMTextConvert {
     
-    private BMMacro() { }
+    private BMTextConvert() { }
 
     /**
      * CTS stands for "Component to String"
@@ -16,5 +17,5 @@ public class BMMacro {
      * LCTS stands for "Legacy Component to String"
      */
     public static final LegacyComponentSerializer LCTS = LegacyComponentSerializer.legacy('§');
-    
+
 }

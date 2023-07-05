@@ -82,7 +82,7 @@ public class BanCommand implements CommandBase {
                 return;
             }
         }
-        Rank tr = RankHandler.getRankFromName(targetUUID);
+        Rank tr = RankHandler.getRankFromSQLName(targetUUID);
         Rank pr = RankHandler.getPlayerRank(pl);
 
         if (pr != Rank.OWNER && (tr == Rank.OPERATOR || tr == Rank.OWNER)) {

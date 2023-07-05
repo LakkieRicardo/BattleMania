@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.settings.SettingHandler;
@@ -36,7 +36,7 @@ public class SettingListener implements Listener {
         ItemStack clicked = e.getCurrentItem();
         Material m = clicked.getType();
 
-        String invTitle = BMMacro.CTS.serialize(inv.title());
+        String invTitle = BMTextConvert.CTS.serialize(inv.title());
 
         if (invTitle.startsWith("Stats: ")) {
             String targetName = invTitle.substring("Stats: ".length());

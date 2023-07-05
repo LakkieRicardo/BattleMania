@@ -19,8 +19,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.battle.core.BMMacro;
-import net.battle.core.ComponentHelper;
+import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.handlers.RankHandler;
@@ -57,7 +56,7 @@ public class ManageUserListener implements Listener {
         Material m = clicked.getType();
         String reason = REASONS.get(pl.getName());
 
-        if (BMMacro.CTS.serialize(inv.title()).startsWith("Manage")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).startsWith("Manage")) {
 
             e.setCancelled(true);
             ItemStack skull = inv.getItem(4);
@@ -113,7 +112,7 @@ public class ManageUserListener implements Listener {
             }
             return;
         }
-        if (BMMacro.CTS.serialize(inv.title()).equalsIgnoreCase("Move Player")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Move Player")) {
 
             e.setCancelled(true);
             ItemStack skull = inv.getItem(4);
@@ -161,7 +160,7 @@ public class ManageUserListener implements Listener {
             }
         }
 
-        if (BMMacro.CTS.serialize(inv.title()).equalsIgnoreCase("Punishments")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Punishments")) {
 
             e.setCancelled(true);
             ItemStack skull = inv.getItem(4);
@@ -175,7 +174,7 @@ public class ManageUserListener implements Listener {
             }
 
             if (m == Material.REDSTONE_BLOCK) {
-                if (ComponentHelper.CollectionContainsString(clicked.getItemMeta().lore(), "§cActivity: §7Active")) {
+                if (InventoryUtils.loreContainsString(clicked.getItemMeta(), "§cActivity: §7Active")) {
                     PunishManager.handleDisablePunishment(pl, targetOffline, PunishmentType.BAN, e.getCurrentItem());
                     pl.sendMessage("§a§lPUNISH§8 > §fThe user §c" + t + "§f has been unbanned.");
                     pl.closeInventory();
@@ -186,7 +185,7 @@ public class ManageUserListener implements Listener {
             }
 
             if (m == Material.BARRIER) {
-                if (ComponentHelper.CollectionContainsString(clicked.getItemMeta().lore(), "§cActivity: §7Active")) {
+                if (InventoryUtils.loreContainsString(clicked.getItemMeta(), "§cActivity: §7Active")) {
                     PunishManager.handleDisablePunishment(pl, targetOffline, PunishmentType.MUTE, e.getCurrentItem());
                     pl.sendMessage("§a§lPUNISH§8 > §fThe user §c" + t + "§f has been unmuted.");
                     if (!pl.getUniqueId().equals(targetOffline.getUniqueId()) && targetOffline.isOnline()) {
@@ -202,7 +201,7 @@ public class ManageUserListener implements Listener {
             return;
         }
 
-        if (BMMacro.CTS.serialize(inv.title()).equalsIgnoreCase("Punish")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Punish")) {
             e.setCancelled(true);
             ItemStack skull = inv.getItem(4);
             String targetName = ((SkullMeta) skull.getItemMeta()).getOwningPlayer().getName();
@@ -336,7 +335,7 @@ public class ManageUserListener implements Listener {
             return;
         }
 
-        if (BMMacro.CTS.serialize(inv.title()).equalsIgnoreCase("Staff Tools")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Staff Tools")) {
             e.setCancelled(true);
             ItemStack skull = inv.getItem(4);
             String targetName = ((SkullMeta) skull.getItemMeta()).getOwningPlayer().getName();

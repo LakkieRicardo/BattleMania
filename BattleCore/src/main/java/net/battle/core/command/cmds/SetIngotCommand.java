@@ -53,12 +53,11 @@ public class SetIngotCommand implements CommandBase {
         OfflinePlayer targetOffline = Bukkit.getOfflinePlayer(targetName);
         PlayerInfoSql.setIngot(targetOffline, ingots);
         Player target;
-        // TODO: If this conditions is false the player will have to rejoin to see the
-        // updated ingots
         if ((target = Bukkit.getPlayerExact(targetName)) != null) {
-            target.sendMessage(
-                "§6§lUPDATE§8 > §fYour ingot has been set to §c" + ingots + " §fby §c" + pl.getName() + "§f.");
+            target.sendMessage("§6§lUPDATE§8 > §fYour ingot has been set to §c" + ingots + " §fby §c" + pl.getName() + "§f.");
             ScoreboardHandler.updateScoreboard(target);
+        } else {
+            ProxyHandler.playerStatUpdated(pl.getName(), targetOffline.getUniqueId(), "ingot", ingots);
         }
         pl.sendMessage("§6§lUPDATE§8 > §fYou set §c" + targetName + "§f's ingot to §c" + ingots + "§f.");
     }

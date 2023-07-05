@@ -93,7 +93,7 @@ public class ManageUserHandler {
         InventoryUtils.addItemLore(stats, "§7Tokens: §c" + info.getToken());
         InventoryUtils.addItemLore(stats, "§7Online Time: §c" + info.getTime());
         InventoryUtils.addItemLore(stats, "§7UUID: §c" + uuid);
-        InventoryUtils.addItemLore(stats, "§7Rank: §c" + RankHandler.getRankFromName(info.getSqlRank()).getGameName());
+        InventoryUtils.addItemLore(stats, "§7Rank: §c" + RankHandler.getRankFromSQLName(info.getSqlRank()).getGameName());
         InventoryUtils.addItemLore(stats, "§7§m----------------------------------------");
         InventoryUtils.setItem(inv, 1, 4, stats);
         ItemStack settings = new ItemStack(Material.COMPARATOR);
@@ -133,7 +133,7 @@ public class ManageUserHandler {
         InventoryUtils.addItemLore(stats, "§7Tokens: §c" + info.getToken());
         InventoryUtils.addItemLore(stats, "§7Online Time: §c" + info.getTime() + " hours");
         InventoryUtils.addItemLore(stats, "§7UUID: §c" + uuid);
-        InventoryUtils.addItemLore(stats, "§7Rank: §c" + RankHandler.getRankFromName(info.getSqlRank()).getGameName());
+        InventoryUtils.addItemLore(stats, "§7Rank: §c" + RankHandler.getRankFromSQLName(info.getSqlRank()).getGameName());
         InventoryUtils.addItemLore(stats, "§7§m----------------------------------------");
         InventoryUtils.setItem(inv, 1, 4, stats);
         ItemStack settings = new ItemStack(Material.COMPARATOR);

@@ -3,7 +3,7 @@ package net.battle.core.command.cmds;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
@@ -107,7 +107,7 @@ public class GimmeCommand implements CommandBase {
             for (Player all : targets) {
                 all.getInventory().addItem(new ItemStack[] { item });
                 all.sendMessage("§9§lCOMMAND§8 > §fYou §fgave yourself §c" + item.getAmount() + " "
-                        + ((item.getItemMeta().displayName() != null) ? BMMacro.CTS.serialize(item.getItemMeta().displayName())
+                        + ((item.getItemMeta().displayName() != null) ? BMTextConvert.CTS.serialize(item.getItemMeta().displayName())
                                 : type.name().toLowerCase().replaceAll("_", " ")));
             }
 
@@ -188,7 +188,7 @@ public class GimmeCommand implements CommandBase {
         for (Player all : targets) {
             all.getInventory().addItem(new ItemStack[] { item });
             all.sendMessage("§9§lCOMMAND§8 > §fYou §fgave yourself §c" + item.getAmount() + " "
-                    + ((item.getItemMeta().displayName() != null) ? BMMacro.CTS.serialize(item.getItemMeta().displayName())
+                    + ((item.getItemMeta().displayName() != null) ? BMTextConvert.CTS.serialize(item.getItemMeta().displayName())
                             : type.name().toLowerCase().replaceAll("_", " ")));
         }
     }

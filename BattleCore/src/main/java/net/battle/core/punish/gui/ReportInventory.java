@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.sql.impl.PunishmentSql;
@@ -52,7 +52,7 @@ public class ReportInventory implements Listener {
         Player pl = (Player) e.getWhoClicked();
         ItemStack item = e.getCurrentItem();
         InventoryView inv = e.getView();
-        String invTitle = BMMacro.CTS.serialize(inv.title());
+        String invTitle = BMTextConvert.CTS.serialize(inv.title());
 
         if (invTitle.equalsIgnoreCase("Report")) {
             if (InventoryUtils.isItemSimilarTo(item, InventoryUtils.BLANK_ITEM)) {

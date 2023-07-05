@@ -13,7 +13,7 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.InventoryUtils;
 import net.kyori.adventure.text.Component;
 
@@ -71,7 +71,7 @@ public class ComponentInventory extends ComponentEvent {
             if (cEvent.getCurrentItem() == null) {
                 return;
             }
-            String invName = BMMacro.CTS.serialize(cEvent.getView().title());
+            String invName = BMTextConvert.CTS.serialize(cEvent.getView().title());
             if (!invName.equalsIgnoreCase(this.inventoryName)) {
                 return;
             }

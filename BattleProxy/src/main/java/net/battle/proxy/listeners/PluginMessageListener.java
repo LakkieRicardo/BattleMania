@@ -35,25 +35,19 @@ public class PluginMessageListener extends ListenerBase {
         }
 
         event.setResult(ForwardResult.handled());
-
         ByteArrayDataInput in = ByteStreams.newDataInput(event.dataAsInputStream());
         String messageType = in.readUTF();
         plugin.logger.info("Received message of type " + messageType + " from " + event.getSource().getClass().getSimpleName());
+
         if (messageType.equals("TrySendMessage")) {
             UUID target = UUID.fromString(in.readUTF());
             String message = in.readUTF();
             plugin.server.getPlayer(target).ifPresent(player -> player.sendMessage(Component.text(message)));
-            return;
-        }
-
-        if (messageType.equals("KickPlayer")) {
+        } else if (messageType.equals("KickPlayer")) {
             UUID target = UUID.fromString(in.readUTF());
             String message = in.readUTF();
             plugin.server.getPlayer(target).ifPresent(player -> player.disconnect(Component.text(message)));
-            return;
-        }
-
-        if (messageType.equals("ConnectPlayers")) {
+        } else if (messageType.equals("ConnectPlayers")) {
             String rawPlayerList = in.readUTF();
             String targetServerName = in.readUTF();
             var targetServerOptional = plugin.server.getServer(targetServerName);
@@ -71,10 +65,7 @@ public class PluginMessageListener extends ListenerBase {
                     });
                 }
             }
-            return;
-        }
-
-        if (messageType.equals("ConnectAllPlayers")) {
+        } else if (messageType.equals("ConnectAllPlayers")) {
             String targetServerName = in.readUTF();
             plugin.server.getServer(targetServerName).ifPresent(targetServer -> {
                 if (event.getSource() instanceof ServerConnection sourceServer) {
@@ -83,10 +74,7 @@ public class PluginMessageListener extends ListenerBase {
                     }
                 }
             });
-            return;
-        }
-
-        if (messageType.equals("GetCommands")) {
+        } else if (messageType.equals("GetCommands")) {
             if (event.getSource() instanceof ServerConnection sourceServer) {   
                 List<CommandBase> commands = plugin.commandList;
                 var paramLabels = new StringBuilder();
@@ -116,9 +104,7 @@ public class PluginMessageListener extends ListenerBase {
                 sourceServer.getServer().sendPluginMessage(identifier, data.toByteArray());
             }
             return;
-        }
-
-        if (messageType.equals("GetPlayerServer")) {
+        } else if (messageType.equals("GetPlayerServer")) {
             String targetPlayer = in.readUTF();
             if (event.getSource() instanceof ServerConnection sourceServer) {
                 plugin.server.getPlayer(UUID.fromString(targetPlayer)).ifPresent(player -> {
@@ -135,11 +121,27 @@ public class PluginMessageListener extends ListenerBase {
                     });
                 });
             }
+        } else if (messageType.equals("PlayerStatUpdated")) {
+            String updateUsername = in.readUTF();
+            UUID targetPlayerUUID = UUID.fromString(in.readUTF());
+            String fieldName = in.readUTF();
+            String fieldValue = in.readUTF();
 
-            return;
+            plugin.server.getPlayer(targetPlayerUUID).ifPresent(target -> {
+                ByteArrayDataOutput data = ByteStreams.newDataOutput();
+                data.writeUTF("PlayerStatUpdated_Forward");
+                data.writeUTF(updateUsername);
+                data.writeUTF(targetPlayerUUID.toString());
+                data.writeUTF(fieldName);
+                data.writeUTF(fieldValue);
+
+                target.getCurrentServer().get().sendPluginMessage(identifier, data.toByteArray());
+
+            });
+        } else {
+            plugin.logger.warn("Received invalid message type from channel bmcore:messages: " + messageType);
         }
 
-        plugin.logger.warn("Received invalid message type from channel bmcore:messages: " + messageType);
     }
     
 }

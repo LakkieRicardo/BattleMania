@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.Rank;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.SwearHandler;
@@ -21,12 +21,12 @@ public class ChatListener implements Listener {
     public void onPlayerChat(AsyncChatEvent e) {
         Player pl = e.getPlayer();
         PlayerInfo info = PlayerInfoSql.getPlayerInfo((OfflinePlayer) pl);
-        Rank r = RankHandler.getRankFromName(info.getSqlRank());
+        Rank r = RankHandler.getRankFromSQLName(info.getSqlRank());
         String message;
         if (RankHandler.getPlayerRank(pl) == Rank.OWNER) {
-            message = BMMacro.CTS.serialize(e.message()).replaceAll("%", "%%").replaceAll("&", "§");
+            message = BMTextConvert.CTS.serialize(e.message()).replaceAll("%", "%%").replaceAll("&", "§");
         } else {
-            message = BMMacro.CTS.serialize(e.message()).replaceAll("%", "%%");
+            message = BMTextConvert.CTS.serialize(e.message()).replaceAll("%", "%%");
         }
 
         for (Player all : Bukkit.getOnlinePlayers()) {

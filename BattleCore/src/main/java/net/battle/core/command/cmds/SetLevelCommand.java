@@ -57,6 +57,8 @@ public class SetLevelCommand implements CommandBase {
             target.sendMessage(
                     "§6§lUPDATE§8 > §fYour level has been set to §c" + levels + " §fby §c" + pl.getName() + "§f.");
             ScoreboardHandler.updateScoreboard(target);
+        } else {
+            ProxyHandler.playerStatUpdated(pl.getName(), targetOffline.getUniqueId(), "level", levels);
         }
         pl.sendMessage("§6§lUPDATE§8 > §fYou set §c" + targetName + "§f's level to §c" + levels + "§f.");
     }

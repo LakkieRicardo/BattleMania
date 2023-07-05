@@ -9,7 +9,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import net.battle.core.BMCorePlugin;
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.handlers.InventoryUtils;
 
@@ -27,7 +27,7 @@ public class GadgetInventoryListener implements Listener {
         }
         Player pl = (Player) e.getWhoClicked();
         InventoryView inv = e.getView();
-        if (BMMacro.CTS.serialize(inv.title()).equalsIgnoreCase("Gadgets Inventory")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Gadgets Inventory")) {
             e.setCancelled(true);
             ItemStack item = e.getCurrentItem();
             Gadget g = Gadget.getByLabel(item);

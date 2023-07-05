@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.kyori.adventure.text.Component;
 
 public class InventoryUtils {
@@ -73,7 +73,7 @@ public class InventoryUtils {
         }
         List<String> result = new ArrayList<String>(compsLore.size());
         for (Component compLore : compsLore) {
-            result.add(BMMacro.CTS.serialize(compLore));
+            result.add(BMTextConvert.CTS.serialize(compLore));
         }
         return result;
     }
@@ -86,7 +86,7 @@ public class InventoryUtils {
         if (item == null || item.getItemMeta() == null || item.getItemMeta().displayName() == null) {
             return "";
         }
-        return BMMacro.LCTS.serialize(item.getItemMeta().displayName());
+        return BMTextConvert.LCTS.serialize(item.getItemMeta().displayName());
     }
 
     public static boolean isItemSimilarTo(ItemStack item, ItemStack item2) {
@@ -99,8 +99,8 @@ public class InventoryUtils {
         if (!item.getItemMeta().hasDisplayName() || !item2.getItemMeta().hasDisplayName()) {
             return false;
         }
-        return (item.getType() == item2.getType() && BMMacro.CTS.serialize(item.getItemMeta().displayName())
-                .equalsIgnoreCase(BMMacro.CTS.serialize(item2.getItemMeta().displayName())));
+        return (item.getType() == item2.getType() && BMTextConvert.CTS.serialize(item.getItemMeta().displayName())
+                .equalsIgnoreCase(BMTextConvert.CTS.serialize(item2.getItemMeta().displayName())));
     }
 
     public static Inventory fillBlanks(Inventory inv) {
@@ -127,6 +127,15 @@ public class InventoryUtils {
             newInv.setItem(i, inv.getItem(i));
         }
         return newInv;
+    }
+
+    public static boolean loreContainsString(ItemMeta itemMeta, String term) {
+        for (Component comp : itemMeta.lore()) {
+            if (BMTextConvert.CTS.serialize(comp).contains(term)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static final ItemStack BLANK_ITEM = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);

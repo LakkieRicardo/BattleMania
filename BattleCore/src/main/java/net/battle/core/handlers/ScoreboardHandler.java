@@ -34,7 +34,7 @@ public class ScoreboardHandler {
         Team time = board.getTeam("%time");
 
         PlayerInfo info = PlayerInfoSql.getPlayerInfo(pl);
-        rank.suffix(Component.text(RankHandler.getRankFromName(info.getSqlRank()).name()));
+        rank.suffix(Component.text(RankHandler.getRankFromSQLName(info.getSqlRank()).name()));
         level.suffix(Component.text(info.getLevel()));
         ingot.suffix(Component.text(info.getIngot()));
         token.suffix(Component.text(info.getToken()));

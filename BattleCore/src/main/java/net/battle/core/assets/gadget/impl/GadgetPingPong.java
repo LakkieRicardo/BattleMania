@@ -20,7 +20,7 @@ import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
 import net.battle.core.BMCorePlugin;
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.assets.gadget.utils.CollisionData;
 import net.battle.core.handlers.BMLogger;
@@ -46,7 +46,7 @@ public class GadgetPingPong extends Gadget {
         ball.customName(Component.text("ORIG"));
         Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, new Runnable() {
             public void run() {
-                ball.customName(Component.text(BMMacro.CTS.serialize(ball.customName()) + " " + ball.getVelocity().getX() + " " + ball.getVelocity().getZ()));
+                ball.customName(Component.text(BMTextConvert.CTS.serialize(ball.customName()) + " " + ball.getVelocity().getX() + " " + ball.getVelocity().getZ()));
             }
         }, 1L);
     }
@@ -62,7 +62,7 @@ public class GadgetPingPong extends Gadget {
                 return;
             }
 
-            if (BMMacro.CTS.serialize(proj.customName()).startsWith("ORIG")) {
+            if (BMTextConvert.CTS.serialize(proj.customName()).startsWith("ORIG")) {
                 CollisionData data = locationTest(proj.getLocation());
                 final Snowball ball2 = (Snowball) proj.getWorld().spawn(proj.getLocation(), Snowball.class);
                 ball2.setCustomNameVisible(false);
@@ -81,7 +81,7 @@ public class GadgetPingPong extends Gadget {
                 }
                 v.setY(0.3D);
 
-                String[] components = BMMacro.CTS.serialize(proj.customName()).split(" ");
+                String[] components = BMTextConvert.CTS.serialize(proj.customName()).split(" ");
                 double x = Double.parseDouble(components[1]);
                 double z = Double.parseDouble(components[2]);
                 if (changeX) {
@@ -103,14 +103,14 @@ public class GadgetPingPong extends Gadget {
                 ball2.customName(Component.text("BOUNCE1"));
                 Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, new Runnable() {
                     public void run() {
-                        ball2.customName(Component.text(BMMacro.CTS.serialize(ball2.customName()) + " " + proj.getVelocity().getX() + " "
+                        ball2.customName(Component.text(BMTextConvert.CTS.serialize(ball2.customName()) + " " + proj.getVelocity().getX() + " "
                                 + proj.getVelocity().getZ()));
                     }
                 }, 1L);
                 ball2.setShooter(proj.getShooter());
                 return;
             }
-            if (BMMacro.CTS.serialize(proj.customName()).startsWith("BOUNCE1")) {
+            if (BMTextConvert.CTS.serialize(proj.customName()).startsWith("BOUNCE1")) {
                 CollisionData data = locationTest(proj.getLocation());
                 final Snowball ball2 = (Snowball) proj.getWorld().spawn(proj.getLocation(), Snowball.class);
                 ball2.setCustomNameVisible(false);
@@ -128,7 +128,7 @@ public class GadgetPingPong extends Gadget {
                     break;
                 }
                 v.setY(0.3D);
-                String[] components = BMMacro.CTS.serialize(proj.customName()).split(" ");
+                String[] components = BMTextConvert.CTS.serialize(proj.customName()).split(" ");
                 double x = Double.parseDouble(components[1]);
                 double z = Double.parseDouble(components[2]);
                 if (changeX) {
@@ -149,14 +149,14 @@ public class GadgetPingPong extends Gadget {
                 ball2.customName(Component.text("BOUNCE2"));
                 Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, new Runnable() {
                     public void run() {
-                        ball2.customName(Component.text(BMMacro.CTS.serialize(ball2.customName()) + " " + proj.getVelocity().getX() + " "
+                        ball2.customName(Component.text(BMTextConvert.CTS.serialize(ball2.customName()) + " " + proj.getVelocity().getX() + " "
                                 + proj.getVelocity().getZ()));
                     }
                 }, 1L);
                 ball2.setShooter(proj.getShooter());
                 return;
             }
-            if (BMMacro.CTS.serialize(proj.customName()).startsWith("BOUNCE2")) {
+            if (BMTextConvert.CTS.serialize(proj.customName()).startsWith("BOUNCE2")) {
                 CollisionData data = locationTest(proj.getLocation());
                 final Snowball ball2 = (Snowball) proj.getWorld().spawn(proj.getLocation(), Snowball.class);
                 ball2.setCustomNameVisible(false);
@@ -174,7 +174,7 @@ public class GadgetPingPong extends Gadget {
                     break;
                 }
                 v.setY(0.3D);
-                String[] components = BMMacro.CTS.serialize(proj.customName()).split(" ");
+                String[] components = BMTextConvert.CTS.serialize(proj.customName()).split(" ");
                 double x = Double.parseDouble(components[1]);
                 double z = Double.parseDouble(components[2]);
                 if (changeX) {
@@ -195,7 +195,7 @@ public class GadgetPingPong extends Gadget {
                 ball2.customName(Component.text("BOUNCE3"));
                 Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, new Runnable() {
                     public void run() {
-                        ball2.customName(Component.text(BMMacro.CTS.serialize(ball2.customName()) + " " + proj.getVelocity().getX() + " "
+                        ball2.customName(Component.text(BMTextConvert.CTS.serialize(ball2.customName()) + " " + proj.getVelocity().getX() + " "
                                 + proj.getVelocity().getZ()));
                     }
                 }, 1L);

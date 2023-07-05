@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.RankHandler;
@@ -43,7 +43,7 @@ public class HelpOpCommand implements CommandBase {
 
         String msg = CommandHandler.getSpacedArgument(args, " ");
 
-        pl.sendMessage("§e§lALERT§8 > §fMessage from §a" + BMMacro.CTS.serialize(pl.displayName()) + "§f: " + msg);
+        pl.sendMessage("§e§lALERT§8 > §fMessage from §a" + BMTextConvert.CTS.serialize(pl.displayName()) + "§f: " + msg);
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (pl == online) {
@@ -51,7 +51,7 @@ public class HelpOpCommand implements CommandBase {
             }
             if (RankHandler.helperPermission(pl)) {
                 online.sendMessage(
-                        "§e§lALERT§8 > §fMessage from §a" + BMMacro.CTS.serialize(pl.displayName()) + "§f: " + msg);
+                        "§e§lALERT§8 > §fMessage from §a" + BMTextConvert.CTS.serialize(pl.displayName()) + "§f: " + msg);
             }
         }
 

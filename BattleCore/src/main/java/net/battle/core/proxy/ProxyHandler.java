@@ -83,4 +83,23 @@ public class ProxyHandler implements Listener {
         }
         BMCorePlugin.ACTIVE_PLUGIN.sendPluginMessage(b.toByteArray());
     }
+
+    public static void playerStatUpdated(String updaterUsername, UUID player, String field, int value) {
+        playerStatUpdated(updaterUsername, player, field, Integer.toString(value));
+    }
+
+    public static void playerStatUpdated(String updaterUsername, UUID player, String field, String value) {
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(b);
+        try {
+            out.writeUTF("PlayerStatUpdated");
+            out.writeUTF(updaterUsername);
+            out.writeUTF(player.toString());
+            out.writeUTF(field);
+            out.writeUTF(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BMCorePlugin.ACTIVE_PLUGIN.sendPluginMessage(b.toByteArray());
+    }
 }

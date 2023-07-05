@@ -180,15 +180,6 @@ public abstract class Gadget implements Listener {
         return null;
     }
 
-    // public static ItemStack setUnbreakable(ItemStack item) {
-    // NBTTagCompound tag = new NBTTagCompound();
-    // ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
-    // nmsItem.setTag(tag);
-    // tag.setInt("Unbreakable", 1);
-    // nmsItem.setTag(tag);
-    // return CraftItemStack.asBukkitCopy(nmsItem);
-    // }
-
     public static final Inventory GADGETS_INV = Bukkit.createInventory(null, 54, Component.text("§cGadgets §7Inventory"));
     static {
         ItemStack gadgetInv = new ItemStack(Material.CHEST);

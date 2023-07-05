@@ -39,7 +39,7 @@ public class ToggleGadgetCommand implements CommandBase {
             for (Player all : Bukkit.getOnlinePlayers()) {
                 all.sendMessage(
                         "§e§lALERT§8 > §f"
-                                + RankHandler.getRankFromName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank())
+                                + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank())
                                         .getGameName()
                                 + " §f"
                                 + pl.getName() + " §fhas §cdisabled§f gadgets");
@@ -49,7 +49,7 @@ public class ToggleGadgetCommand implements CommandBase {
             for (Player all : Bukkit.getOnlinePlayers())
                 all.sendMessage(
                         "§e§lALERT§8 > §f"
-                                + RankHandler.getRankFromName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank())
+                                + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank())
                                         .getGameName()
                                 + " §f"
                                 + pl.getName() + " §fhas §cenabled§f gadgets");

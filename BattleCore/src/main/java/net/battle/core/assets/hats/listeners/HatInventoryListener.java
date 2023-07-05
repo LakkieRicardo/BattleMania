@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.assets.hats.Hat;
 import net.battle.core.handlers.InventoryUtils;
 
@@ -28,7 +28,7 @@ public class HatInventoryListener implements Listener {
         Player pl = (Player) e.getWhoClicked();
         InventoryView inv = e.getView();
         ItemStack item = e.getCurrentItem();
-        if (BMMacro.CTS.serialize(inv.title()).equals("Hats")) {
+        if (BMTextConvert.CTS.serialize(inv.title()).equals("Hats")) {
             e.setCancelled(true);
             if (item.getType() == Material.BARRIER) {
                 Hat.dequip(pl);

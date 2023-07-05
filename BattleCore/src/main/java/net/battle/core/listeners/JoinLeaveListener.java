@@ -43,7 +43,7 @@ public class JoinLeaveListener implements Listener {
         }
 
         // Initialize news, scoreboard, and tab list
-        pl.playerListName(Component.text((RankHandler.getRankFromName(info.getSqlRank()).getGameName() + " §a" + pl.getName()).trim()));
+        pl.playerListName(Component.text((RankHandler.getRankFromSQLName(info.getSqlRank()).getGameName() + " §a" + pl.getName()).trim()));
         pl.setScoreboard(ScoreboardHandler.BLANK_BOARD);
         NewsHelper.DisplayNews(pl);
         HeaderFooterHandler.updateHeaderFooter(pl);
@@ -74,7 +74,8 @@ public class JoinLeaveListener implements Listener {
         } else {
             punishMeta.displayName(Component.text("§aReport"));
         }
-        punish.setItemMeta(punishMeta); // TODO got rid of the unbreakable modification. Will have to find a workaround
+        punishMeta.setUnbreakable(true);
+        punish.setItemMeta(punishMeta);
         pl.getInventory().clear();
         pl.getInventory().setItem(0, AssetHandler.getAssetItem());
         pl.getInventory().setItem(1, Gadget.NO_GADGET_ITEM);

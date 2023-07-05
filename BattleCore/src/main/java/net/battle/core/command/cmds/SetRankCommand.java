@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.Rank;
@@ -45,11 +45,11 @@ public class SetRankCommand implements CommandBase {
             return;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(targetName);
-        if (RankHandler.getRankFromName(args[1]) == null) {
+        if (RankHandler.getRankFromSQLName(args[1]) == null) {
             pl.sendMessage("§4§lERROR§8 > §cInvalid rank.");
             return;
         }
-        Rank r = RankHandler.getRankFromName(args[1]);
+        Rank r = RankHandler.getRankFromSQLName(args[1]);
         if (!RankHandler.ownerPermission(pl) && (r == Rank.OWNER || r == Rank.OPERATOR)) {
             pl.sendMessage("§4§lERROR§8 > §cYou do not have enough permission to set that player to that rank");
             return;
@@ -66,9 +66,11 @@ public class SetRankCommand implements CommandBase {
                     "§6§lUPDATE§8 > §fYour rank has been updated to §c" + r.getSQLName() + " §fby §c" + pl.getName()
                             + "§f.");
             targetOnline
-                    .playerListName(Component.text(RankHandler.getRankFromName(info.getSqlRank()).getGameName() + " §a"
+                    .playerListName(Component.text(RankHandler.getRankFromSQLName(info.getSqlRank()).getGameName() + " §a"
                             + targetOnline.getName()));
-            targetOnline.playerListName(Component.text(BMMacro.CTS.serialize(targetOnline.playerListName()).trim()));
+            targetOnline.playerListName(Component.text(BMTextConvert.CTS.serialize(targetOnline.playerListName()).trim()));
+        } else {
+            ProxyHandler.playerStatUpdated(pl.getName(), target.getUniqueId(), "rank", r.getSQLName());
         }
     }
 

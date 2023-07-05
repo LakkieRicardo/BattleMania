@@ -57,6 +57,8 @@ public class SetTokenCommand implements CommandBase {
             target.sendMessage(
                     "§6§lUPDATE§8 > §fYour token has been set to §c" + tokens + " §fby §c" + pl.getName() + "§f.");
             ScoreboardHandler.updateScoreboard(target);
+        } else {
+            ProxyHandler.playerStatUpdated(pl.getName(), targetOffline.getUniqueId(), "token", tokens);
         }
         pl.sendMessage("§6§lUPDATE§8 > §fYou set §c" + targetName + "§f's token to §c" + tokens + "§f.");
     }

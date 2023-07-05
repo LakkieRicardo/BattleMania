@@ -14,13 +14,19 @@ Server -> Proxy:
     players: String (comma-separated list of UUIDs)
     target server name: String
 
-    ConnectAllPlayers
+ConnectAllPlayers
     target server name: String
 
     GetCommands
 
     GetPlayerServer
     target: UUID
+
+    PlayerStatUpdated (will be forwarded to the server the player is on if they are online)
+    updater username: String
+    target player: UUID
+    field name: String
+    field value: String/int
 
 Proxy -> Server:
 
@@ -33,3 +39,9 @@ Proxy -> Server:
     GetPlayerServer_Reply
     target: UUID
     server name: String
+
+    PlayerStatUpdated_Forward
+    updater username: String
+    target player: UUID
+    field name: String
+    field value: String/int

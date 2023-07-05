@@ -20,7 +20,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import net.battle.core.BMMacro;
+import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.BMLogger;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.supplydrop.SupplyDropType;
@@ -50,7 +50,7 @@ public class SupplyDropHandler
         boolean foo = false;
         for (Entity en : stand.getNearbyEntities(0.5D, 110.0D, 0.5D)) {
           if (en.isCustomNameVisible() &&
-              BMMacro.LCTS.serialize(en.customName()).equalsIgnoreCase("§7Supply Drops")) {
+              BMTextConvert.LCTS.serialize(en.customName()).equalsIgnoreCase("§7Supply Drops")) {
             foo = true;
           }
         }
@@ -92,7 +92,7 @@ public class SupplyDropHandler
     ItemStack clicked = e.getCurrentItem();
     Material m = clicked.getType();
 
-    if (BMMacro.CTS.serialize(inv.title()).equalsIgnoreCase("Supply Drops")) {
+    if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Supply Drops")) {
       e.setCancelled(true);
       if (m == Material.IRON_INGOT && !SupplyDropType.NORMAL.getSupplyDrop().play(pl))
         pl.sendMessage("§4§lERROR§8 > §cThis supply drop is currently occupied");
