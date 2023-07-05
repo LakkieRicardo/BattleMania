@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -35,7 +37,7 @@ public class ChairListener implements Listener {
         }
         Stairs stairsData = (Stairs) blockData;
         // TODO figure out which stairs face are down
-        if (stairsData.getShape() != Stairs.Shape.STRAIGHT) {
+        if (stairsData.getHalf() != Half.BOTTOM || (stairsData.getFacing() != BlockFace.WEST && stairsData.getFacing() != BlockFace.EAST && stairsData.getFacing() != BlockFace.NORTH && stairsData.getFacing() != BlockFace.SOUTH)) {
             return;
         }
 
@@ -43,16 +45,18 @@ public class ChairListener implements Listener {
             if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
                 return;
             }
+            this.lastLocs.put(pl.getUniqueId().toString(), pl.getLocation());
             Location pLoc = pl.getLocation();
             pLoc.setYaw(pLoc.getYaw() + 180.0F);
             pl.teleport(pLoc);
             Location targetLoc = target.getLocation();
             targetLoc.setX(targetLoc.getX() + 0.5D);
+            targetLoc.setY(targetLoc.getY() - 0.5D);
             targetLoc.setZ(targetLoc.getZ() + 0.5D);
-            targetLoc.setY(targetLoc.getY() - 1.0D);
             targetLoc.setYaw(pLoc.getYaw());
             ArmorStand stand = (ArmorStand) pl.getWorld().spawn(targetLoc, ArmorStand.class);
             targetLoc.setYaw(pLoc.getYaw());
+            stand.setCollidable(false);
             stand.teleport(targetLoc);
             stand.setGravity(false);
             stand.setSmall(true);
@@ -60,7 +64,6 @@ public class ChairListener implements Listener {
             stand.addPassenger((Entity) pl);
             stand.teleport(targetLoc);
             this.stands.put(pl.getUniqueId().toString(), stand);
-            this.lastLocs.put(pl.getUniqueId().toString(), pl.getLocation());
         }
     }
 
@@ -77,7 +80,10 @@ public class ChairListener implements Listener {
                 stand.setHealth(0.0D);
             }
             this.stands.remove(pl.getUniqueId().toString());
-            pl.teleport(this.lastLocs.get(pl.getUniqueId().toString()));
+            Location lastLoc = this.lastLocs.get(pl.getUniqueId().toString());
+            lastLoc.setYaw(pl.getLocation().getYaw());
+            lastLoc.setPitch(pl.getLocation().getPitch());
+            pl.teleport(lastLoc);
             this.lastLocs.remove(pl.getUniqueId().toString());
         }
     }
