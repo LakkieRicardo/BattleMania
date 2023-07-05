@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import net.battle.core.handlers.BMLogger;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 
@@ -189,7 +190,7 @@ public class CommandHandler implements Listener {
      * @param pl Player to send to
      */
     public static void sendPerms(Player pl) {
-        CommandHandler.sendPerms(pl);
+        pl.sendMessage(Prefixes.error + "Not enough permission");
     }
 
     public static String getSpacedArgument(String[] args, String delimiter, int startingIdx) {
