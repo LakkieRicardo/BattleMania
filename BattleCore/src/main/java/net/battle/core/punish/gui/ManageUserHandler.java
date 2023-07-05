@@ -460,19 +460,16 @@ public class ManageUserHandler {
         InventoryUtils.setItemLore(chat3, "§7This is for when a user is spamming advertisments or just plain spamming");
         InventoryUtils.addItemLore(chat3, "§7EX: \"JOIN: DUMB.SERVER.URL\" or \"HI\" 4 or more times");
         InventoryUtils.addItemLore(chat3, "§7-");
-        InventoryUtils.addItemLore(chat3,
-                "§6Note: §7If the user is not advertising and has not already been warned then warn first");
+        InventoryUtils.addItemLore(chat3, "§6Note: §7If the user is not advertising and has not already been warned then warn first");
         InventoryUtils.addItemLore(chat3, "§7If the user has already been warned for the same reason");
         InventoryUtils.addItemLore(chat3, "§7on the same day then use this punishment");
         InventoryUtils.addItemLore(chat3, "§cMute Duration: §71 Month");
         InventoryUtils.setItem(inv, 1, 4, chat3);
         ItemStack exploit2 = new ItemStack(Material.GREEN_CONCRETE);
         InventoryUtils.renameItem(exploit2, "§aSeverity 2");
-        InventoryUtils.setItemLore(exploit2,
-                "§7This is for when a player expoits glitches or hacks and abuses leaked files");
+        InventoryUtils.setItemLore(exploit2, "§7This is for when a player expoits glitches or hacks and abuses leaked files");
         InventoryUtils.addItemLore(exploit2, "§7-");
-        InventoryUtils.addItemLore(exploit2,
-                "§6Note: §7If the player has not been punished for this before, punish them severity 1");
+        InventoryUtils.addItemLore(exploit2, "§6Note: §7If the player has not been punished for this before, punish them severity 1");
         InventoryUtils.addItemLore(exploit2, "§7If the player has hacked SQL information, do not give them severity 1");
         InventoryUtils.addItemLore(exploit2, "§cBan Duration: §72 Months");
         InventoryUtils.setItem(inv, 4, 3, exploit2);
@@ -510,17 +507,11 @@ public class ManageUserHandler {
             if (punish.getType() == PunishmentType.REPORT || punish.getType() == PunishmentType.WARN) {
                 continue;
             }
-            switch (punish.getType()) {
-                case MUTE:
-                    punishItem = new ItemStack(Material.BARRIER);
-                    break;
-                case BAN:
-                    punishItem = new ItemStack(Material.REDSTONE_BLOCK);
-                    break;
-                default: // This won't be reached
-                    punishItem = new ItemStack(Material.EGG);
-                    break;
-            }
+            punishItem = switch (punish.getType()) {
+            case MUTE -> new ItemStack(Material.BARRIER);
+            case BAN -> new ItemStack(Material.REDSTONE_BLOCK);
+            default -> new ItemStack(Material.EGG); // Should not be reached
+            };
 
             if (punish.getExpiration() == null) {
                 InventoryUtils.renameItem(punishItem, "§aPermanent " + punish.getType().name());
@@ -535,15 +526,15 @@ public class ManageUserHandler {
                 InventoryUtils.addItemLore(punishItem, "§c" + punish.getType().name() + "Duration: §7EXPIRED");
             } else {
                 InventoryUtils.addItemLore(punishItem, "§c" + punish.getType().name() + "Expiration: §7"
-                        + PunishManager.PUNISHMENT_DATE_FORMAT.format(punish.getExpiration()) + " at " + PunishManager.PUNISHMENT_TIME_FORMAT.format(punish.getExpiration()));
+                        + PunishManager.PUNISHMENT_DATE_FORMAT.format(punish.getExpiration()) + " at "
+                        + PunishManager.PUNISHMENT_TIME_FORMAT.format(punish.getExpiration()));
             }
 
             if (punish.isActive()) {
                 punishItem.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
             }
             InventoryUtils.addItemLore(punishItem, "§7-");
-            InventoryUtils.addItemLore(punishItem,
-                    "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(punish.getPunisherUUID())).getName());
+            InventoryUtils.addItemLore(punishItem, "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(punish.getPunisherUUID())).getName());
             InventoryUtils.addItemLore(punishItem, "§cPunish Reason: §7" + punish.getReason());
             InventoryUtils.addItemLore(punishItem, "§cActivity: §7" + (punish.isActive() ? "Active" : "Inactive"));
             InventoryUtils.addItemLore(punishItem, PUNISH_ID_FIELD_PREFIX + punish.getId());
@@ -565,8 +556,7 @@ public class ManageUserHandler {
             InventoryUtils.setItemLore(warnItem, "§7If the player already has a warning for the same");
             InventoryUtils.addItemLore(warnItem, "§7reason then it will result in a larger punishment");
             InventoryUtils.addItemLore(warnItem, "§7-");
-            InventoryUtils.addItemLore(warnItem,
-                    "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(warn.getPunisherUUID())).getName());
+            InventoryUtils.addItemLore(warnItem, "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(warn.getPunisherUUID())).getName());
             String reason = warn.getReason();
 
             if (reason.length() > 50) {

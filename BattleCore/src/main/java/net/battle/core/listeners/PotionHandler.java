@@ -74,7 +74,8 @@ public class PotionHandler implements Listener {
             }
             return;
         }
-        if (BMTextConvert.CTS.serialize(inv.title()).contains(" ") && PotionEffectType.getByName(BMTextConvert.CTS.serialize(inv.title()).split(" ")[0]) != null) {
+        if (BMTextConvert.CTS.serialize(inv.title()).contains(" ")
+                && PotionEffectType.getByName(BMTextConvert.CTS.serialize(inv.title()).split(" ")[0]) != null) {
             e.setCancelled(true);
             if (m == Material.POTION) {
                 return;
@@ -134,46 +135,24 @@ public class PotionHandler implements Listener {
                     ItemStack item = inv.getItem(i);
                     Material itemMat = item.getType();
                     if (getEditType(InventoryUtils.getItemName(item)) == EditType.DURATION && item.containsEnchantment(Enchantment.DURABILITY)) {
-                        switch (itemMat) {
-                        case LIME_CONCRETE:
-                            duration = 60;
-                            break;
-                        case GREEN_CONCRETE:
-                            duration = 120;
-                            break;
-                        case YELLOW_CONCRETE:
-                            duration = 300;
-                            break;
-                        case PINK_CONCRETE:
-                            duration = 1200;
-                            break;
-                        case RED_CONCRETE:
-                            duration = 9999;
-                            break;
-                        default:
-                            break;
-                        }
+                        duration = switch (itemMat) {
+                        case LIME_CONCRETE -> 60;
+                        case GREEN_CONCRETE -> 120;
+                        case YELLOW_CONCRETE -> 300;
+                        case PINK_CONCRETE -> 1200;
+                        case RED_CONCRETE -> 9999;
+                        default -> duration;
+                        };
                     }
                     if (getEditType(InventoryUtils.getItemName(item)) == EditType.AMPLIFIER && item.containsEnchantment(Enchantment.DURABILITY)) {
-                        switch (itemMat) {
-                        case LIME_CONCRETE:
-                            amplifier = 1;
-                            break;
-                        case GREEN_CONCRETE:
-                            amplifier = 2;
-                            break;
-                        case YELLOW_CONCRETE:
-                            amplifier = 5;
-                            break;
-                        case PINK_CONCRETE:
-                            amplifier = 20;
-                            break;
-                        case RED_CONCRETE:
-                            amplifier = 255;
-                            break;
-                        default:
-                            break;
-                        }
+                        amplifier = switch (itemMat) {
+                        case LIME_CONCRETE -> 1;
+                        case GREEN_CONCRETE -> 2;
+                        case YELLOW_CONCRETE -> 5;
+                        case PINK_CONCRETE -> 20;
+                        case RED_CONCRETE -> 255;
+                        default -> amplifier;
+                        };
                     }
                     if (getEditType(InventoryUtils.getItemName(item)) == EditType.VISIBLE && item.containsEnchantment(Enchantment.DURABILITY)) {
                         if (itemMat == Material.GREEN_CONCRETE) {

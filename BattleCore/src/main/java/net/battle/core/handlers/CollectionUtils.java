@@ -33,13 +33,11 @@ public class CollectionUtils {
     }
 
     public static <T> Collection<T> convertTo(Collection<T> orig, int mode) {
-        switch (mode) {
-        case 1:
-            return convertToList(orig);
-        case 2:
-            return convertToSet(orig);
-        }
-        return null;
+        return switch (mode) {
+        case 1 -> convertToList(orig);
+        case 2 -> convertToSet(orig);
+        default -> null;
+        };
     }
 
     public static <T> List<T> copyToList(Collection<T> from) {
