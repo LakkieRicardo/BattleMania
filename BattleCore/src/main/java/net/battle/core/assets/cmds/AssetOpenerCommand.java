@@ -20,7 +20,7 @@ public class AssetOpenerCommand implements CommandBase {
     }
 
     public void onCommandExecute(Player pl, String[] args) {
-        pl.openInventory(AssetHandler.getAssetInventory());
+        pl.openInventory(AssetHandler.getAssetInventory(pl));
         pl.sendMessage("§9§lCOMMAND§8 > §fOpened §cAssets§f inventory");
     }
 

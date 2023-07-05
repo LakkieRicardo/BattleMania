@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -41,7 +42,12 @@ public class ItemStackBuilder {
 
             ItemMeta itemMeta = item.getItemMeta();
             if (item.getType() == Material.PLAYER_HEAD) {
-                this.owner = ((SkullMeta) itemMeta).getOwningPlayer().getName();
+                OfflinePlayer owningPlayer = ((SkullMeta) itemMeta).getOwningPlayer();
+                if (owningPlayer != null) {
+                    this.owner = owningPlayer.getName();
+                } else {
+                    this.owner = null;
+                }
             } else {
                 this.owner = null;
             }
@@ -80,6 +86,17 @@ public class ItemStackBuilder {
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(name));
         this.value.setItemMeta(meta);
         this.owner = owner;
+        return this;
+    }
+
+    public ItemStackBuilder withSkullOwner(OfflinePlayer player) {
+        if (this.value.getType() != Material.PLAYER_HEAD) {
+            return this;
+        }
+        SkullMeta meta = (SkullMeta) this.value.getItemMeta();
+        meta.setOwningPlayer(player);
+        this.value.setItemMeta(meta);
+        this.owner = player.getName();
         return this;
     }
 

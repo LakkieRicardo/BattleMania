@@ -15,9 +15,18 @@ import net.battle.core.assets.AssetHandler;
 import net.battle.core.assets.cmds.AssetOpenerCommand;
 import net.battle.core.assets.gadget.cmds.GadgetBypassCommand;
 import net.battle.core.assets.gadget.cmds.ToggleGadgetCommand;
+import net.battle.core.assets.gadget.impl.GadgetApple;
+import net.battle.core.assets.gadget.impl.GadgetFirework;
+import net.battle.core.assets.gadget.impl.GadgetFishingKnockback;
+import net.battle.core.assets.gadget.impl.GadgetFlyingSword;
+import net.battle.core.assets.gadget.impl.GadgetPingPong;
 import net.battle.core.assets.gadget.listeners.GadgetInventoryListener;
 import net.battle.core.assets.hats.cmds.HatCommand;
 import net.battle.core.assets.hats.cmds.HatInventoryCommand;
+import net.battle.core.assets.hats.impl.HatCreeperSkull;
+import net.battle.core.assets.hats.impl.HatGlass;
+import net.battle.core.assets.hats.impl.HatWitherSkull;
+import net.battle.core.assets.hats.impl.HatWool;
 import net.battle.core.assets.hats.listeners.HatInventoryListener;
 import net.battle.core.assets.hats.listeners.HatLeaveListener;
 import net.battle.core.assets.listeners.AssetChestListener;
@@ -48,6 +57,7 @@ import net.battle.core.command.cmds.SpawnEntityCommand;
 import net.battle.core.command.cmds.SuspectSpectateCommand;
 import net.battle.core.command.cmds.TeleportCommand;
 import net.battle.core.command.cmds.TitleCommand;
+import net.battle.core.command.cmds.UsageCommand;
 import net.battle.core.handlers.BMLogger;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.ScoreboardHandler;
@@ -93,7 +103,7 @@ public class BMCorePlugin extends JavaPlugin {
     private YamlConfiguration settingsFile = null;
 
     private boolean allowBlockBreak;
-    private boolean allowGadgets;
+    private boolean allowGadgets = true;
 
     public void onEnable() {
         BMLogger.info("Initializing BM Core...");
@@ -149,6 +159,7 @@ public class BMCorePlugin extends JavaPlugin {
         CommandHandler.registerCommand(new TeleportCommand());
         CommandHandler.registerCommand(new SpawnEntityCommand());
         CommandHandler.registerCommand(new NullCommand());
+        CommandHandler.registerCommand(new UsageCommand());
 
         BMLogger.info("Initializing punishment commands...");
         CommandHandler.registerCommand(new BanCommand());
@@ -200,9 +211,18 @@ public class BMCorePlugin extends JavaPlugin {
         new ParticleHalo();
         new ParticleHex();
         new ParticleJail();
-        for (int i = 0; i < 100; i++) {
-            new ParticleJail("jail" + i);
-        }
+
+        new HatCreeperSkull();
+        new HatGlass();
+        new HatWitherSkull();
+        new HatWool();
+
+        new GadgetApple();
+        new GadgetFirework();
+        new GadgetFishingKnockback();
+        new GadgetFlyingSword();
+        new GadgetPingPong();
+
         AssetHandler.init();
 
         BMLogger.info("Opening connections with proxy...");
@@ -230,8 +250,6 @@ public class BMCorePlugin extends JavaPlugin {
 
         // Additional info
         BMLogger.info("All ranks: " + RankHandler.getAllRanks());
-
-        allowGadgets = true;
     }
 
     @Override

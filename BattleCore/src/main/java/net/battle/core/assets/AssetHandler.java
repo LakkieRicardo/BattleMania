@@ -2,6 +2,7 @@ package net.battle.core.assets;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,10 +24,10 @@ public class AssetHandler {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(BMCorePlugin.ACTIVE_PLUGIN, () -> BMParticle.update(), 1L, 1L);
     }
 
-    public static Inventory getAssetInventory() {
+    public static Inventory getAssetInventory(OfflinePlayer viewer) {
         Inventory inv = Bukkit.createInventory(null, 27, Component.text("Assets"));
         InventoryUtils.setItem(inv, 2, 1, (new ItemStackBuilder(Material.GHAST_TEAR)).withName("§aGadgets").build());
-        InventoryUtils.setItem(inv, 4, 1, (new ItemStackBuilder(Material.PLAYER_HEAD)).withName("§aHats").build());
+        InventoryUtils.setItem(inv, 4, 1, (new ItemStackBuilder(Material.PLAYER_HEAD)).withName("§aHats").withSkullOwner(viewer).build());
         InventoryUtils.setItem(inv, 6, 1, (new ItemStackBuilder(Material.REDSTONE)).withName("§aParticles").build());
         InventoryUtils.fillBlanks(inv);
         return inv;

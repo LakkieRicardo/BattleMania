@@ -15,49 +15,49 @@
             "D": {
                 "type": "PROP",
                 "material": "BARRIER",
-                "name": "§aDisable",
+                "name": "&aDisable",
                 "lore": [
-                    "§7Disable currently active particle."
+                    "&7Disable currently active particle."
                 ]
             },
             "0": {
                 "type": "NAVIGATOR_CONTENT",
                 "default": {
                     "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "§0"
+                    "name": "&0"
                 }
             },
             "I": {
                 "type": "PROP",
                 "material": "GRAY_STAINED_GLASS_PANE",
-                "name": "§0"
+                "name": "&0"
             },
             "P": {
                 "type": "NAVIGATOR_PREVIOUS",
                 "active": {
                     "material": "STONE_BUTTON",
-                    "name": "§aGo to previous",
+                    "name": "&aGo to previous",
                     "lore": [
-                        "§7Navigate to previous page"
+                        "&7Navigate to previous page"
                     ]
                 },
                 "default": {
                     "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "§0"
+                    "name": "&0"
                 }
             },
             "N": {
                 "type": "NAVIGATOR_NEXT",
                 "active": {
                     "material": "STONE_BUTTON",
-                    "name": "§aGo to next",
+                    "name": "&aGo to next",
                     "lore": [
-                        "§7Navigate to next page"
+                        "&7Navigate to next page"
                     ]
                 },
                 "default": {
                     "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "§0"
+                    "name": "&0"
                 }
             }
         }
@@ -75,41 +75,41 @@
             "0": {
                 "type": "PROP",
                 "material": "GRAY_STAINED_GLASS_PANE",
-                "name": "§0"
+                "name": "&0"
             },
             "C": {
                 "type": "NAVIGATOR_CONTENT",
                 "default": {
                     "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "§0"
+                    "name": "&0"
                 }
             },
             "P": {
                 "type": "NAVIGATOR_PREVIOUS",
                 "active": {
                     "material": "STONE_BUTTON",
-                    "name": "§aGo to previous",
+                    "name": "&aGo to previous",
                     "lore": [
-                        "§7Navigate to previous page"
+                        "&7Navigate to previous page"
                     ]
                 },
                 "default": {
                     "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "§0"
+                    "name": "&0"
                 }
             },
             "N": {
                 "type": "NAVIGATOR_NEXT",
                 "active": {
                     "material": "STONE_BUTTON",
-                    "name": "§aGo to next",
+                    "name": "&aGo to next",
                     "lore": [
-                        "§7Navigate to next page"
+                        "&7Navigate to next page"
                     ]
                 },
                 "default": {
                     "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "§0"
+                    "name": "&0"
                 }
             }
         }

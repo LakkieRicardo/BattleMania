@@ -97,13 +97,13 @@ public class NavigatorInventoryLayout {
     private ItemStack createItemFromJSON(JSONObject definition) {
         ItemStack item = new ItemStack(Material.valueOf((String) definition.get("material")));
         if (definition.containsKey("name")) {
-            InventoryUtils.renameItem(item, (String) definition.get("name"));
+            InventoryUtils.renameItem(item, ((String) definition.get("name")).replaceAll("&", "§"));
         }
         if (definition.containsKey("lore")) {
             JSONArray loreLines = (JSONArray) definition.get("lore");
             List<Component> newLore = new ArrayList<>();
             for (int loreIdx = 0; loreIdx < loreLines.size(); loreIdx++) {
-                newLore.add(Component.text((String) loreLines.get(loreIdx)));
+                newLore.add(Component.text(((String) loreLines.get(loreIdx)).replaceAll("&", "§")));
             }
             InventoryUtils.setItemLore(item, newLore);
         }
