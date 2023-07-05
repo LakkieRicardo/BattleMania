@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class OperatorCommand implements CommandBase {
@@ -60,11 +61,25 @@ public class OperatorCommand implements CommandBase {
             }
             return;
         }
+
+        if (args[0].equalsIgnoreCase("check")) {
+            OfflinePlayer t = Bukkit.getOfflinePlayer(args[1]);
+            if (t == null) {
+                executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                return;
+            }
+            if (t.isOp()) {
+                executor.sendMessage(Prefixes.cmd + "Player §c" + t.getName() + " is§f an op.");
+            } else {
+                executor.sendMessage(Prefixes.cmd + "Player §c" + t.getName() + "§f is §cnot§f an op.");
+            }
+            return;
+        }
         CommandHandler.sendUsage(executor, this);
     }
 
     @Override
     public String getUsage() {
-        return "/op <add,remove> <player>";
+        return "/op <add,check,remove> <player>";
     }
 }
