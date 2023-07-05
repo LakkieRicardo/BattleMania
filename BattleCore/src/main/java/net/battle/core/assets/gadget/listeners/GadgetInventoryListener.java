@@ -12,6 +12,7 @@ import net.battle.core.BMCorePlugin;
 import net.battle.core.BMTextConvert;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 
 public class GadgetInventoryListener implements Listener {
     @EventHandler
@@ -36,7 +37,7 @@ public class GadgetInventoryListener implements Listener {
                     for (Gadget gc : Gadget.getAllGadgets()) {
                         if (gc.getUsers().contains(pl)) {
                             gc.unselectGadget(pl);
-                            pl.sendMessage("§a§lGADGET§8 > §fYou deselected " + gc.getName() + " §fgadget");
+                            pl.sendMessage(Prefixes.GADGET + "You deselected " + gc.getName() + " §fgadget");
                             pl.closeInventory();
 
                             return;
@@ -47,7 +48,7 @@ public class GadgetInventoryListener implements Listener {
                 return;
             }
             g.selectGadget(pl);
-            pl.sendMessage("§a§lGADGET§8 > §fYou enabled " + g.getName() + " §fgadget");
+            pl.sendMessage(Prefixes.GADGET + "You enabled " + g.getName() + " §fgadget");
             pl.closeInventory();
         }
     }
@@ -58,10 +59,10 @@ public class GadgetInventoryListener implements Listener {
 
         if (InventoryUtils.isItemSimilarTo(Gadget.GADGET_ITEM, pl.getInventory().getItemInMainHand())) {
             if (!BMCorePlugin.ACTIVE_PLUGIN.areGadgetsAllowed()) {
-                pl.sendMessage("§4§lERROR§8 > §cGadgets are disabled");
+                pl.sendMessage(Prefixes.ERROR + "Gadgets are disabled");
                 return;
             }
-            pl.sendMessage("§a§lGADGET§8 > §fOpened gadgets inventory");
+            pl.sendMessage(Prefixes.GADGET + "Opened gadgets inventory");
             pl.openInventory(Gadget.GADGETS_INV);
         }
     }

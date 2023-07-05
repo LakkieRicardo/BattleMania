@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.sql.impl.PunishmentSql;
 import net.battle.core.sql.pod.PlayerPunishInfo;
@@ -75,14 +76,14 @@ public class ReportInventory implements Listener {
             String reportedUUID = Bukkit.getOfflinePlayer(reportedName).getUniqueId().toString();
             String reporterName = pl.getName();
             String message = InventoryUtils.getItemName(item);
-            pl.sendMessage("§a§lPUNISH§8 > §fYou have reported §c" + reportedName + " §ffor: " + message);
+            pl.sendMessage(Prefixes.PUNISH + "You have reported §c" + reportedName + " §ffor: " + message);
             PlayerPunishInfo reportInfo = new PlayerPunishInfo(0, reportedUUID, pl.getUniqueId().toString(), null, true,
                     PunishmentType.REPORT, message);
             PunishmentSql.insertNewPlayerPunishment(reportInfo);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 if (online == pl || RankHandler.helperPermission(online)) {
                     online.sendMessage(
-                            "§e§lALERT§8 > §f" + reporterName + " has reported " + reportedName + " for: " + message);
+                            Prefixes.ALERT + "" + reporterName + " has reported " + reportedName + " for: " + message);
                 }
             }
         }

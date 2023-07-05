@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.sql.impl.PunishmentSql;
@@ -38,7 +39,7 @@ public class WarnCommand implements CommandBase {
         }
 
         if (!ProxyHandler.hasPlayerPlayedBefore(args[0])) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player");
             return;
         }
 
@@ -50,7 +51,7 @@ public class WarnCommand implements CommandBase {
 
         for (Player all : Bukkit.getOnlinePlayers()) {
             if (RankHandler.helperPermission(all)) {
-                all.sendMessage("§a§lPUNISH§8 > §fThe user §c" + targetName + "§f has been warned by §c" + pl.getName());
+                all.sendMessage(Prefixes.PUNISH + "The user §c" + targetName + "§f has been warned by §c" + pl.getName());
             }
         }
 
@@ -59,14 +60,14 @@ public class WarnCommand implements CommandBase {
 
         Player targetOnline = Bukkit.getPlayerExact(targetName);
         if (targetOnline != null) {
-            targetOnline.sendMessage("§a§lPUNISH§8 > §fYou have been warned by §c" + pl.getName());
-            targetOnline.sendMessage("§a§lPUNISH§8 > §fReason: §c" + reason);
+            targetOnline.sendMessage(Prefixes.PUNISH + "You have been warned by §c" + pl.getName());
+            targetOnline.sendMessage(Prefixes.PUNISH + "Reason: §c" + reason);
         }
 
         for (Player all : Bukkit.getOnlinePlayers()) {
             if (RankHandler.helperPermission(all)) {
-                all.sendMessage("§a§lPUNISH§8 > §fPlayer §c" + targetName + "§f has been warned by §c" + pl.getName());
-                all.sendMessage("§a§lPUNISH§8 > §fReason: §c" + reason);
+                all.sendMessage(Prefixes.PUNISH + "Player §c" + targetName + "§f has been warned by §c" + pl.getName());
+                all.sendMessage(Prefixes.PUNISH + "Reason: §c" + reason);
             }
         }
     }

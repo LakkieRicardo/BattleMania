@@ -25,7 +25,7 @@ public class OperatorCommand implements CommandBase {
 
     public void onCommandExecute(Player executor, String[] args) {
         if (!RankHandler.ownerPermission(executor)) {
-            executor.sendMessage("§4§lERROR§8 > §cNot enough permission");
+            executor.sendMessage(Prefixes.ERROR + "Not enough permission");
             return;
         }
         if (args.length != 2) {
@@ -35,13 +35,13 @@ public class OperatorCommand implements CommandBase {
         if (args[0].equalsIgnoreCase("add")) {
             OfflinePlayer t = Bukkit.getOfflinePlayer(args[1]);
             if (t == null) {
-                executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                executor.sendMessage(Prefixes.ERROR + "Invalid player");
                 return;
             }
             t.setOp(true);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 if (RankHandler.ownerPermission(online)) {
-                    online.sendMessage("§6§lUPDATE§8 > §fPlayer §c" + t.getName() + "§f is now op");
+                    online.sendMessage(Prefixes.UPDATE + "Player §c" + t.getName() + "§f is now op");
                 }
             }
 
@@ -50,13 +50,13 @@ public class OperatorCommand implements CommandBase {
         if (args[0].equalsIgnoreCase("remove")) {
             OfflinePlayer t = Bukkit.getOfflinePlayer(args[1]);
             if (t == null) {
-                executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                executor.sendMessage(Prefixes.ERROR + "Invalid player");
                 return;
             }
             t.setOp(false);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 if (RankHandler.ownerPermission(online)) {
-                    online.sendMessage("§6§lUPDATE§8 > §fPlayer §c" + t.getName() + "§f is no longer op");
+                    online.sendMessage(Prefixes.UPDATE + "Player §c" + t.getName() + "§f is no longer op");
                 }
             }
             return;
@@ -65,13 +65,13 @@ public class OperatorCommand implements CommandBase {
         if (args[0].equalsIgnoreCase("check")) {
             OfflinePlayer t = Bukkit.getOfflinePlayer(args[1]);
             if (t == null) {
-                executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                executor.sendMessage(Prefixes.ERROR + "Invalid player");
                 return;
             }
             if (t.isOp()) {
-                executor.sendMessage(Prefixes.cmd + "Player §c" + t.getName() + " is§f an op.");
+                executor.sendMessage(Prefixes.COMMAND + "Player §c" + t.getName() + " is§f an op.");
             } else {
-                executor.sendMessage(Prefixes.cmd + "Player §c" + t.getName() + "§f is §cnot§f an op.");
+                executor.sendMessage(Prefixes.COMMAND + "Player §c" + t.getName() + "§f is §cnot§f an op.");
             }
             return;
         }

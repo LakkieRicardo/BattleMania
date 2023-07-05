@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class HologramCommand implements CommandBase {
@@ -40,7 +41,7 @@ public class HologramCommand implements CommandBase {
             for (Entity en : nearby) {
                 if (en instanceof ArmorStand && en.isCustomNameVisible()) {
                     ArmorStand stand = (ArmorStand) en;
-                    pl.sendMessage("§9§lCOMMAND§8 > §fKilled " + BMTextConvert.CTS.serialize(stand.customName()));
+                    pl.sendMessage(Prefixes.COMMAND + "Killed " + BMTextConvert.CTS.serialize(stand.customName()));
                     stand.setHealth(0.0D);
                 }
             }

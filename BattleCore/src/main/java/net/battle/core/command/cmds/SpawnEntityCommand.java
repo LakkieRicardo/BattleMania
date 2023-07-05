@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.kyori.adventure.text.Component;
 
@@ -26,7 +27,7 @@ public class SpawnEntityCommand implements CommandBase {
 
     public void onCommandExecute(Player executor, String[] args) {
         if (!RankHandler.developerPermission(executor)) {
-            executor.sendMessage("§4§lERROR§8 > §cNot enough permission");
+            executor.sendMessage(Prefixes.ERROR + "Not enough permission");
             return;
         }
 
@@ -37,23 +38,23 @@ public class SpawnEntityCommand implements CommandBase {
         }
         EntityType type = EntityCommand.getEntityType(args[0]);
         if (type == null) {
-            executor.sendMessage("§4§lERROR§8 > §cInvalid entity type");
-            executor.sendMessage("§e§lALERT§8 > §fUse /entity list to display entities");
+            executor.sendMessage(Prefixes.ERROR + "Invalid entity type");
+            executor.sendMessage(Prefixes.ALERT + "Use /entity list to display entities");
 
             return;
         }
         try {
             amount = Integer.parseInt(args[1]);
         } catch (Exception e) {
-            executor.sendMessage("§4§lERROR§8 > §cInvalid amount");
+            executor.sendMessage(Prefixes.ERROR + "Invalid amount");
             return;
         }
         if (!RankHandler.ownerPermission(executor) && amount > 10) {
-            executor.sendMessage("§4§lERROR§8 > §cYou cannot spawn more than 10 entities at a time");
+            executor.sendMessage(Prefixes.ERROR + "You cannot spawn more than 10 entities at a time");
             return;
         }
         if (amount > 200) {
-            executor.sendMessage("§4§lERROR§8 > §cYou cannot spawn more than 200 entities at a time");
+            executor.sendMessage(Prefixes.ERROR + "You cannot spawn more than 200 entities at a time");
             return;
         }
         String name = null;
@@ -70,7 +71,7 @@ public class SpawnEntityCommand implements CommandBase {
         }
 
         if (type == EntityType.PLAYER) {
-            executor.sendMessage("§4§lERROR§8 > §cYou cannot spawn players");
+            executor.sendMessage(Prefixes.ERROR + "You cannot spawn players");
             return;
         }
         Location target = executor.getTargetBlock(null, 50).getLocation();
@@ -83,7 +84,7 @@ public class SpawnEntityCommand implements CommandBase {
             }
         }
 
-        executor.sendMessage("§9§lCOMMAND§8 > §fYou spawned §c" + amount + "§f of §c" + type.name());
+        executor.sendMessage(Prefixes.COMMAND + "You spawned §c" + amount + "§f of §c" + type.name());
     }
 
     @Override

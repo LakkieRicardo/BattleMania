@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.Rank;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
@@ -47,37 +48,37 @@ public class BanCommand implements CommandBase {
         try {
             permanent = Boolean.parseBoolean(args[1]);
         } catch (Exception e) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid permanent ban value.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid permanent ban value.");
             return;
         }
         try {
             dayCount = Integer.parseInt(args[0]);
         } catch (Exception e) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid amount of days.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid amount of days.");
             return;
         }
         if (dayCount < 1) {
-            pl.sendMessage("§4§lERROR§8 > §cThe ban must last for at least 1 day.");
+            pl.sendMessage(Prefixes.ERROR + "The ban must last for at least 1 day.");
             return;
         }
 
         if (!ProxyHandler.hasPlayerPlayedBefore(args[2])) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player");
             return;
         }
         String targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
         if (!RankHandler.developerPermission(pl)) {
             if (RankHandler.getPlayerRank(pl) == Rank.HELPER && dayCount > 5) {
-                pl.sendMessage("§4§lERROR§8 > §cHelpers can only ban for up to 5 days.");
+                pl.sendMessage(Prefixes.ERROR + "Helpers can only ban for up to 5 days.");
                 return;
             }
             if (RankHandler.getPlayerRank(pl) == Rank.MODERATOR && dayCount > 7) {
-                pl.sendMessage("§4§lERROR§8 > §cModerators can only ban for up to 7 days");
+                pl.sendMessage(Prefixes.ERROR + "Moderators can only ban for up to 7 days");
                 return;
             }
             if (RankHandler.getPlayerRank(pl) == Rank.EXPMOD && dayCount > 62) {
-                pl.sendMessage("§4§lERROR§8 > §cExperienced moderators can only ban for up to 2 months(62 days)");
+                pl.sendMessage(Prefixes.ERROR + "Experienced moderators can only ban for up to 2 months(62 days)");
 
                 return;
             }
@@ -86,7 +87,7 @@ public class BanCommand implements CommandBase {
         Rank pr = RankHandler.getPlayerRank(pl);
 
         if (pr != Rank.OWNER && (tr == Rank.OPERATOR || tr == Rank.OWNER)) {
-            pl.sendMessage("§4§lERROR§8 > §cYou cannot ban owners or operators");
+            pl.sendMessage(Prefixes.ERROR + "You cannot ban owners or operators");
 
             return;
         }
@@ -106,7 +107,7 @@ public class BanCommand implements CommandBase {
 
         for (Player foo : Bukkit.getOnlinePlayers()) {
             if (RankHandler.helperPermission(foo))
-                foo.sendMessage("§a§lPUNISH§8 > §fThe user §c" + args[2] + "§f has been banned for "
+                foo.sendMessage(Prefixes.PUNISH + "The user §c" + args[2] + "§f has been banned for "
                         + (permanent ? "§c§lPERMANENT" : ("§c§l" + dayCount + " DAYS")) + "§f by §c" + pl.getName());
         }
     }

@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class WorldTPCommand implements CommandBase {
@@ -52,7 +53,7 @@ public class WorldTPCommand implements CommandBase {
         }
 
         if (!found) {
-            pl.sendMessage("§4§lERROR§8 > §cThis world does not exist.");
+            pl.sendMessage(Prefixes.ERROR + "This world does not exist.");
 
             return;
         }
@@ -75,7 +76,7 @@ public class WorldTPCommand implements CommandBase {
         } else {
             pl.teleport(new Location(w, 0.0D, 0.0D, 0.0D));
         }
-        pl.sendMessage("§9§lCOMMAND§8 > §fYou teleported to §c" + w.getName());
+        pl.sendMessage(Prefixes.COMMAND + "You teleported to §c" + w.getName());
     }
 
     public static class ServerDirectoryFilter implements FilenameFilter {

@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.kyori.adventure.text.Component;
 
@@ -28,7 +29,7 @@ public class HeadCommand implements CommandBase {
 
     public void onCommandExecute(Player executor, String[] args) {
         if (!RankHandler.developerPermission(executor)) {
-            executor.sendMessage("§4§lERROR§8 > §cNot enough permission");
+            executor.sendMessage(Prefixes.ERROR + "Not enough permission");
             return;
         }
 
@@ -47,7 +48,7 @@ public class HeadCommand implements CommandBase {
             item.setItemMeta((ItemMeta) meta);
         }
         executor.getInventory().addItem(new ItemStack[] { item });
-        executor.sendMessage("§9§lCOMMAND§8 > §fGave yourself §c" + meta.getOwningPlayer().getName() + "§f's skull (§c"
+        executor.sendMessage(Prefixes.COMMAND + "Gave yourself §c" + meta.getOwningPlayer().getName() + "§f's skull (§c"
                 + meta.getOwningPlayer().getUniqueId() + "§f)");
     }
 

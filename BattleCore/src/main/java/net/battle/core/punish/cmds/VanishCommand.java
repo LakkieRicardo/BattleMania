@@ -3,6 +3,7 @@ package net.battle.core.punish.cmds;
 import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.TempHandler;
 
@@ -22,7 +23,7 @@ public class VanishCommand implements CommandBase {
 
     public void onCommandExecute(Player executor, String[] args) {
         if (!RankHandler.helperPermission(executor)) {
-            executor.sendMessage("§4§lERROR§8 > §cNot enough permission");
+            executor.sendMessage(Prefixes.ERROR + "Not enough permission");
             return;
         }
 

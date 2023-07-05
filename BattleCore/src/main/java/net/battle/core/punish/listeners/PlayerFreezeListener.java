@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.TempHandler;
 
 public class PlayerFreezeListener implements Listener {
@@ -37,7 +38,7 @@ public class PlayerFreezeListener implements Listener {
             if (!cooldown.containsKey(player.getUniqueId())
                     || cooldown.get(player.getUniqueId()) < nowMs + MESSAGE_COOLDOWN_MS) {
 
-                player.sendMessage("§4§lERROR§8 > §cYou are frozen, you cannot move");
+                player.sendMessage(Prefixes.ERROR + "You are frozen, you cannot move");
                 this.cooldown.put(player.getUniqueId(), nowMs);
             }
         }

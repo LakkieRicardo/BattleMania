@@ -9,6 +9,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.kyori.adventure.text.Component;
 
@@ -53,7 +54,7 @@ public class EntityCommand implements CommandBase {
         }
         EntityType type = getEntityType(args[0]);
         if (type == null || type == EntityType.PLAYER) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid entity type");
+            pl.sendMessage(Prefixes.ERROR + "Invalid entity type");
             CommandHandler.sendUsage(pl, this);
             return;
         }

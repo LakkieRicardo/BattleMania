@@ -6,8 +6,10 @@ import org.bukkit.entity.Player;
 import net.battle.core.BMCorePlugin;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.command.CommandBase;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.sql.impl.PlayerInfoSql;
+import net.kyori.adventure.text.Component;
 
 public class ToggleGadgetCommand implements CommandBase {
     public String getLabel() {
@@ -25,7 +27,7 @@ public class ToggleGadgetCommand implements CommandBase {
 
     public void onCommandExecute(Player pl, String[] args) {
         if (!RankHandler.expModPermission(pl)) {
-            pl.sendMessage("§4§lERROR§8 > §cNot enough permission for this");
+            pl.sendMessage(Prefixes.ERROR + "Not enough permission for this");
 
             return;
         }
@@ -36,23 +38,12 @@ public class ToggleGadgetCommand implements CommandBase {
                     g.unselectGadget(g.getUsers().get(i));
                 }
             }
-            for (Player all : Bukkit.getOnlinePlayers()) {
-                all.sendMessage(
-                        "§e§lALERT§8 > §f"
-                                + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank())
-                                        .getGameName()
-                                + " §f"
-                                + pl.getName() + " §fhas §cdisabled§f gadgets");
-            }
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "" + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank()).getGameName()
+                    + " §f" + pl.getName() + " §fhas §cdisabled§f gadgets"));
         } else {
             BMCorePlugin.ACTIVE_PLUGIN.setGadgetsAllowed(true);
-            for (Player all : Bukkit.getOnlinePlayers())
-                all.sendMessage(
-                        "§e§lALERT§8 > §f"
-                                + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank())
-                                        .getGameName()
-                                + " §f"
-                                + pl.getName() + " §fhas §cenabled§f gadgets");
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "" + RankHandler.getRankFromSQLName(PlayerInfoSql.getPlayerInfo(pl).getSqlRank()).getGameName()
+                    + " §f" + pl.getName() + " §fhas §cenabled§f gadgets"));
         }
     }
 

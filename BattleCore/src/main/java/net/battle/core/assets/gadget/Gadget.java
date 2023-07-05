@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import net.battle.core.BMCorePlugin;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.kyori.adventure.text.Component;
 
 import org.bukkit.Bukkit;
@@ -76,13 +77,13 @@ public abstract class Gadget implements Listener {
 
                 float delta = (float) (usedTime + cooldown - currentTime);
                 delta /= 1000.0F;
-                e.getPlayer().sendMessage("§4§lERROR§8 > §cYou must wait " + delta + " seconds before using this again");
+                e.getPlayer().sendMessage(Prefixes.ERROR + "You must wait " + delta + " seconds before using this again");
 
                 return;
             }
         }
         this.activeCooldown.put(e.getPlayer(), Long.valueOf(System.currentTimeMillis()));
-        e.getPlayer().sendMessage("§a§lGADGET§8 > §fYou used " + getName() + "§f gadget");
+        e.getPlayer().sendMessage(Prefixes.GADGET + "You used " + getName() + "§f gadget");
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             rightClickGadgetAction(e.getPlayer());
         } else {

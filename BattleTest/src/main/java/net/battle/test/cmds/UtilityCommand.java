@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.listeners.JoinLeaveListener;
 
@@ -35,9 +36,9 @@ public class UtilityCommand implements CommandBase {
             return;
         }
         if (args.length != 2) {
-            executor.sendMessage("§4§lERROR§8 > §cUsage for inventories: /utils inv <anvil,craft,furnace,ender,open,enchant>");
-            executor.sendMessage("§4§lERROR§8 > §cUsage for gamemode: /utils gm <type>");
-            executor.sendMessage("§4§lERROR§8 > §cUsage for custom invs: /utils getinv <clear,build,hub>");
+            executor.sendMessage(Prefixes.ERROR + "Usage for inventories: /utils inv <anvil,craft,furnace,ender,open,enchant>");
+            executor.sendMessage(Prefixes.ERROR + "Usage for gamemode: /utils gm <type>");
+            executor.sendMessage(Prefixes.ERROR + "Usage for custom invs: /utils getinv <clear,build,hub>");
             return;
         }
         if (args[0].equalsIgnoreCase("inv")) {
@@ -55,7 +56,7 @@ public class UtilityCommand implements CommandBase {
             if (type.equalsIgnoreCase("enchant"))
                 executor.openInventory(Bukkit.createInventory((InventoryHolder) executor, InventoryType.ENCHANTING));
             if (executor.getOpenInventory() == null) {
-                executor.sendMessage("§4§lERROR§8 > §cInvalid inventory");
+                executor.sendMessage(Prefixes.ERROR + "Invalid inventory");
             }
             return;
         }
@@ -65,38 +66,38 @@ public class UtilityCommand implements CommandBase {
             if (gamemode.equalsIgnoreCase("s") || gamemode.equalsIgnoreCase("0")) {
                 GameMode target = GameMode.SURVIVAL;
                 executor.setGameMode(target);
-                executor.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                executor.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
 
                 return;
             }
             if (gamemode.equalsIgnoreCase("c") || gamemode.equalsIgnoreCase("1")) {
                 GameMode target = GameMode.CREATIVE;
                 executor.setGameMode(target);
-                executor.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                executor.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
 
                 return;
             }
             if (gamemode.equalsIgnoreCase("a") || gamemode.equalsIgnoreCase("2")) {
                 GameMode target = GameMode.ADVENTURE;
                 executor.setGameMode(target);
-                executor.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                executor.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
 
                 return;
             }
             if (gamemode.equalsIgnoreCase("sp") || gamemode.equalsIgnoreCase("3")) {
                 GameMode target = GameMode.SPECTATOR;
                 executor.setGameMode(target);
-                executor.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                executor.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
                 return;
             }
-            executor.sendMessage("§4§lERROR§8 > §cInvalid gamemode");
+            executor.sendMessage(Prefixes.ERROR + "Invalid gamemode");
             return;
         }
         if (args[0].equalsIgnoreCase("getinv")) {
             String type = args[1];
             if (type.equalsIgnoreCase("clear")) {
                 executor.getInventory().clear();
-                executor.sendMessage("§9§lCOMMAND§8 > §fGot inventory clear");
+                executor.sendMessage(Prefixes.COMMAND + "Got inventory clear");
                 return;
             }
             if (type.equalsIgnoreCase("build")) {
@@ -105,19 +106,19 @@ public class UtilityCommand implements CommandBase {
                 executor.getInventory().setItem(1, InventoryUtils.renameItem(new ItemStack(Material.BLAZE_ROD), "§aPosition 1"));
                 executor.getInventory().setItem(2, InventoryUtils.renameItem(new ItemStack(Material.BLAZE_ROD), "§aPosition 2"));
                 executor.getInventory().setItem(3, InventoryUtils.renameItem(new ItemStack(Material.COBBLESTONE, 1), "§aWorld Editing Tools"));
-                executor.sendMessage("§9§lCOMMAND§8 > §fGot inventory build");
+                executor.sendMessage(Prefixes.COMMAND + "Got inventory build");
                 return;
             }
             if (type.equalsIgnoreCase("hub")) {
                 JoinLeaveListener.resetInventory(executor);
-                executor.sendMessage("§9§lCOMMAND§8 > §fGot inventory hub");
+                executor.sendMessage(Prefixes.COMMAND + "Got inventory hub");
                 return;
             }
-            executor.sendMessage("§4§lERROR§8 > §cInvalid inventory");
+            executor.sendMessage(Prefixes.ERROR + "Invalid inventory");
 
             return;
         }
-        executor.sendMessage("§4§lERROR§8 > §cInvalid type");
+        executor.sendMessage(Prefixes.ERROR + "Invalid type");
     }
 
     @Override

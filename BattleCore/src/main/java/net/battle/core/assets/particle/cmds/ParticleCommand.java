@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.assets.particle.BMParticle;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 
 public class ParticleCommand implements CommandBase {
     public String getLabel() {
@@ -34,7 +35,7 @@ public class ParticleCommand implements CommandBase {
             }
 
             particles = particles.replaceFirst(", ", "");
-            pl.sendMessage("§9§lCOMMAND§8 > §fParticles: " + particles);
+            pl.sendMessage(Prefixes.COMMAND + "Particles: " + particles);
             return;
         }
 
@@ -51,7 +52,7 @@ public class ParticleCommand implements CommandBase {
         }
 
         if (particle == null) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid particle");
+            pl.sendMessage(Prefixes.ERROR + "Invalid particle");
             CommandHandler.sendUsage(pl, this);
             return;
         }

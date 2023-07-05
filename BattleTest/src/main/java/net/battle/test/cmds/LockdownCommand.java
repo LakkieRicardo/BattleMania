@@ -5,8 +5,10 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.test.BMTestPlugin;
+import net.kyori.adventure.text.Component;
 
 public class LockdownCommand implements CommandBase {
     public String getLabel() {
@@ -30,15 +32,11 @@ public class LockdownCommand implements CommandBase {
         }
         if (BMTestPlugin.ACTIVE_PLUGIN.getConfigBoolean(BMTestPlugin.CONFIG_LOCKDOWN)) {
             BMTestPlugin.ACTIVE_PLUGIN.setConfigBoolean(BMTestPlugin.CONFIG_LOCKDOWN, false);
-            for (Player all : Bukkit.getOnlinePlayers()) {
-                all.sendMessage("§e§lALERT§8 > §fLockdown mode has been §cdisabled §fby " + pl.getName());
-            }
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "Lockdown mode has been §cdisabled §fby " + pl.getName()));
         } else {
             BMTestPlugin.ACTIVE_PLUGIN.setConfigBoolean(BMTestPlugin.CONFIG_LOCKDOWN, true);
-            for (Player all : Bukkit.getOnlinePlayers()) {
-                all.sendMessage("§e§lALERT§8 > §fLockdown mode has been §cenabled §fby " + pl.getName());
-                all.sendMessage("§e§lALERT§8 > §fLockdown mode means that all EXP.MOD and lower cannot join.");
-            }
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "Lockdown mode has been §cenabled §fby " + pl.getName()));
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "Lockdown mode means that all EXP.MOD and lower cannot join."));
         }
     }
 

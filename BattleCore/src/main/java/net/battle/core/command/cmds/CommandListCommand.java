@@ -62,7 +62,7 @@ public class CommandListCommand implements CommandBase {
             }
             commands = filteredCommands;
         }
-        pl.sendMessage("§9§lCOMMAND§8 > §fCommands§7 (" + commands.size() + ")§f:");
+        pl.sendMessage(Prefixes.COMMAND + "Commands§7 (" + commands.size() + ")§f:");
         for (String command : commands) {
             pl.sendMessage(command);
         }
@@ -75,7 +75,7 @@ public class CommandListCommand implements CommandBase {
         }
 
         if (ProxyHandler.PROXY_COMMANDS.size() == 0) {
-            pl.sendMessage(Prefixes.cmd + "Querying for commands...");            
+            pl.sendMessage(Prefixes.COMMAND + "Querying for commands...");            
             ProxyHandler.queryForProxyCommands();
             Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, () -> {
                 executeCommandProper(pl, args);

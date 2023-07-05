@@ -1,6 +1,7 @@
 package net.battle.test.listeners;
 
 import net.battle.core.BMCorePlugin;
+import net.battle.core.handlers.Prefixes;
 import net.battle.test.BMTestPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,7 +37,7 @@ public class GoldAppleListener implements Listener {
                             b++;
                         }
 
-                        pl.sendMessage("§e§lALERT§8 > §fYou ate a §c§ldreadful§f apple");
+                        pl.sendMessage(Prefixes.ALERT + "You ate a §c§ldreadful§f apple");
                         PotionEffect effect = new PotionEffect(PotionEffectType.WITHER, 120, 2, false, true);
                         pl.addPotionEffect(effect);
                         pl.setHealth(10.0D);
@@ -55,7 +56,7 @@ public class GoldAppleListener implements Listener {
                             b++;
                         }
 
-                        pl.sendMessage("§e§lALERT§8 > §fYou ate a §c§lgourmet§f apple!");
+                        pl.sendMessage(Prefixes.ALERT + "You ate a §c§lgourmet§f apple!");
                         PotionEffect effect = new PotionEffect(PotionEffectType.REGENERATION, 120, 3, false, true);
                         pl.addPotionEffect(effect);
                         pl.setHealth(20.0D);

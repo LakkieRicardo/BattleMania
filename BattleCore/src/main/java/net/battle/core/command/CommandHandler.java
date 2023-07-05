@@ -48,7 +48,7 @@ public class CommandHandler implements Listener {
                 || label.equalsIgnoreCase("pl") || label.equalsIgnoreCase("me") || label.equalsIgnoreCase("say") || label.equalsIgnoreCase("about")
                 || label.equalsIgnoreCase("version")) && !RankHandler.ownerPermission(pl)) {
             e.setCancelled(true);
-            pl.sendMessage("§4§lERROR§8 > §cThis command is blocked by the server.");
+            pl.sendMessage(Prefixes.ERROR + "This command is blocked by the server.");
 
             return;
         }
@@ -181,7 +181,7 @@ public class CommandHandler implements Listener {
     }
 
     public static void sendUsage(Player pl, CommandBase cmd) {
-        pl.sendMessage("§4§lERROR§8 > §cUsage: " + cmd.getUsage());
+        pl.sendMessage(Prefixes.ERROR + "Usage: " + cmd.getUsage());
     }
 
     /**
@@ -190,7 +190,7 @@ public class CommandHandler implements Listener {
      * @param pl Player to send to
      */
     public static void sendPerms(Player pl) {
-        pl.sendMessage(Prefixes.error + "Not enough permission");
+        pl.sendMessage(Prefixes.ERROR + "Not enough permission");
     }
 
     public static String getSpacedArgument(String[] args, String delimiter, int startingIdx) {

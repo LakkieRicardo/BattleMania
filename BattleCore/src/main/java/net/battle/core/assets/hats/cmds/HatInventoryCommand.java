@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.assets.hats.gui.HatInventoryBuilder;
 import net.battle.core.command.CommandBase;
+import net.battle.core.handlers.Prefixes;
 
 public class HatInventoryCommand implements CommandBase {
     public String getLabel() {
@@ -21,7 +22,7 @@ public class HatInventoryCommand implements CommandBase {
 
     public void onCommandExecute(Player pl, String[] args) {
         pl.openInventory(HatInventoryBuilder.getInventory());
-        pl.sendMessage("§9§lCOMMAND§8 > §fOpened§c hat§f inventory");
+        pl.sendMessage(Prefixes.COMMAND + "Opened§c hat§f inventory");
     }
 
     @Override

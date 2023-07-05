@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import net.battle.core.BMCorePlugin;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.sql.impl.PlayerSettingsSql;
 import net.kyori.adventure.text.Component;
 
@@ -171,7 +172,7 @@ public class SettingHandler {
         return inv;
     }
 
-    // TODO: This function needs to be able to figure out if this is a server-created inventory is just a renamed chest.
+    // TODO: This function needs to be able to figure out if this is a server-created inventory is just a renamed chest
     /**
      * Updated function to handle setting inventory clicks. It will change the clicked item to the updated setting, which it figures out by looking at the clicked item.
      * 
@@ -204,12 +205,12 @@ public class SettingHandler {
         PlayerSettingsSql.updateSetting(player.getUniqueId().toString(), settingName, newSettingValue);
         String settingDisplayName = BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("settingDisplayNames." + settingName);
         if (player.getUniqueId().equals(targetPlayer.getUniqueId())) {
-            player.sendMessage("§e§lALERT§8 > §fSet §c" + settingDisplayName + "§f to " + newSettingValue);
+            player.sendMessage(Prefixes.ALERT + "Set §c" + settingDisplayName + "§f to " + newSettingValue);
         } else {
-            player.sendMessage("§e§lALERT§8 > §fSet §c" + settingDisplayName + "§fof §c" + targetPlayer.getName() + "§f to " + newSettingValue);
+            player.sendMessage(Prefixes.ALERT + "Set §c" + settingDisplayName + "§fof §c" + targetPlayer.getName() + "§f to " + newSettingValue);
             if (targetPlayer.isOnline()) {
                 Player targetOnline = Bukkit.getPlayer(targetPlayer.getUniqueId());
-                targetOnline.sendMessage("§e§lALERT§8 > §fPlayer §c" + player.getName() + "§f updated your §c" + settingDisplayName + "§f setting to " + newSettingValue);
+                targetOnline.sendMessage(Prefixes.ALERT + "Player §c" + player.getName() + "§f updated your §c" + settingDisplayName + "§f setting to " + newSettingValue);
             }
         }
     }

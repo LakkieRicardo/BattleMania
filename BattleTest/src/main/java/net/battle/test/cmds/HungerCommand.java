@@ -5,8 +5,10 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.test.BMTestPlugin;
+import net.kyori.adventure.text.Component;
 
 public class HungerCommand implements CommandBase {
     public String getLabel() {
@@ -29,13 +31,10 @@ public class HungerCommand implements CommandBase {
         }
         if (BMTestPlugin.ACTIVE_PLUGIN.getConfigBoolean(BMTestPlugin.CONFIG_HUNGER)) {
             BMTestPlugin.ACTIVE_PLUGIN.setConfigBoolean(BMTestPlugin.CONFIG_HUNGER, false);
-            for (Player all : Bukkit.getOnlinePlayers()) {
-                all.sendMessage("§9§lCOMMAND§8 > §f§c" + pl.getName() + "§f has disabled hunger");
-            }
+            Bukkit.broadcast(Component.text(Prefixes.COMMAND + "§c" + pl.getName() + "§f has disabled hunger"));
         } else {
             BMTestPlugin.ACTIVE_PLUGIN.setConfigBoolean(BMTestPlugin.CONFIG_HUNGER, true);
-            for (Player all : Bukkit.getOnlinePlayers())
-                all.sendMessage("§9§lCOMMAND§8 > §f§c" + pl.getName() + "§f has enabled hunger");
+            Bukkit.broadcast(Component.text(Prefixes.COMMAND + "§c" + pl.getName() + "§f has enabled hunger"));
         }
     }
 

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class SuspectSpectateCommand implements CommandBase {
@@ -39,7 +40,7 @@ public class SuspectSpectateCommand implements CommandBase {
         Player t = CommandHandler.getPlayer(args[0]);
 
         if (t == null) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player");
 
             return;
         }

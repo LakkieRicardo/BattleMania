@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.BMCorePlugin;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.settings.SettingHandler;
 import net.battle.core.sql.impl.PlayerSettingsSql;
@@ -29,7 +30,7 @@ public class SettingsCommand implements CommandBase {
                 CommandHandler.sendUsage(pl, this);
                 return;
             }
-            pl.sendMessage("§9§lCOMMAND§8 > §fSetting dislay name (ID): default value");
+            pl.sendMessage(Prefixes.COMMAND + "Setting dislay name (ID): default value");
             for (String setting : BMCorePlugin.ACTIVE_PLUGIN.getSettingsStringList("settingList")) {
                 String displayName;
                 if (BMCorePlugin.ACTIVE_PLUGIN.getSettingsContains("settingDisplayNames." + setting)) {
@@ -64,11 +65,11 @@ public class SettingsCommand implements CommandBase {
             }
 
             PlayerSettingsSql.updateSetting(pl.getUniqueId().toString(), setting, value);
-            pl.sendMessage("§9§lCOMMAND§8 > §fUpdated setting §c" + setting + "§f to §c" + value);
+            pl.sendMessage(Prefixes.COMMAND + "Updated setting §c" + setting + "§f to §c" + value);
             return;
         }
         pl.openInventory(SettingHandler.getSettingsInventory(pl.getName()));
-        pl.sendMessage("§9§lCOMMAND§8 > §fOpened settings");
+        pl.sendMessage(Prefixes.COMMAND + "Opened settings");
     }
 
     @Override

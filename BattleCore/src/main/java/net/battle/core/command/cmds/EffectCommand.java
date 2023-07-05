@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.listeners.PotionHandler;
 
@@ -30,12 +31,12 @@ public class EffectCommand implements CommandBase {
         if (args.length == 1) {
             if (RankHandler.ownerPermission(pl)) {
                 if (CommandHandler.getPlayer(args[0]) == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cInvalid player");
+                    pl.sendMessage(Prefixes.ERROR + "Invalid player");
                     return;
                 }
                 Player target = CommandHandler.getPlayer(args[0]);
                 pl.openInventory(PotionHandler.getPotionTypeInventory(target.getName()));
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou opened effect inventory for §c" + target.getName());
+                pl.sendMessage(Prefixes.COMMAND + "You opened effect inventory for §c" + target.getName());
                 return;
             }
             CommandHandler.sendPerms(pl);
@@ -44,7 +45,7 @@ public class EffectCommand implements CommandBase {
         }
 
         pl.openInventory(PotionHandler.getPotionTypeInventory(pl.getName()));
-        pl.sendMessage("§9§lCOMMAND§8 > §fYou opened effect inventory for yourself");
+        pl.sendMessage(Prefixes.COMMAND + "You opened effect inventory for yourself");
     }
 
     @Override

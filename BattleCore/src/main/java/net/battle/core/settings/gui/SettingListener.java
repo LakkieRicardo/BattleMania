@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.settings.SettingHandler;
 import net.battle.core.sql.impl.PlayerInfoSql;
@@ -44,17 +45,17 @@ public class SettingListener implements Listener {
             if (m == Material.PLAYER_HEAD) {
                 pl.closeInventory();
                 pl.openInventory(SettingHandler.getPublicSettings(targetUUID, targetName));
-                pl.sendMessage("§9§lCOMMAND§8 > §fOpened public settings");
+                pl.sendMessage(Prefixes.COMMAND + "Opened public settings");
                 return;
             }
             if (m == Material.REPEATER) {
                 pl.closeInventory();
                 pl.openInventory(SettingHandler.getGameSettings(targetUUID, targetName));
-                pl.sendMessage("§9§lCOMMAND§8 > §fOpened game settings");
+                pl.sendMessage(Prefixes.COMMAND + "Opened game settings");
                 return;
             }
             if (m == Material.PAPER) {
-                pl.sendMessage("§9§lCOMMAND§8 > §fOpened hub settings");
+                pl.sendMessage(Prefixes.COMMAND + "Opened hub settings");
                 pl.openInventory(getHubSettingsInventory(pl, targetUUID, targetName));
                 return;
             }
@@ -64,7 +65,7 @@ public class SettingListener implements Listener {
             if (InventoryUtils.compareItemNames(clicked, SettingHandler.getSettingDisplayName("public.showswears"), false)) {
                 if (PlayerInfoSql.getPlayerInfo(pl).getTime() < 5.0F && !RankHandler.ownerPermission(pl)) {
                     if (pl.getName().equals(targetUsername)) {
-                        pl.sendMessage("§4§lERROR§8 > §cYou cannot your swear setting yet");
+                        pl.sendMessage(Prefixes.ERROR + "You cannot your swear setting yet");
                     }
                     return;
                 }
@@ -151,7 +152,7 @@ public class SettingListener implements Listener {
                 return;
             }
             pl.openInventory(SettingHandler.getSettingsInventory(pl.getName()));
-            pl.sendMessage("§9§lCOMMAND§8 > §fOpened settings");
+            pl.sendMessage(Prefixes.COMMAND + "Opened settings");
             e.setCancelled(true);
         }
     }

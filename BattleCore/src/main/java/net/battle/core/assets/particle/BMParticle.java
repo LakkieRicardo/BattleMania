@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.layouts.INavigatorContentItem;
 
 public abstract class BMParticle implements INavigatorContentItem {
@@ -36,7 +37,7 @@ public abstract class BMParticle implements INavigatorContentItem {
     public void equip(Player pl) {
         dequip(pl);
         this.players.add(pl.getUniqueId());
-        pl.sendMessage("§9§lCOMMAND§8 > §fEquipped particle §c" + this.name);
+        pl.sendMessage(Prefixes.COMMAND + "Equipped particle §c" + this.name);
     }
 
     public void update(long updateCount) {
@@ -58,7 +59,7 @@ public abstract class BMParticle implements INavigatorContentItem {
         for (BMParticle particle : particles) {
             if (particle.players.contains(pl.getUniqueId())) {
                 particle.players.remove(pl.getUniqueId());
-                pl.sendMessage("§9§lCOMMAND§8 > §fDisabled particle §c" + particle.getName());
+                pl.sendMessage(Prefixes.COMMAND + "Disabled particle §c" + particle.getName());
             }
         }
     }

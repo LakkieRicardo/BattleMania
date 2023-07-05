@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class TeleportCommand implements CommandBase {
@@ -24,12 +25,12 @@ public class TeleportCommand implements CommandBase {
 
     public void onCommandExecute(Player executor, String[] args) {
         if (!RankHandler.expModPermission(executor)) {
-            executor.sendMessage("§4§lERROR§8 > §cNot enough permission");
+            executor.sendMessage(Prefixes.ERROR + "Not enough permission");
             return;
         }
         if (args.length == 2) {
             if (!RankHandler.moderatorPermission(executor)) {
-                executor.sendMessage("§4§lERROR§8 > §cNot enough permission");
+                executor.sendMessage(Prefixes.ERROR + "Not enough permission");
                 return;
             }
             if (args.length < 1) {
@@ -39,11 +40,11 @@ public class TeleportCommand implements CommandBase {
             if (args.length == 1) {
                 Player t = CommandHandler.getPlayer(args[0]);
                 if (t == null) {
-                    executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                    executor.sendMessage(Prefixes.ERROR + "Invalid player");
                     return;
                 }
                 executor.teleport((Entity) t);
-                executor.sendMessage("§9§lCOMMAND§8 > §fTeleported to §c" + t.getName());
+                executor.sendMessage(Prefixes.COMMAND + "Teleported to §c" + t.getName());
                 return;
             }
             if (args.length == 2) {
@@ -52,38 +53,38 @@ public class TeleportCommand implements CommandBase {
                         for (Player player : Bukkit.getOnlinePlayers()) {
                             if (player != executor) {
                                 player.teleport((Entity) executor);
-                                player.sendMessage("§9§lCOMMAND§8 > §fPlayer §c" + executor.getName()
+                                player.sendMessage(Prefixes.COMMAND + "Player §c" + executor.getName()
                                         + "§f has teleported you to them");
                             }
                         }
-                        executor.sendMessage("§9§lCOMMAND§8 > §fYou teleported §ceveryone§f to you");
+                        executor.sendMessage(Prefixes.COMMAND + "You teleported §ceveryone§f to you");
                         return;
                     }
                     Player t = CommandHandler.getPlayer(args[0]);
                     if (t == null) {
-                        executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                        executor.sendMessage(Prefixes.ERROR + "Invalid player");
                         return;
                     }
                     t.teleport((Entity) executor);
-                    t.sendMessage("§9§lCOMMAND§8 > §fPlayer §c" + executor.getName() + "§f has teleported you to them");
-                    executor.sendMessage("§9§lCOMMAND§8 > §fTeleported §c" + t.getName() + "§f to you");
+                    t.sendMessage(Prefixes.COMMAND + "Player §c" + executor.getName() + "§f has teleported you to them");
+                    executor.sendMessage(Prefixes.COMMAND + "Teleported §c" + t.getName() + "§f to you");
                     return;
                 }
                 Player from = CommandHandler.getPlayer(args[0]);
                 Player to = CommandHandler.getPlayer(args[1]);
                 if (from == null || to == null) {
-                    executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                    executor.sendMessage(Prefixes.ERROR + "Invalid player");
                     return;
                 }
                 from.teleport((Entity) to);
                 executor.sendMessage(
-                        "§9§lCOMMAND§8 > §fYou teleported §c" + from.getName() + "§f to §c" + to.getName());
+                        Prefixes.COMMAND + "You teleported §c" + from.getName() + "§f to §c" + to.getName());
                 if (from != executor) {
-                    from.sendMessage("§9§lCOMMAND§8 > §fYou have been teleported to §c" + to.getName() + "§f by §c"
+                    from.sendMessage(Prefixes.COMMAND + "You have been teleported to §c" + to.getName() + "§f by §c"
                             + executor.getName());
                 }
                 if (to != executor) {
-                    to.sendMessage("§9§lCOMMAND§8 > §fPlayer §c" + from.getName()
+                    to.sendMessage(Prefixes.COMMAND + "Player §c" + from.getName()
                             + "§f has been teleported to you by §c" + executor.getName());
                 }
 
@@ -99,11 +100,11 @@ public class TeleportCommand implements CommandBase {
         if (args.length == 1) {
             Player t = CommandHandler.getPlayer(args[0]);
             if (t == null) {
-                executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+                executor.sendMessage(Prefixes.ERROR + "Invalid player");
                 return;
             }
             executor.teleport((Entity) t);
-            executor.sendMessage("§9§lCOMMAND§8 > §fTeleported to §c" + t.getName());
+            executor.sendMessage(Prefixes.COMMAND + "Teleported to §c" + t.getName());
             return;
         }
         CommandHandler.sendUsage(executor, this);

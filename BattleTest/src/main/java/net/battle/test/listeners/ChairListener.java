@@ -36,8 +36,8 @@ public class ChairListener implements Listener {
             return;
         }
         Stairs stairsData = (Stairs) blockData;
-        // TODO figure out which stairs face are down
-        if (stairsData.getHalf() != Half.BOTTOM || (stairsData.getFacing() != BlockFace.WEST && stairsData.getFacing() != BlockFace.EAST && stairsData.getFacing() != BlockFace.NORTH && stairsData.getFacing() != BlockFace.SOUTH)) {
+        if (stairsData.getHalf() != Half.BOTTOM || (stairsData.getFacing() != BlockFace.WEST && stairsData.getFacing() != BlockFace.EAST
+                && stairsData.getFacing() != BlockFace.NORTH && stairsData.getFacing() != BlockFace.SOUTH)) {
             return;
         }
 

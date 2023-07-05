@@ -12,6 +12,7 @@ public final class Prefixes {
   public static final String GADGET = "§a§lGADGET§8 > §f";
   public static final String PUNISH = "§a§lPUNISH§8 > §f";
   public static final String TIP = "§6§lTIP§8 > §f§o";
+  public static final String WARNING = "§6§lWARNING§8 > §f";
   /**
    * Direct message
    */

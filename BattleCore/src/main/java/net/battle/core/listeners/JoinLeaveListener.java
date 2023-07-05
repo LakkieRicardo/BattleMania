@@ -4,6 +4,7 @@ import net.battle.core.HeaderFooterHandler;
 import net.battle.core.NewsHelper;
 import net.battle.core.assets.AssetHandler;
 import net.battle.core.assets.gadget.Gadget;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.ScoreboardHandler;
 import net.battle.core.handlers.TempHandler;
@@ -50,7 +51,7 @@ public class JoinLeaveListener implements Listener {
         ScoreboardHandler.setupScoreboard(pl);
         ScoreboardHandler.updateScoreboard(pl);
         TempHandler.handlePlayerJoin(pl);
-        e.joinMessage(Component.text("§2§lJOIN§8 > §f" + pl.getName()));
+        e.joinMessage(Component.text(Prefixes.JOIN + "" + pl.getName()));
         pl.setHealth(20.0D);
     }
 
@@ -59,7 +60,7 @@ public class JoinLeaveListener implements Listener {
         Player player = e.getPlayer();
         TempHandler.handlePlayerLeave(player);
         player.setScoreboard(ScoreboardHandler.BLANK_BOARD);
-        e.quitMessage(Component.text("§4§lQUIT§8 > §f" + player.getName()));
+        e.quitMessage(Component.text(Prefixes.QUIT + "" + player.getName()));
     }
 
     public static void resetInventory(Player pl) {

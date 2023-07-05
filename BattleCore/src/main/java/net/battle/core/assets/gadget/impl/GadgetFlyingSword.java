@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import net.battle.core.BMCorePlugin;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 
 public class GadgetFlyingSword extends Gadget {
     private Map<String, Integer> schedularIDs = new HashMap<>();
@@ -46,7 +47,7 @@ public class GadgetFlyingSword extends Gadget {
         long delta = current - ((Long) this.startTime.get(pl)).longValue();
         if (delta >= 8000L) {
             this.startTime.remove(pl);
-            pl.sendMessage("§a§lGADGET§8 > §fYou have exceeded the max time of 8 seconds using the flying sword");
+            pl.sendMessage(Prefixes.GADGET + "You have exceeded the max time of 8 seconds using the flying sword");
             if (pl.getGameMode() != GameMode.CREATIVE && pl.getGameMode() != GameMode.SPECTATOR) {
                 pl.setAllowFlight(false);
             }

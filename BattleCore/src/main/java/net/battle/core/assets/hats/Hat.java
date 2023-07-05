@@ -6,6 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import net.battle.core.handlers.Prefixes;
+
 public abstract class Hat {
     public static final List<Hat> hats = new ArrayList<>();
 
@@ -32,12 +34,12 @@ public abstract class Hat {
 
     public void equip(Player pl) {
         pl.getInventory().setHelmet(getMadeItem());
-        pl.sendMessage("§9§lCOMMAND§8 > §fEquipped hat §c" + this.name);
+        pl.sendMessage(Prefixes.COMMAND + "Equipped hat §c" + this.name);
     }
 
     public static void dequip(Player pl) {
         pl.getInventory().setHelmet(new ItemStack(Material.AIR));
-        pl.sendMessage("§9§lCOMMAND§8 > §fYou dequipped your §chat");
+        pl.sendMessage(Prefixes.COMMAND + "You dequipped your §chat");
     }
 
     private static String[] remakeNames() {

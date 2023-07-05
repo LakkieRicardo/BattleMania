@@ -12,28 +12,28 @@ public class RestartHandler {
 
     private static void lastMinute3() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage("§e§lALERT§8 > §fRestarting server in 3 minutes");
+            pl.sendMessage(Prefixes.ALERT + "Restarting server in 3 minutes");
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, () -> lastMinute2(), 1200L);
     }
 
     private static void lastMinute2() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage("§e§lALERT§8 > §fRestarting server in 2 minutes");
+            pl.sendMessage(Prefixes.ALERT + "Restarting server in 2 minutes");
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, () -> lastMinute1(), 1200L);
     }
 
     private static void lastMinute1() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage("§e§lALERT§8 > §fRestarting server in 1 minute");
+            pl.sendMessage(Prefixes.ALERT + "Restarting server in 1 minute");
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, () -> restartServerWarn(), 1200L);
     }
 
     private static void restartServerWarn() {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            pl.sendMessage("§e§lALERT§8 > §fRestarting the server in 10 seconds");
+            pl.sendMessage(Prefixes.ALERT + "Restarting the server in 10 seconds");
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(BMCorePlugin.ACTIVE_PLUGIN, () -> restartServer(), 200L);
     }

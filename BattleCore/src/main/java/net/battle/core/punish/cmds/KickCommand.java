@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.BMCorePlugin;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 
@@ -25,7 +26,7 @@ public class KickCommand implements CommandBase {
 
     public void onCommandExecute(Player executor, String[] args) {
         if (!RankHandler.operatorPermission(executor)) {
-            executor.sendMessage("§4§lERROR§8 > §cNot enough permission");
+            executor.sendMessage(Prefixes.ERROR + "Not enough permission");
             return;
         }
 
@@ -36,14 +37,14 @@ public class KickCommand implements CommandBase {
         String targetName = args[0];
         Player target = Bukkit.getPlayerExact(targetName);
         if (target == null) {
-            executor.sendMessage("§4§lERROR§8 > §cInvalid player");
+            executor.sendMessage(Prefixes.ERROR + "Invalid player");
             return;
         }
         targetName = target.getName();
 
         String reason = CommandHandler.getSpacedArgument(args, " ", 1);
         if (reason.length() < 4) {
-            executor.sendMessage("§4§lERROR§8 > §cPlease enter a more detailed reason");
+            executor.sendMessage(Prefixes.ERROR + "Please enter a more detailed reason");
 
             return;
         }

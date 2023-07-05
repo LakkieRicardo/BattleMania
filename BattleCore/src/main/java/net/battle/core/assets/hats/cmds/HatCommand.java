@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.assets.hats.Hat;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.StringUtility;
 
 public class HatCommand implements CommandBase {
@@ -28,7 +29,7 @@ public class HatCommand implements CommandBase {
         }
         if (args[0].equalsIgnoreCase("list")) {
             String result = StringUtility.assemble(Hat.names, ", ");
-            pl.sendMessage("§9§lCOMMAND§8 > §fHat names: " + result);
+            pl.sendMessage(Prefixes.COMMAND + "Hat names: " + result);
             return;
         }
         if (args[0].equalsIgnoreCase("disable")) {
@@ -41,7 +42,7 @@ public class HatCommand implements CommandBase {
                 return;
             }
         }
-        pl.sendMessage("§4§lERROR§8 > §cFound no hat with the name §c" + args[0]);
+        pl.sendMessage(Prefixes.ERROR + "Found no hat with the name §c" + args[0]);
     }
 
     @Override

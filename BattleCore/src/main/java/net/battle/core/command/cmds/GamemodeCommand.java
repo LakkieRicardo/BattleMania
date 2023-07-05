@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class GamemodeCommand implements CommandBase {
@@ -30,11 +31,11 @@ public class GamemodeCommand implements CommandBase {
             GameMode gm = pl.getGameMode();
             if (gm != GameMode.CREATIVE) {
                 pl.setGameMode(GameMode.CREATIVE);
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7creative §fmode.");
+                pl.sendMessage(Prefixes.COMMAND + "You are now in §7creative §fmode.");
                 return;
             }
             pl.setGameMode(GameMode.SURVIVAL);
-            pl.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7survival §fmode.");
+            pl.sendMessage(Prefixes.COMMAND + "You are now in §7survival §fmode.");
 
             return;
         }
@@ -49,34 +50,34 @@ public class GamemodeCommand implements CommandBase {
             if (gamemode.equalsIgnoreCase("s") || gamemode.equalsIgnoreCase("0")) {
                 GameMode target = GameMode.SURVIVAL;
                 pl.setGameMode(target);
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                pl.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
 
                 return;
             }
             if (gamemode.equalsIgnoreCase("c") || gamemode.equalsIgnoreCase("1")) {
                 GameMode target = GameMode.CREATIVE;
                 pl.setGameMode(target);
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                pl.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
 
                 return;
             }
             if (gamemode.equalsIgnoreCase("a") || gamemode.equalsIgnoreCase("2")) {
                 GameMode target = GameMode.ADVENTURE;
                 pl.setGameMode(target);
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                pl.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
 
                 return;
             }
             if (gamemode.equalsIgnoreCase("sp") || gamemode.equalsIgnoreCase("3")) {
                 GameMode target = GameMode.SPECTATOR;
                 pl.setGameMode(target);
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7" + target.name().toLowerCase() + "§f mode.");
+                pl.sendMessage(Prefixes.COMMAND + "You are now in §7" + target.name().toLowerCase() + "§f mode.");
 
                 return;
             }
             Player t = CommandHandler.getPlayer(args[0]);
             if (t == null) {
-                pl.sendMessage("§4§lERROR§8 > §cThe player is invalid.");
+                pl.sendMessage(Prefixes.ERROR + "The player is invalid.");
 
                 return;
             }
@@ -84,16 +85,16 @@ public class GamemodeCommand implements CommandBase {
             if (gm != GameMode.CREATIVE) {
                 t.setGameMode(GameMode.CREATIVE);
                 if (t != pl) {
-                    t.sendMessage("§9§lCOMMAND§8 > §fYou are now in §7creative §fmode.");
+                    t.sendMessage(Prefixes.COMMAND + "You are now in §7creative §fmode.");
                 }
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou have set §7" + t.getName() + "§f's gamemode to §7creative§f.");
+                pl.sendMessage(Prefixes.COMMAND + "You have set §7" + t.getName() + "§f's gamemode to §7creative§f.");
                 return;
             }
             t.setGameMode(GameMode.SURVIVAL);
             if (t != pl) {
-                t.sendMessage("§9§lCOMMAND§8 > §fYou are now in survival mode.");
+                t.sendMessage(Prefixes.COMMAND + "You are now in survival mode.");
             }
-            pl.sendMessage("§9§lCOMMAND§8 > §fYou have set §7" + t.getName() + "§f's gamemode to §7survival§f.");
+            pl.sendMessage(Prefixes.COMMAND + "You have set §7" + t.getName() + "§f's gamemode to §7survival§f.");
 
             return;
         }
@@ -105,7 +106,7 @@ public class GamemodeCommand implements CommandBase {
             Player t = CommandHandler.getPlayer(args[1]);
 
             if (t == null) {
-                pl.sendMessage("§4§lERROR§8 > §cThe player is invalid.");
+                pl.sendMessage(Prefixes.ERROR + "The player is invalid.");
 
                 return;
             }
@@ -130,9 +131,9 @@ public class GamemodeCommand implements CommandBase {
             }
 
             if (t != pl) {
-                t.sendMessage("§9§lCOMMAND§8 > §fYour gamemode has been updated to §7" + t.getGameMode().name().toLowerCase());
+                t.sendMessage(Prefixes.COMMAND + "Your gamemode has been updated to §7" + t.getGameMode().name().toLowerCase());
             }
-            pl.sendMessage("§9§lCOMMAND§8 > §fYou have changed §7" + t.getName() + "§f's gamemode to §7" + t.getGameMode().name().toLowerCase());
+            pl.sendMessage(Prefixes.COMMAND + "You have changed §7" + t.getName() + "§f's gamemode to §7" + t.getGameMode().name().toLowerCase());
 
             return;
         }

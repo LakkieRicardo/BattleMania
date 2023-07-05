@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class TeleportAllCommand implements CommandBase {
@@ -31,17 +32,17 @@ public class TeleportAllCommand implements CommandBase {
             for (Player all : Bukkit.getOnlinePlayers()) {
                 if (pl != all) {
                     all.teleport((Entity) pl);
-                    all.sendMessage("§9§lCOMMAND§8 > §fYou were teleported to §c" + pl.getName());
+                    all.sendMessage(Prefixes.COMMAND + "You were teleported to §c" + pl.getName());
                 }
             }
-            pl.sendMessage("§9§lCOMMAND§8 > §fYou teleported everyone to you");
+            pl.sendMessage(Prefixes.COMMAND + "You teleported everyone to you");
 
             return;
         }
         Player t = CommandHandler.getPlayer(args[0]);
 
         if (t == null) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player");
             return;
         }
 
@@ -49,12 +50,12 @@ public class TeleportAllCommand implements CommandBase {
             if (all != t) {
                 all.teleport((Entity) t);
                 all.sendMessage(
-                        "§9§lCOMMAND§8 > §fYou were teleported to §c" + t.getName() + "§f by §c" + pl.getName());
+                        Prefixes.COMMAND + "You were teleported to §c" + t.getName() + "§f by §c" + pl.getName());
             }
         }
 
-        t.sendMessage("§9§lCOMMAND§8 > §fEveryone was teleported to you by §c" + pl.getName());
-        pl.sendMessage("§9§lCOMMAND§8 > §fYou teleported everyone to §c" + t.getName());
+        t.sendMessage(Prefixes.COMMAND + "Everyone was teleported to you by §c" + pl.getName());
+        pl.sendMessage(Prefixes.COMMAND + "You teleported everyone to §c" + t.getName());
     }
 
     @Override

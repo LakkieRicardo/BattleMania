@@ -40,10 +40,10 @@ public class UsageCommand implements CommandBase {
         String commandLabel = args[0];
         ICommandInfo commandInfo = CommandHandler.getExistingCommandInfo(Arrays.asList(commandLabel));
         if (commandInfo == null) {
-            executor.sendMessage(Prefixes.error + "Unable to find command with label/alias §c§o" + commandLabel);
+            executor.sendMessage(Prefixes.ERROR + "Unable to find command with label/alias §c§o" + commandLabel);
             return;
         }
-        executor.sendMessage(Prefixes.cmd + "§7Usage: §f" + commandInfo.getUsage());
+        executor.sendMessage(Prefixes.COMMAND + "§7Usage: §f" + commandInfo.getUsage());
     }
 
 }

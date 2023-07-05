@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.sql.impl.PunishmentSql;
@@ -32,7 +33,7 @@ public class ReportCommand implements CommandBase {
             return;
         }
         if (ProxyHandler.hasPlayerPlayedBefore(args[0])) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player");
             return;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
@@ -42,14 +43,14 @@ public class ReportCommand implements CommandBase {
         PlayerPunishInfo reportInfo = new PlayerPunishInfo(0, target.getUniqueId().toString(),
                 pl.getUniqueId().toString(), null, true, PunishmentType.REPORT, msg);
         PunishmentSql.insertNewPlayerPunishment(reportInfo);
-        pl.sendMessage("§9§lCOMMAND§8 > §fYou have reported §c" + target.getName() + "§f, Reason: §c" + msg);
+        pl.sendMessage(Prefixes.COMMAND + "You have reported §c" + target.getName() + "§f, Reason: §c" + msg);
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (online.getUniqueId().equals(target.getUniqueId())) {
-                online.sendMessage("§9§lCOMMAND§8 > §fYou have been reported by §c" + pl.getName() + "§f for " + msg);
+                online.sendMessage(Prefixes.COMMAND + "You have been reported by §c" + pl.getName() + "§f for " + msg);
             } else if (RankHandler.helperPermission(online)) {
                 online.sendMessage(
-                        "§a§lPUNISH§8 > §fPlayer §c" + pl.getName() + "§f has reported §c" + target.getName());
-                online.sendMessage("§a§lPUNISH§8 > §fReason: " + msg);
+                        Prefixes.PUNISH + "Player §c" + pl.getName() + "§f has reported §c" + target.getName());
+                online.sendMessage(Prefixes.PUNISH + "Reason: " + msg);
             }
         }
     }

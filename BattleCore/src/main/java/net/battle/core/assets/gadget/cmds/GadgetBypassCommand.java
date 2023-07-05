@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class GadgetBypassCommand implements CommandBase {
@@ -28,11 +29,11 @@ public class GadgetBypassCommand implements CommandBase {
         }
         if (Gadget.BYPASS.contains(pl.getName())) {
             Gadget.BYPASS.remove(pl.getName());
-            pl.sendMessage("§9§lCOMMAND§8 > §fYou §cdisabled §fcooldown bypass");
+            pl.sendMessage(Prefixes.COMMAND + "You §cdisabled §fcooldown bypass");
             return;
         }
         Gadget.BYPASS.add(pl.getName());
-        pl.sendMessage("§9§lCOMMAND§8 > §fYou §cenabled §fcooldown bypass");
+        pl.sendMessage(Prefixes.COMMAND + "You §cenabled §fcooldown bypass");
     }
 
     @Override

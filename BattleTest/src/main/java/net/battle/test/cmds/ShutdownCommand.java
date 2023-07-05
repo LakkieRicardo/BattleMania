@@ -5,8 +5,10 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
+import net.kyori.adventure.text.Component;
 
 public class ShutdownCommand implements CommandBase {
     public static boolean shutdown = false;
@@ -31,16 +33,14 @@ public class ShutdownCommand implements CommandBase {
         }
         if (shutdown) {
             shutdown = false;
-            for (Player all : Bukkit.getOnlinePlayers()) {
-                all.sendMessage("§9§lCOMMAND§8 > §fShutdown mode was set to §c" + shutdown + "§f by §c" + pl.getName());
-            }
+            Bukkit.broadcast(Component.text(Prefixes.COMMAND + "Shutdown mode was set to §c" + shutdown + "§f by §c" + pl.getName()));
             return;
         }
         shutdown = true;
+        Bukkit.broadcast(Component.text(Prefixes.COMMAND + "Shutdown mode was set to §c" + shutdown + "§f by §c" + pl.getName()));
         for (Player all : Bukkit.getOnlinePlayers()) {
-            all.sendMessage("§9§lCOMMAND§8 > §fShutdown mode was set to §c" + shutdown + "§f by §c" + pl.getName());
             if (!RankHandler.ownerPermission(all)) {
-                all.sendMessage("§9§lCOMMAND§8 > §fYou are being sent to §cLobby§f because of shutdown mode");
+                all.sendMessage(Prefixes.COMMAND + "You are being sent to §cLobby§f because of shutdown mode");
                 ProxyHandler.sendAllToServer("Lobby");
             }
         }

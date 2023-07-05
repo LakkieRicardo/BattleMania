@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.sql.impl.PunishmentSql;
@@ -41,7 +42,7 @@ public class MuteCommand implements CommandBase {
         }
 
         if (!ProxyHandler.hasPlayerPlayedBefore(args[0])) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player.");
             return;
         }
         // TODO: To add Bungee support all of the Bukkit.getOfflinePlayer calls will
@@ -53,19 +54,19 @@ public class MuteCommand implements CommandBase {
 
         if (args[1].equalsIgnoreCase("permanent")) {
             if (!RankHandler.developerPermission(pl)) {
-                pl.sendMessage("§4§lERROR§8 > §cOnly Developer+ can mute permanently.");
+                pl.sendMessage(Prefixes.ERROR + "Only Developer+ can mute permanently.");
                 return;
             }
 
             if (targetOnline != null) {
                 targetOnline
-                        .sendMessage("§a§lPUNISH§8 > §fYou've been muted by: §c" + pl.getName() + "§f §c§lPERMANENTLY");
-                targetOnline.sendMessage("§a§lPUNISH§8 > §fReason: " + reason);
+                        .sendMessage(Prefixes.PUNISH + "You've been muted by: §c" + pl.getName() + "§f §c§lPERMANENTLY");
+                targetOnline.sendMessage(Prefixes.PUNISH + "Reason: " + reason);
             }
 
             for (Player serverPlayer : Bukkit.getOnlinePlayers()) {
                 if (RankHandler.helperPermission(serverPlayer)) {
-                    serverPlayer.sendMessage("§a§lPUNISH§8 > §fThe user §c" + target.getName()
+                    serverPlayer.sendMessage(Prefixes.PUNISH + "The user §c" + target.getName()
                             + "§f has been muted §c§lPERMANENTLY§f by §c" + pl.getName());
                 }
             }
@@ -83,28 +84,28 @@ public class MuteCommand implements CommandBase {
 
             if (!RankHandler.developerPermission(pl)) {
                 if (!RankHandler.moderatorPermission(pl) && dayCount > 1) {
-                    pl.sendMessage("§4§lERROR§8 > §cHelpers can only mute for up to 1 days.");
+                    pl.sendMessage(Prefixes.ERROR + "Helpers can only mute for up to 1 days.");
                     return;
                 }
                 if (!RankHandler.expModPermission(pl) && dayCount > 7) {
-                    pl.sendMessage("§4§lERROR§8 > §cModerators can only mute for up to 7 days");
+                    pl.sendMessage(Prefixes.ERROR + "Moderators can only mute for up to 7 days");
                     return;
                 }
                 if (dayCount > 31) {
-                    pl.sendMessage("§4§lERROR§8 > §cExperienced moderators can only mute for up to 1 month(31 days)");
+                    pl.sendMessage(Prefixes.ERROR + "Experienced moderators can only mute for up to 1 month(31 days)");
                     return;
                 }
             }
 
             if (targetOnline != null) {
-                targetOnline.sendMessage("§a§lPUNISH§8 > §fYou've been muted by: §c" + pl.getName() + "§f for §c§l"
+                targetOnline.sendMessage(Prefixes.PUNISH + "You've been muted by: §c" + pl.getName() + "§f for §c§l"
                         + dayCount + " DAYS");
-                targetOnline.sendMessage("§a§lPUNISH§8 > §fReason: " + reason);
+                targetOnline.sendMessage(Prefixes.PUNISH + "Reason: " + reason);
             }
 
             for (Player serverPlayer : Bukkit.getOnlinePlayers()) {
                 if (RankHandler.helperPermission(serverPlayer)) {
-                    serverPlayer.sendMessage("§a§lPUNISH§8 > §fThe user §c" + target.getName()
+                    serverPlayer.sendMessage(Prefixes.PUNISH + "The user §c" + target.getName()
                             + "§f has been muted for §c§l" + dayCount + " DAYS§f by §c" + pl.getName());
                 }
             }
@@ -115,7 +116,7 @@ public class MuteCommand implements CommandBase {
                     reason);
             PunishmentSql.insertNewPlayerPunishment(muteInfo);
         } catch (Exception e) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid amount of days.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid amount of days.");
             return;
         }
     }

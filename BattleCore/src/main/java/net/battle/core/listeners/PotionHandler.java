@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.kyori.adventure.text.Component;
 
 public class PotionHandler implements Listener {
@@ -58,7 +59,7 @@ public class PotionHandler implements Listener {
                     b++;
                 }
 
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou cleared your potion effects");
+                pl.sendMessage(Prefixes.COMMAND + "You cleared your potion effects");
                 pl.closeInventory();
                 return;
             }
@@ -67,7 +68,7 @@ public class PotionHandler implements Listener {
 
                 pl.closeInventory();
                 pl.openInventory(getEditInventory(name.replaceFirst("§c", ""), BMTextConvert.CTS.serialize(inv.title()).replaceFirst("Potion Type: ", "")));
-                pl.sendMessage("§9§lCOMMAND§8 > §fOpening edit inventory");
+                pl.sendMessage(Prefixes.COMMAND + "Opening edit inventory");
 
                 return;
             }
@@ -114,14 +115,14 @@ public class PotionHandler implements Listener {
                 PotionEffect potion = new PotionEffect(PotionEffectType.getByName(type), 600, 0, false, false);
                 Player t = CommandHandler.getPlayer(BMTextConvert.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
                 if (t == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cPlayer left");
+                    pl.sendMessage(Prefixes.ERROR + "Player left");
                     return;
                 }
                 t.addPotionEffect(potion);
                 pl.closeInventory();
-                t.sendMessage("§9§lCOMMAND§8 > §fYou got the default potion from " + pl.getName());
+                t.sendMessage(Prefixes.COMMAND + "You got the default potion from " + pl.getName());
                 if (t != pl) {
-                    pl.sendMessage("§9§lCOMMAND§8 > §fApplied default potion for §c" + t.getName());
+                    pl.sendMessage(Prefixes.COMMAND + "Applied default potion for §c" + t.getName());
                 }
                 return;
             }
@@ -186,17 +187,17 @@ public class PotionHandler implements Listener {
                 }
 
                 if (duration == -1) {
-                    pl.sendMessage("§4§lERROR§8 > §cNo duration selected");
+                    pl.sendMessage(Prefixes.ERROR + "No duration selected");
 
                     return;
                 }
                 if (amplifier == -1) {
-                    pl.sendMessage("§4§lERROR§8 > §cNo amplifier selected");
+                    pl.sendMessage(Prefixes.ERROR + "No amplifier selected");
 
                     return;
                 }
                 if (visible == -1) {
-                    pl.sendMessage("§4§lERROR§8 > §cNo visiblity selected");
+                    pl.sendMessage(Prefixes.ERROR + "No visiblity selected");
 
                     return;
                 }
@@ -210,16 +211,16 @@ public class PotionHandler implements Listener {
                 PotionEffect potion = new PotionEffect(PotionEffectType.getByName(type), duration * 20, amplifier, (visible == 1), (visible == 1));
                 Player t = CommandHandler.getPlayer(BMTextConvert.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
                 if (t == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cPlayer left");
+                    pl.sendMessage(Prefixes.ERROR + "Player left");
                     return;
                 }
                 t.addPotionEffect(potion);
                 pl.closeInventory();
-                t.sendMessage("§9§lCOMMAND§8 > §fYou got potion: §c" + PotionEffectType.getByName(type).getName() + "§f Duration: §c"
+                t.sendMessage(Prefixes.COMMAND + "You got potion: §c" + PotionEffectType.getByName(type).getName() + "§f Duration: §c"
                         + ((duration == 9999) ? "§lFOREVER " : (duration / 60 + "min ")) + "§fAmplifier: §c" + amplifier + "§f Visible: §c"
                         + ((visible == 1) ? "Yes" : "No") + "§f from §c" + pl.getName());
                 if (t != pl) {
-                    pl.sendMessage("§9§lCOMMAND§8 > §fYou gave yourself Type: §c" + PotionEffectType.getByName(type).getName() + "§f Duration: §c"
+                    pl.sendMessage(Prefixes.COMMAND + "You gave yourself Type: §c" + PotionEffectType.getByName(type).getName() + "§f Duration: §c"
                             + ((duration == 9999) ? "§lFOREVER " : (duration / 60 + "min ")) + "§fAmplifier: §c" + amplifier + "§f Visible: §c"
                             + ((visible == 1) ? "Yes" : "No"));
                 }
@@ -235,13 +236,13 @@ public class PotionHandler implements Listener {
 
                 Player t = CommandHandler.getPlayer(BMTextConvert.CTS.serialize(inv.title()).replaceFirst(type + " ", ""));
                 if (t == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cPlayer left");
+                    pl.sendMessage(Prefixes.ERROR + "Player left");
                     return;
                 }
                 t.removePotionEffect(PotionEffectType.getByName(type));
-                t.sendMessage("§9§lCOMMAND§8 > §fYou got §c" + type + "§f removed from §c" + pl.getName());
+                t.sendMessage(Prefixes.COMMAND + "You got §c" + type + "§f removed from §c" + pl.getName());
                 if (t != pl) {
-                    pl.sendMessage("§9§lCOMMAND§8 > §fYou removed §c" + type + "§f from §c" + t.getName());
+                    pl.sendMessage(Prefixes.COMMAND + "You removed §c" + type + "§f from §c" + t.getName());
                 }
             }
         }

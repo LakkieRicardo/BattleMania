@@ -42,14 +42,14 @@ public class ToggleFadeCommand implements CommandBase {
         boolean currentValue = BMTestPlugin.ACTIVE_PLUGIN.getConfigBoolean(BMTestPlugin.CONFIG_FADE);
 
         if (args.length != 1) {
-            executor.sendMessage(Prefixes.error + "No option specified. Type \"§c§oconfirm§c\" to actually change value, type \"§c§ocheck§c\" to check value.");
+            executor.sendMessage(Prefixes.ERROR + "No option specified. Type \"§c§oconfirm§c\" to actually change value, type \"§c§ocheck§c\" to check value.");
             return;
         }
         
         if (args[0].equals("check")) {
-            executor.sendMessage(Prefixes.cmd + "Currently, allow block fade events is set to §c" + currentValue + "§f.");
+            executor.sendMessage(Prefixes.COMMAND + "Currently, allow block fade events is set to §c" + currentValue + "§f.");
         } else if (args[0].equals("confirm")) {
-            Bukkit.broadcast(Component.text(Prefixes.alert + "Player §c" + executor.getName() + "§f has set allow block fade events to §c" + !currentValue + "§f."));
+            Bukkit.broadcast(Component.text(Prefixes.ALERT + "Player §c" + executor.getName() + "§f has set allow block fade events to §c" + !currentValue + "§f."));
             BMTestPlugin.ACTIVE_PLUGIN.setConfigBoolean(BMTestPlugin.CONFIG_FADE, !currentValue);
         } else {
             CommandHandler.sendUsage(executor, this);

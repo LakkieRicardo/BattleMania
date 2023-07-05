@@ -15,6 +15,7 @@ import com.google.common.io.ByteStreams;
 import net.battle.core.BMCorePlugin;
 import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.BMLogger;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.Rank;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.ScoreboardHandler;
@@ -61,20 +62,20 @@ public class ProxyMessageListener implements PluginMessageListener {
             String fieldValue = in.readUTF();
             if (fieldName.equals("rank")) {
                 Rank newRank = RankHandler.getRankFromSQLName(fieldValue);
-                target.sendMessage("§6§lUPDATE§8 > §fYour rank has been updated to §c" + newRank.getSQLName() + " §fby §c" + updaterUsername + "§f.");
+                target.sendMessage(Prefixes.UPDATE + "Your rank has been updated to §c" + newRank.getSQLName() + " §fby §c" + updaterUsername + "§f.");
                 target.playerListName(Component.text(newRank.getGameName() + " §a" + target.getName()));
                 target.playerListName(Component.text(BMTextConvert.CTS.serialize(target.playerListName()).trim()));
                 return;
             }
             int valueInt = Integer.parseInt(fieldValue);
             if (fieldName.equals("ingot")) {
-                target.sendMessage("§6§lUPDATE§8 > §fYour ingot has been set to §c" + valueInt + " §fby §c" + updaterUsername + "§f.");
+                target.sendMessage(Prefixes.UPDATE + "Your ingot has been set to §c" + valueInt + " §fby §c" + updaterUsername + "§f.");
                 ScoreboardHandler.updateScoreboard(target);
             } else if (fieldName.equals("level")) {
-                target.sendMessage("§6§lUPDATE§8 > §fYour level has been set to §c" + valueInt + " §fby §c" + updaterUsername + "§f.");
+                target.sendMessage(Prefixes.UPDATE + "Your level has been set to §c" + valueInt + " §fby §c" + updaterUsername + "§f.");
                 ScoreboardHandler.updateScoreboard(target);
             } else if (fieldName.equals("token")) {
-                target.sendMessage("§6§lUPDATE§8 > §fYour token has been set to §c" + valueInt + " §fby §c" + updaterUsername + "§f.");
+                target.sendMessage(Prefixes.UPDATE + "Your token has been set to §c" + valueInt + " §fby §c" + updaterUsername + "§f.");
                 ScoreboardHandler.updateScoreboard(target);
             }
         }

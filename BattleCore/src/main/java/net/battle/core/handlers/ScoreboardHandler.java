@@ -45,7 +45,6 @@ public class ScoreboardHandler {
     public static void setupScoreboard(Player pl) {
         Scoreboard board = setScoreboard(pl);
         String objName = genRandomString(14);
-        // TODO need to figure out how to get server name
         Objective obj = board.registerNewObjective(objName, Criteria.DUMMY,
                 Component.text("§a§l" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " Test"));
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);

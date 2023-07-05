@@ -7,6 +7,7 @@ import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
@@ -57,7 +58,7 @@ public class GimmeCommand implements CommandBase {
                 String s = arrayOfString1[b];
                 Player t = CommandHandler.getPlayer(s);
                 if (t == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cPlayer " + s + " is invalid");
+                    pl.sendMessage(Prefixes.ERROR + "Player " + s + " is invalid");
                     return;
                 }
                 targets.add(t);
@@ -76,7 +77,7 @@ public class GimmeCommand implements CommandBase {
             if (targets.size() == 0) {
                 Player t = CommandHandler.getPlayer(ts);
                 if (t == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cPlayer " + ts + " is invalid");
+                    pl.sendMessage(Prefixes.ERROR + "Player " + ts + " is invalid");
                     return;
                 }
                 targets.add(t);
@@ -97,7 +98,7 @@ public class GimmeCommand implements CommandBase {
         }
 
         if (type == null) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid material");
+            pl.sendMessage(Prefixes.ERROR + "Invalid material");
             return;
         }
 
@@ -106,7 +107,7 @@ public class GimmeCommand implements CommandBase {
         if (args.length == 2) {
             for (Player all : targets) {
                 all.getInventory().addItem(new ItemStack[] { item });
-                all.sendMessage("§9§lCOMMAND§8 > §fYou §fgave yourself §c" + item.getAmount() + " "
+                all.sendMessage(Prefixes.COMMAND + "You §fgave yourself §c" + item.getAmount() + " "
                         + ((item.getItemMeta().displayName() != null) ? BMTextConvert.CTS.serialize(item.getItemMeta().displayName())
                                 : type.name().toLowerCase().replaceAll("_", " ")));
             }
@@ -123,7 +124,7 @@ public class GimmeCommand implements CommandBase {
             try {
                 amount = Integer.parseInt(args[2]);
             } catch (Exception e) {
-                pl.sendMessage("§4§lERROR§8 > §cInvalid amount");
+                pl.sendMessage(Prefixes.ERROR + "Invalid amount");
 
                 return;
             }
@@ -136,8 +137,8 @@ public class GimmeCommand implements CommandBase {
                     for (int i = 0; i < stringArray.length; i++) {
                         String s = stringArray[i];
                         if (parseEnchant(s) == null) {
-                            pl.sendMessage("§4§lERROR§8 > §cInvalid enchant: " + s);
-                            pl.sendMessage("§9§lCOMMAND§8 > §fAll enchantments: §c" + GenerateAllEnchantsString());
+                            pl.sendMessage(Prefixes.ERROR + "Invalid enchant: " + s);
+                            pl.sendMessage(Prefixes.COMMAND + "All enchantments: §c" + GenerateAllEnchantsString());
                             return;
                         }
                         enchants.add(parseEnchant(s));
@@ -145,8 +146,8 @@ public class GimmeCommand implements CommandBase {
 
                 } else {
                     if (parseEnchant(arg) == null) {
-                        pl.sendMessage("§4§lERROR§8 > §cInvalid enchant: " + arg);
-                        pl.sendMessage("§9§lCOMMAND§8 > §f§fAll enchantments: " + GenerateAllEnchantsString());
+                        pl.sendMessage(Prefixes.ERROR + "Invalid enchant: " + arg);
+                        pl.sendMessage(Prefixes.COMMAND + "§fAll enchantments: " + GenerateAllEnchantsString());
                         return;
                     }
                     enchants.add(parseEnchant(arg));
@@ -187,7 +188,7 @@ public class GimmeCommand implements CommandBase {
 
         for (Player all : targets) {
             all.getInventory().addItem(new ItemStack[] { item });
-            all.sendMessage("§9§lCOMMAND§8 > §fYou §fgave yourself §c" + item.getAmount() + " "
+            all.sendMessage(Prefixes.COMMAND + "You §fgave yourself §c" + item.getAmount() + " "
                     + ((item.getItemMeta().displayName() != null) ? BMTextConvert.CTS.serialize(item.getItemMeta().displayName())
                             : type.name().toLowerCase().replaceAll("_", " ")));
         }

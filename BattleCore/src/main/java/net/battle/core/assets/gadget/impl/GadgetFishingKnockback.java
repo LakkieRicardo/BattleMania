@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import net.battle.core.BMCorePlugin;
 import net.battle.core.assets.gadget.Gadget;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 
 public class GadgetFishingKnockback extends Gadget {
     public static boolean enabled = true;
@@ -45,8 +46,8 @@ public class GadgetFishingKnockback extends Gadget {
 
         boolean luck = (BMCorePlugin.ACTIVE_PLUGIN.random.nextInt(100) == 0);
 
-        pl.sendMessage("§e§lALERT§8 > §fPlayer §c" + shooter.getName() + "§f's fishing hook hit you!" + (luck ? " You deserved it! §cThat's rude." : ""));
-        shooter.sendMessage("§e§lALERT§8 > §fYou hit §c" + pl.getName() + "§f with your fishing rod!"
+        pl.sendMessage(Prefixes.ALERT + "Player §c" + shooter.getName() + "§f's fishing hook hit you!" + (luck ? " You deserved it! §cThat's rude." : ""));
+        shooter.sendMessage(Prefixes.ALERT + "You hit §c" + pl.getName() + "§f with your fishing rod!"
                 + (luck ? " You told him they deserved it. §cThat's rude." : ""));
     }
 

@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class HealCommand implements CommandBase {
@@ -32,15 +33,15 @@ public class HealCommand implements CommandBase {
         if (this.lastTime.containsKey(executor.getUniqueId())) {
             long delta = currentTimeMs - this.lastTime.get(executor.getUniqueId());
             if (delta <= DELAY_MILLIS && !RankHandler.developerPermission(executor)) {
-                executor.sendMessage("§4§lERROR§8 > §cYou must wait 10 seconds before using this command again");
+                executor.sendMessage(Prefixes.ERROR + "You must wait 10 seconds before using this command again");
                 return;
             }
         }
         executor.setHealth(20.0D);
         executor.setFoodLevel(20);
-        executor.sendMessage("§6§lUPDATE§8 > §fYou healed yourself");
+        executor.sendMessage(Prefixes.UPDATE + "You healed yourself");
         if (!RankHandler.ownerPermission(executor)) {
-            executor.sendMessage("§9§lCOMMAND§8 > §fYou must wait §c10§f seconds before using this command again");
+            executor.sendMessage(Prefixes.COMMAND + "You must wait §c10§f seconds before using this command again");
             this.lastTime.put(executor.getUniqueId(), currentTimeMs);
         }
     }

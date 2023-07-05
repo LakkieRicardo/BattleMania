@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import net.battle.core.handlers.Prefixes;
 import net.battle.test.handlers.Booth;
 
 public class BoothListener implements Listener {
@@ -14,7 +15,7 @@ public class BoothListener implements Listener {
         for (Booth booth : Booth.BOOTHS) {
             if (booth.getRegion().isInside(pl) && booth.isOccupied() && !booth.getInvited().contains(pl.getName())) {
                 e.setCancelled(true);
-                pl.sendMessage("§e§lALERT§8 > §fThis booth is currently reserved!");
+                pl.sendMessage(Prefixes.ALERT + "This booth is currently reserved!");
             }
         }
     }

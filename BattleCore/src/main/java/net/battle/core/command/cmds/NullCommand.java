@@ -3,6 +3,7 @@ package net.battle.core.command.cmds;
 import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
+import net.battle.core.handlers.Prefixes;
 
 public class NullCommand implements CommandBase {
     public String getLabel() {
@@ -19,7 +20,7 @@ public class NullCommand implements CommandBase {
     }
 
     public void onCommandExecute(Player pl, String[] args) {
-        pl.sendMessage("§9§lCOMMAND§8 > §fI wonder what you thought this command did....");
+        pl.sendMessage(Prefixes.COMMAND + "I wonder what you thought this command did....");
     }
 
     @Override

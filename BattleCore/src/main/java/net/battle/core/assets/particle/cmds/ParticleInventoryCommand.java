@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.assets.particle.gui.ParticleInventoryBuilder;
 import net.battle.core.command.CommandBase;
+import net.battle.core.handlers.Prefixes;
 
 public class ParticleInventoryCommand implements CommandBase {
     public String getLabel() {
@@ -21,7 +22,7 @@ public class ParticleInventoryCommand implements CommandBase {
 
     public void onCommandExecute(Player pl, String[] args) {
         pl.openInventory(ParticleInventoryBuilder.create(0, pl.getUniqueId()));
-        pl.sendMessage("§9§lCOMMAND§8 > §fOpened §cparticle§f inventory");
+        pl.sendMessage(Prefixes.COMMAND + "Opened §cparticle§f inventory");
     }
 
     @Override

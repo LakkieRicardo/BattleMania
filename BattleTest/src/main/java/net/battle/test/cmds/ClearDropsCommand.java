@@ -7,7 +7,9 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
+import net.kyori.adventure.text.Component;
 
 public class ClearDropsCommand implements CommandBase {
     public String getLabel() {
@@ -38,8 +40,7 @@ public class ClearDropsCommand implements CommandBase {
             }
         }
 
-        for (Player all : Bukkit.getOnlinePlayers())
-            all.sendMessage("§9§lCOMMAND§8 > §f§c" + pl.getName() + "§f cleared all items removing a total of §c" + counter + "§f items");
+        Bukkit.broadcast(Component.text(Prefixes.COMMAND + "§c" + pl.getName() + "§f cleared all items removing a total of §c" + counter + "§f items"));
     }
 
     @Override

@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import net.battle.core.BMTextConvert;
 import net.battle.core.handlers.BMLogger;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.supplydrop.SupplyDropType;
 import net.kyori.adventure.text.Component;
 
@@ -95,7 +96,7 @@ public class SupplyDropHandler
     if (BMTextConvert.CTS.serialize(inv.title()).equalsIgnoreCase("Supply Drops")) {
       e.setCancelled(true);
       if (m == Material.IRON_INGOT && !SupplyDropType.NORMAL.getSupplyDrop().play(pl))
-        pl.sendMessage("§4§lERROR§8 > §cThis supply drop is currently occupied");
+        pl.sendMessage(Prefixes.ERROR + "This supply drop is currently occupied");
     }
   }
 

@@ -6,8 +6,10 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.test.BMTestPlugin;
+import net.kyori.adventure.text.Component;
 
 public class AllowCommand implements CommandBase {
     public String getLabel() {
@@ -31,14 +33,10 @@ public class AllowCommand implements CommandBase {
         if (args.length == 0) {
             if (BMTestPlugin.ACTIVE_PLUGIN.getConfigBoolean(BMTestPlugin.CONFIG_ALLOW_MODE)) {
                 BMTestPlugin.ACTIVE_PLUGIN.setConfigBoolean(BMTestPlugin.CONFIG_ALLOW_MODE, false);
-                for (Player all : Bukkit.getOnlinePlayers()) {
-                    all.sendMessage("§e§lALERT§8 > §fPlayer §c" + executor.getName() + "§f has disabled allow mode");
-                }
+                Bukkit.broadcast(Component.text(Prefixes.ALERT + "Player §c" + executor.getName() + "§f has disabled allow mode"));
             } else {
                 BMTestPlugin.ACTIVE_PLUGIN.setConfigBoolean(BMTestPlugin.CONFIG_ALLOW_MODE, true);
-                for (Player all : Bukkit.getOnlinePlayers()) {
-                    all.sendMessage("§e§lALERT§8 > §fPlayer §c" + executor.getName() + "§f has enabled allow mode");
-                }
+                Bukkit.broadcast(Component.text(Prefixes.ALERT + "Player §c" + executor.getName() + "§f has enabled allow mode"));
             }
 
             return;
@@ -46,21 +44,15 @@ public class AllowCommand implements CommandBase {
         if (args.length == 1) {
             OfflinePlayer t = CommandHandler.getOfflinePlayer(args[0]);
             if (t == null) {
-                executor.sendMessage("§9§lCOMMAND§8 > §fInvalid player");
+                executor.sendMessage(Prefixes.COMMAND + "Invalid player");
                 return;
             }
             if (BMTestPlugin.ACTIVE_PLUGIN.getAllowed().contains(t.getUniqueId().toString())) {
                 BMTestPlugin.ACTIVE_PLUGIN.removeAllowed(t.getUniqueId());
-                for (Player all : Bukkit.getOnlinePlayers()) {
-                    all.sendMessage("§e§lALERT§8 > §fPlayer §c" + executor.getName() + "§f has removed §c" + t.getName()
-                            + "§f from allow");
-                }
+                Bukkit.broadcast(Component.text(Prefixes.ALERT + "Player §c" + executor.getName() + "§f has removed §c" + t.getName() + "§f from allow"));
             } else {
                 BMTestPlugin.ACTIVE_PLUGIN.addAllowed(t.getUniqueId());
-                for (Player all : Bukkit.getOnlinePlayers()) {
-                    all.sendMessage("§e§lALERT§8 > §fPlayer §c" + executor.getName() + "§f has added §c" + t.getName()
-                            + "§f from allow");
-                }
+                Bukkit.broadcast(Component.text(Prefixes.ALERT + "Player §c" + executor.getName() + "§f has added §c" + t.getName() + "§f from allow"));
             }
             return;
         }

@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.assets.AssetHandler;
 import net.battle.core.command.CommandBase;
+import net.battle.core.handlers.Prefixes;
 
 public class AssetOpenerCommand implements CommandBase {
     public String getLabel() {
@@ -21,7 +22,7 @@ public class AssetOpenerCommand implements CommandBase {
 
     public void onCommandExecute(Player pl, String[] args) {
         pl.openInventory(AssetHandler.getAssetInventory(pl));
-        pl.sendMessage("§9§lCOMMAND§8 > §fOpened §cAssets§f inventory");
+        pl.sendMessage(Prefixes.COMMAND + "Opened §cAssets§f inventory");
     }
 
     @Override

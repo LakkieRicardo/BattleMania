@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.ScoreboardHandler;
 import net.battle.core.proxy.ProxyHandler;
@@ -38,7 +39,7 @@ public class SetTokenCommand implements CommandBase {
 
         String targetName = args[0];
         if (!ProxyHandler.hasPlayerPlayedBefore(targetName)) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player");
             return;
         }
 
@@ -46,7 +47,7 @@ public class SetTokenCommand implements CommandBase {
         try {
             tokens = Integer.parseInt(args[1]);
         } catch (Exception e) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid number");
+            pl.sendMessage(Prefixes.ERROR + "Invalid number");
             return;
         }
 
@@ -55,12 +56,12 @@ public class SetTokenCommand implements CommandBase {
         Player target;
         if ((target = Bukkit.getPlayerExact(targetName)) != null) {
             target.sendMessage(
-                    "§6§lUPDATE§8 > §fYour token has been set to §c" + tokens + " §fby §c" + pl.getName() + "§f.");
+                    Prefixes.UPDATE + "Your token has been set to §c" + tokens + " §fby §c" + pl.getName() + "§f.");
             ScoreboardHandler.updateScoreboard(target);
         } else {
             ProxyHandler.playerStatUpdated(pl.getName(), targetOffline.getUniqueId(), "token", tokens);
         }
-        pl.sendMessage("§6§lUPDATE§8 > §fYou set §c" + targetName + "§f's token to §c" + tokens + "§f.");
+        pl.sendMessage(Prefixes.UPDATE + "You set §c" + targetName + "§f's token to §c" + tokens + "§f.");
     }
 
     @Override

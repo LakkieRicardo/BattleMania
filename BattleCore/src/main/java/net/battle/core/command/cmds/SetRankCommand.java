@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.Rank;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
@@ -41,17 +42,17 @@ public class SetRankCommand implements CommandBase {
 
         String targetName = args[0];
         if (!ProxyHandler.hasPlayerPlayedBefore(targetName)) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid player.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid player.");
             return;
         }
         OfflinePlayer target = Bukkit.getOfflinePlayer(targetName);
         if (RankHandler.getRankFromSQLName(args[1]) == null) {
-            pl.sendMessage("§4§lERROR§8 > §cInvalid rank.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid rank.");
             return;
         }
         Rank r = RankHandler.getRankFromSQLName(args[1]);
         if (!RankHandler.ownerPermission(pl) && (r == Rank.OWNER || r == Rank.OPERATOR)) {
-            pl.sendMessage("§4§lERROR§8 > §cYou do not have enough permission to set that player to that rank");
+            pl.sendMessage(Prefixes.ERROR + "You do not have enough permission to set that player to that rank");
             return;
         }
 
@@ -59,11 +60,11 @@ public class SetRankCommand implements CommandBase {
         info.setSqlRank(r.getSQLName());
         PlayerInfoSql.setRank(target, r.getSQLName());
         pl.sendMessage(
-                "§6§lUPDATE§8 > §fYou updated §c" + target.getName() + "§f's rank to §c" + r.getSQLName() + "§f.");
+                Prefixes.UPDATE + "You updated §c" + target.getName() + "§f's rank to §c" + r.getSQLName() + "§f.");
         Player targetOnline;
         if ((targetOnline = Bukkit.getPlayerExact(targetName)) != null) {
             targetOnline.sendMessage(
-                    "§6§lUPDATE§8 > §fYour rank has been updated to §c" + r.getSQLName() + " §fby §c" + pl.getName()
+                    Prefixes.UPDATE + "Your rank has been updated to §c" + r.getSQLName() + " §fby §c" + pl.getName()
                             + "§f.");
             targetOnline
                     .playerListName(Component.text(RankHandler.getRankFromSQLName(info.getSqlRank()).getGameName() + " §a"

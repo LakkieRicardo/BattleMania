@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 
@@ -42,10 +43,10 @@ public class EvacuateCommand implements CommandBase {
         try {
             keepStaff = Boolean.parseBoolean(args[1]);
         } catch (Exception e) {
-            pl.sendMessage("§4§lERROR§8 > §cMust be true or false");
+            pl.sendMessage(Prefixes.ERROR + "Must be true or false");
             return;
         }
-        broadcastMessage("§e§lALERT§8 > §fServer is evacuated.");
+        broadcastMessage(Prefixes.ALERT + "Server is evacuated.");
         List<UUID> playersToSend = new ArrayList<>();
         for (Player all : Bukkit.getOnlinePlayers()) {
             if (keepStaff) {

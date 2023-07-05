@@ -22,6 +22,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.StringUtility;
 import net.battle.core.handlers.TempHandler;
@@ -65,18 +66,16 @@ public class ManageUserListener implements Listener {
 
             if (m == Material.WOODEN_AXE) {
                 if (e.getClick() == ClickType.MIDDLE) {
-                    PlayerPunishInfo warningInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(),
-                            pl.getUniqueId().toString(), null, true, PunishmentType.WARN, reason);
+                    PlayerPunishInfo warningInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), null, true, PunishmentType.WARN, reason);
                     PunishmentSql.insertNewPlayerPunishment(warningInfo);
-                    String msg = "§a§lPUNISH§8 > §fThe user §c" + targetName + "§f has been warned by §c"
-                            + pl.getName();
+                    String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been warned by §c" + pl.getName();
                     for (Player all : Bukkit.getOnlinePlayers()) {
                         if (RankHandler.helperPermission(all)) {
                             all.sendMessage(msg);
                         }
                     }
                 } else {
-                    pl.sendMessage("§9§lCOMMAND§8 > §fOpened punish inventory");
+                    pl.sendMessage(Prefixes.COMMAND + "Opened punish inventory");
                     pl.closeInventory();
                     pl.openInventory(ManageUserHandler.getPunish(targetName, pl));
                 }
@@ -84,13 +83,13 @@ public class ManageUserListener implements Listener {
                 return;
             }
             if (m == Material.BOOK) {
-                pl.sendMessage("§9§lCOMMAND§8 > §fOpened punishment list inventory");
+                pl.sendMessage(Prefixes.COMMAND + "Opened punishment list inventory");
                 pl.closeInventory();
                 pl.openInventory(ManageUserHandler.getPunishList(targetName, targetOffline.getUniqueId().toString()));
                 return;
             }
             if (m == Material.COMPASS) {
-                pl.sendMessage("§9§lCOMMAND§8 > §fOpened staff tools");
+                pl.sendMessage(Prefixes.COMMAND + "Opened staff tools");
                 pl.closeInventory();
                 pl.openInventory(ManageUserHandler.getStaffTools(targetName));
                 return;
@@ -105,7 +104,7 @@ public class ManageUserListener implements Listener {
                 return;
             }
             if (m == Material.PISTON) {
-                pl.sendMessage("§9§lCOMMAND§8 > §fOpened move to a server");
+                pl.sendMessage(Prefixes.COMMAND + "Opened move to a server");
                 pl.closeInventory();
                 pl.openInventory(ManageUserHandler.getMoveInventory1(targetName));
                 return;
@@ -127,34 +126,34 @@ public class ManageUserListener implements Listener {
 
             if (m == Material.CRAFTING_TABLE) {
                 if (targetPlayer == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cThis player must be online to send to another server!");
+                    pl.sendMessage(Prefixes.ERROR + "This player must be online to send to another server!");
                     return;
                 }
                 pl.closeInventory();
                 ProxyHandler.sendToServer(Arrays.asList(targetPlayer.getUniqueId()), "Lobby");
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou have sent §c" + t + "§f to §cLobby");
+                pl.sendMessage(Prefixes.COMMAND + "You have sent §c" + t + "§f to §cLobby");
 
                 return;
             }
 
             if (m == Material.COBBLESTONE) {
                 if (targetPlayer == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cThis player must be online to send to another server!");
+                    pl.sendMessage(Prefixes.ERROR + "This player must be online to send to another server!");
                     return;
                 }
                 pl.closeInventory();
                 ProxyHandler.sendToServer(Arrays.asList(targetPlayer.getUniqueId()), "BW");
-                pl.sendMessage("§9§lCOMMAND§8 > §fYou have sent §c" + t + "§f to §cLobby");
+                pl.sendMessage(Prefixes.COMMAND + "You have sent §c" + t + "§f to §cLobby");
 
                 return;
             }
             if (m == Material.FIRE_CHARGE) {
                 if (targetPlayer == null) {
-                    pl.sendMessage("§4§lERROR§8 > §cThis player must be online to send to another server!");
+                    pl.sendMessage(Prefixes.ERROR + "This player must be online to send to another server!");
                     return;
                 }
                 pl.closeInventory();
-                pl.sendMessage("§4§lERROR§8 > §cTankDefender is still W.I.P.");
+                pl.sendMessage(Prefixes.ERROR + "TankDefender is still W.I.P.");
 
                 return;
             }
@@ -176,26 +175,26 @@ public class ManageUserListener implements Listener {
             if (m == Material.REDSTONE_BLOCK) {
                 if (InventoryUtils.loreContainsString(clicked.getItemMeta(), "§cActivity: §7Active")) {
                     PunishManager.handleDisablePunishment(pl, targetOffline, PunishmentType.BAN, e.getCurrentItem());
-                    pl.sendMessage("§a§lPUNISH§8 > §fThe user §c" + t + "§f has been unbanned.");
+                    pl.sendMessage(Prefixes.PUNISH + "The user §c" + t + "§f has been unbanned.");
                     pl.closeInventory();
                     return;
                 }
-                pl.sendMessage("§4§lERROR§8 > §cYou cannot deactive this punishment as it is not active");
+                pl.sendMessage(Prefixes.ERROR + "You cannot deactive this punishment as it is not active");
                 return;
             }
 
             if (m == Material.BARRIER) {
                 if (InventoryUtils.loreContainsString(clicked.getItemMeta(), "§cActivity: §7Active")) {
                     PunishManager.handleDisablePunishment(pl, targetOffline, PunishmentType.MUTE, e.getCurrentItem());
-                    pl.sendMessage("§a§lPUNISH§8 > §fThe user §c" + t + "§f has been unmuted.");
+                    pl.sendMessage(Prefixes.PUNISH + "The user §c" + t + "§f has been unmuted.");
                     if (!pl.getUniqueId().equals(targetOffline.getUniqueId()) && targetOffline.isOnline()) {
                         Player targetOnline = Bukkit.getPlayer(targetOffline.getUniqueId());
-                        targetOnline.sendMessage("§a§lPUNISH§8 > §fYou have been unmuted by §c" + pl.getName() + "§f.");
+                        targetOnline.sendMessage(Prefixes.PUNISH + "You have been unmuted by §c" + pl.getName() + "§f.");
                     }
                     pl.closeInventory();
                     return;
                 }
-                pl.sendMessage("§4§lERROR§8 > §cYou cannot deactive this punishment as it is not active");
+                pl.sendMessage(Prefixes.ERROR + "You cannot deactive this punishment as it is not active");
                 return;
             }
             return;
@@ -214,11 +213,9 @@ public class ManageUserListener implements Listener {
             }
 
             if (m == Material.PAPER) {
-                PlayerPunishInfo warningInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(),
-                        pl.getUniqueId().toString(), null, true, PunishmentType.WARN, reason);
+                PlayerPunishInfo warningInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), null, true, PunishmentType.WARN, reason);
                 PunishmentSql.insertNewPlayerPunishment(warningInfo);
-                String msg = "§a§lPUNISH§8 > §fThe user §c" + targetName + "§f has been warned by §c"
-                        + pl.getName();
+                String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been warned by §c" + pl.getName();
                 for (Player all : Bukkit.getOnlinePlayers()) {
                     if (RankHandler.helperPermission(all)) {
                         all.sendMessage(msg);
@@ -227,11 +224,9 @@ public class ManageUserListener implements Listener {
             }
 
             if (m == Material.BARRIER) {
-                PlayerPunishInfo muteInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(),
-                        pl.getUniqueId().toString(), null, true, PunishmentType.MUTE, reason);
+                PlayerPunishInfo muteInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), null, true, PunishmentType.MUTE, reason);
                 PunishmentSql.insertNewPlayerPunishment(muteInfo);
-                String msg = "§a§lPUNISH§8 > §fThe user §c" + targetName
-                        + "§f has been muted for §c§lPERMANENT§f by §c" + pl.getName();
+                String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been muted for §c§lPERMANENT§f by §c" + pl.getName();
                 for (Player foo : Bukkit.getOnlinePlayers()) {
                     if (RankHandler.helperPermission(foo)) {
                         foo.sendMessage(msg);
@@ -240,11 +235,9 @@ public class ManageUserListener implements Listener {
             }
 
             if (m == Material.REDSTONE_BLOCK) {
-                PlayerPunishInfo banInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(),
-                        pl.getUniqueId().toString(), null, true, PunishmentType.BAN, reason);
+                PlayerPunishInfo banInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), null, true, PunishmentType.BAN, reason);
                 PunishmentSql.insertNewPlayerPunishment(banInfo);
-                String msg = "§a§lPUNISH§8 > §fThe user §c" + targetName
-                        + "§f has been banned for §c§lPERMANENT§f by §c" + pl.getName();
+                String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been banned for §c§lPERMANENT§f by §c" + pl.getName();
                 for (Player foo : Bukkit.getOnlinePlayers()) {
                     if (RankHandler.helperPermission(foo)) {
                         foo.sendMessage(msg);
@@ -290,13 +283,10 @@ public class ManageUserListener implements Listener {
                 }
 
                 if (type == PunishmentType.BAN) {
-                    PlayerPunishInfo banInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(),
-                            pl.getUniqueId().toString(),
-                            new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(dayCount)), true,
-                            PunishmentType.BAN, reason);
+                    PlayerPunishInfo banInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), new Date(System.currentTimeMillis()
+                            + TimeUnit.DAYS.toMillis(dayCount)), true, PunishmentType.BAN, reason);
                     PunishmentSql.insertNewPlayerPunishment(banInfo);
-                    String msg = "§a§lPUNISH§8 > §fThe user §c" + targetName + "§f has been banned for §c§l"
-                            + dayCount + " DAYS§f by §c" + pl.getName();
+                    String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been banned for §c§l" + dayCount + " DAYS§f by §c" + pl.getName();
                     for (Player foo : Bukkit.getOnlinePlayers()) {
                         if (RankHandler.helperPermission(foo)) {
                             foo.sendMessage(msg);
@@ -306,20 +296,16 @@ public class ManageUserListener implements Listener {
                     return;
                 }
                 if (type == PunishmentType.MUTE) {
-                    PlayerPunishInfo muteInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(),
-                            pl.getUniqueId().toString(),
-                            new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(dayCount)), true,
-                            PunishmentType.MUTE, reason);
+                    PlayerPunishInfo muteInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), new Date(System.currentTimeMillis()
+                            + TimeUnit.DAYS.toMillis(dayCount)), true, PunishmentType.MUTE, reason);
                     PunishmentSql.insertNewPlayerPunishment(muteInfo);
-                    String msg = "§a§lPUNISH§8 > §fThe user §c" + targetName + "§f has been muted for §c§l"
-                            + dayCount + " DAYS§f by §c" + pl.getName();
+                    String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been muted for §c§l" + dayCount + " DAYS§f by §c" + pl.getName();
                     for (Player foo : Bukkit.getOnlinePlayers()) {
                         if (RankHandler.helperPermission(foo)) {
                             foo.sendMessage(msg);
                         }
                         if (foo.getName().equalsIgnoreCase(targetName)) {
-                            foo.sendMessage("§a§lPUNISH§8 > §fYou have been muted for §c§l" + dayCount + " DAYS§f by §c"
-                                    + pl.getName() + "§f Reason: §c"
+                            foo.sendMessage(Prefixes.PUNISH + "You have been muted for §c§l" + dayCount + " DAYS§f by §c" + pl.getName() + "§f Reason: §c"
                                     + reason);
                         }
                     }
@@ -349,12 +335,10 @@ public class ManageUserListener implements Listener {
             }
             if (m == Material.COMPASS) {
                 if (!ProxyHandler.isPlayerOnline(targetName)) {
-                    pl.sendMessage("§e§lALERT§8 > §f§c" + targetName + "§f is offline");
+                    pl.sendMessage(Prefixes.ALERT + "§c" + targetName + "§f is offline");
                     return;
                 }
-                pl.sendMessage(
-                        "§e§lALERT§8 > §f§c" + targetName + "§f is on server §c" + ProxyHandler.getPlayerServer(targetName));
-
+                pl.sendMessage(Prefixes.ALERT + "§c" + targetName + "§f is on server §c" + ProxyHandler.getPlayerServer(targetName));
                 return;
             }
             if (m == Material.ICE) {
@@ -368,12 +352,12 @@ public class ManageUserListener implements Listener {
             }
             if (m == Material.GLASS) {
                 if (!ProxyHandler.isPlayerOnline(targetName)) {
-                    pl.sendMessage("§e§lALERT§8 > §f§c" + targetName + "§f is offline");
+                    pl.sendMessage(Prefixes.ALERT + "§c" + targetName + "§f is offline");
                     return;
                 }
                 TempHandler.handleTogglePlayerVanish(pl);
                 String targetServer = ProxyHandler.getPlayerServer(targetName);
-                pl.sendMessage("§e§lALERT§8 > §fSending you to server §c" + targetServer + "§f in vanish mode");
+                pl.sendMessage(Prefixes.ALERT + "Sending you to server §c" + targetServer + "§f in vanish mode");
                 pl.closeInventory();
                 ProxyHandler.sendToServer(Arrays.asList(pl.getUniqueId()), targetServer);
                 return;

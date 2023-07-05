@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 
 public class HelpOpCommand implements CommandBase {
@@ -33,7 +34,7 @@ public class HelpOpCommand implements CommandBase {
     public void onCommandExecute(Player pl, String[] args) {
         long nowMs = System.currentTimeMillis();
         if (cooldown.containsKey(pl.getUniqueId()) && cooldown.get(pl.getUniqueId()) < nowMs + MS_DELAY) {
-            pl.sendMessage("§4§lERROR§8 > §cYou must wait 10 seconds in between uses of /helpop.");
+            pl.sendMessage(Prefixes.ERROR + "You must wait 10 seconds in between uses of /helpop.");
             return;
         }
         if (args.length == 0) {
@@ -43,7 +44,7 @@ public class HelpOpCommand implements CommandBase {
 
         String msg = CommandHandler.getSpacedArgument(args, " ");
 
-        pl.sendMessage("§e§lALERT§8 > §fMessage from §a" + BMTextConvert.CTS.serialize(pl.displayName()) + "§f: " + msg);
+        pl.sendMessage(Prefixes.ALERT + "Message from §a" + BMTextConvert.CTS.serialize(pl.displayName()) + "§f: " + msg);
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             if (pl == online) {
@@ -51,7 +52,7 @@ public class HelpOpCommand implements CommandBase {
             }
             if (RankHandler.helperPermission(pl)) {
                 online.sendMessage(
-                        "§e§lALERT§8 > §fMessage from §a" + BMTextConvert.CTS.serialize(pl.displayName()) + "§f: " + msg);
+                        Prefixes.ALERT + "Message from §a" + BMTextConvert.CTS.serialize(pl.displayName()) + "§f: " + msg);
             }
         }
 
