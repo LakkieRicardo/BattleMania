@@ -10,7 +10,7 @@ import net.battle.core.handlers.ScoreboardHandler;
 import net.battle.core.handlers.TempHandler;
 import net.battle.core.settings.SettingHandler;
 import net.battle.core.sql.impl.PlayerInfoSql;
-import net.battle.core.sql.pod.PlayerInfo;
+import net.battle.core.sql.records.PlayerInfo;
 import net.kyori.adventure.text.Component;
 
 import java.util.List;

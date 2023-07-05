@@ -10,8 +10,8 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.battle.core.punish.PunishManager;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 import net.kyori.adventure.text.Component;
 
 public class PlayerPunishmentListener implements Listener {
@@ -20,8 +20,8 @@ public class PlayerPunishmentListener implements Listener {
     public void onPlayerChateMute(AsyncChatEvent e) {
         Player pl = e.getPlayer();
         String uuid = pl.getUniqueId().toString();
-        PunishManager.updatePlayerPunishments(uuid, PunishmentType.MUTE);
-        List<PlayerPunishInfo> punishments = PunishmentSql.getPlayerActivePunishments(uuid, PunishmentType.MUTE);
+        PunishManager.updatePlayerPunishments(uuid, PunishType.MUTE);
+        List<PlayerPunishInfo> punishments = PunishmentSql.getPlayerActivePunishments(uuid, PunishType.MUTE);
         if (punishments == null || punishments.size() == 0) {
             return;
         }
@@ -34,8 +34,8 @@ public class PlayerPunishmentListener implements Listener {
     @EventHandler
     public void onPlayerBanJoin(AsyncPlayerPreLoginEvent e) {
         String uuid = e.getUniqueId().toString();
-        PunishManager.updatePlayerPunishments(uuid, PunishmentType.BAN);
-        List<PlayerPunishInfo> punishments = PunishmentSql.getPlayerActivePunishments(uuid, PunishmentType.BAN);
+        PunishManager.updatePlayerPunishments(uuid, PunishType.BAN);
+        List<PlayerPunishInfo> punishments = PunishmentSql.getPlayerActivePunishments(uuid, PunishType.BAN);
         if (punishments == null || punishments.size() == 0) {
             return;
         }

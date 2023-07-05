@@ -13,8 +13,8 @@ import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 
 public class MuteCommand implements CommandBase {
     public String getLabel() {
@@ -73,7 +73,7 @@ public class MuteCommand implements CommandBase {
 
             PlayerPunishInfo muteInfo = new PlayerPunishInfo(0, target.getUniqueId().toString(),
                     pl.getUniqueId().toString(),
-                    null, true, PunishmentType.MUTE,
+                    null, true, PunishType.MUTE,
                     reason);
             PunishmentSql.insertNewPlayerPunishment(muteInfo);
             return;
@@ -112,7 +112,7 @@ public class MuteCommand implements CommandBase {
 
             PlayerPunishInfo muteInfo = new PlayerPunishInfo(0, target.getUniqueId().toString(),
                     pl.getUniqueId().toString(),
-                    new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(dayCount)), true, PunishmentType.MUTE,
+                    new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(dayCount)), true, PunishType.MUTE,
                     reason);
             PunishmentSql.insertNewPlayerPunishment(muteInfo);
         } catch (Exception e) {

@@ -18,9 +18,9 @@ import net.battle.core.handlers.RankHandler;
 import net.battle.core.punish.PunishManager;
 import net.battle.core.sql.impl.PlayerInfoSql;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerInfo;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerInfo;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 import net.kyori.adventure.text.Component;
 
 public class ManageUserHandler {
@@ -495,7 +495,7 @@ public class ManageUserHandler {
         ItemStack back = new ItemStack(Material.RED_BED);
         InventoryUtils.renameItem(back, "§8Back");
         InventoryUtils.setItem(inv, 4, 5, back);
-        List<PlayerPunishInfo> warns = PunishmentSql.getPlayerPunishmentHistory(uuid, PunishmentType.WARN);
+        List<PlayerPunishInfo> warns = PunishmentSql.getPlayerPunishmentHistory(uuid, PunishType.WARN);
         List<PlayerPunishInfo> punishes = PunishmentSql.getPlayerPunishmentHistory(uuid);
         int counter = 18;
         for (PlayerPunishInfo punish : punishes) {
@@ -504,40 +504,40 @@ public class ManageUserHandler {
             }
 
             ItemStack punishItem = null;
-            if (punish.getType() == PunishmentType.REPORT || punish.getType() == PunishmentType.WARN) {
+            if (punish.type() == PunishType.REPORT || punish.type() == PunishType.WARN) {
                 continue;
             }
-            punishItem = switch (punish.getType()) {
+            punishItem = switch (punish.type()) {
             case MUTE -> new ItemStack(Material.BARRIER);
             case BAN -> new ItemStack(Material.REDSTONE_BLOCK);
             default -> new ItemStack(Material.EGG); // Should not be reached
             };
 
-            if (punish.getExpiration() == null) {
-                InventoryUtils.renameItem(punishItem, "§aPermanent " + punish.getType().name());
+            if (punish.expiration() == null) {
+                InventoryUtils.renameItem(punishItem, "§aPermanent " + punish.type().name());
             } else {
-                InventoryUtils.renameItem(punishItem, "§aTemporary " + punish.getType().name());
+                InventoryUtils.renameItem(punishItem, "§aTemporary " + punish.type().name());
             }
 
-            InventoryUtils.setItemLore(punishItem, "§cType: §7" + punish.getType().name());
-            if (punish.getExpiration() == null) {
-                InventoryUtils.addItemLore(punishItem, "§c" + punish.getType().name() + "Duration: §7FOREVER");
+            InventoryUtils.setItemLore(punishItem, "§cType: §7" + punish.type().name());
+            if (punish.expiration() == null) {
+                InventoryUtils.addItemLore(punishItem, "§c" + punish.type().name() + "Duration: §7FOREVER");
             } else if (!punish.isActive()) {
-                InventoryUtils.addItemLore(punishItem, "§c" + punish.getType().name() + "Duration: §7EXPIRED");
+                InventoryUtils.addItemLore(punishItem, "§c" + punish.type().name() + "Duration: §7EXPIRED");
             } else {
-                InventoryUtils.addItemLore(punishItem, "§c" + punish.getType().name() + "Expiration: §7"
-                        + PunishManager.PUNISHMENT_DATE_FORMAT.format(punish.getExpiration()) + " at "
-                        + PunishManager.PUNISHMENT_TIME_FORMAT.format(punish.getExpiration()));
+                InventoryUtils.addItemLore(punishItem, "§c" + punish.type().name() + "Expiration: §7"
+                        + PunishManager.PUNISHMENT_DATE_FORMAT.format(punish.expiration()) + " at "
+                        + PunishManager.PUNISHMENT_TIME_FORMAT.format(punish.expiration()));
             }
 
             if (punish.isActive()) {
                 punishItem.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
             }
             InventoryUtils.addItemLore(punishItem, "§7-");
-            InventoryUtils.addItemLore(punishItem, "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(punish.getPunisherUUID())).getName());
-            InventoryUtils.addItemLore(punishItem, "§cPunish Reason: §7" + punish.getReason());
+            InventoryUtils.addItemLore(punishItem, "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(punish.punisherUUID())).getName());
+            InventoryUtils.addItemLore(punishItem, "§cPunish Reason: §7" + punish.reason());
             InventoryUtils.addItemLore(punishItem, "§cActivity: §7" + (punish.isActive() ? "Active" : "Inactive"));
-            InventoryUtils.addItemLore(punishItem, PUNISH_ID_FIELD_PREFIX + punish.getId());
+            InventoryUtils.addItemLore(punishItem, PUNISH_ID_FIELD_PREFIX + punish.id());
             if (punish.isActive()) {
                 InventoryUtils.addItemLore(punishItem, "§7-");
                 InventoryUtils.addItemLore(punishItem, "§cClick me to de-activate punishment!");
@@ -556,8 +556,8 @@ public class ManageUserHandler {
             InventoryUtils.setItemLore(warnItem, "§7If the player already has a warning for the same");
             InventoryUtils.addItemLore(warnItem, "§7reason then it will result in a larger punishment");
             InventoryUtils.addItemLore(warnItem, "§7-");
-            InventoryUtils.addItemLore(warnItem, "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(warn.getPunisherUUID())).getName());
-            String reason = warn.getReason();
+            InventoryUtils.addItemLore(warnItem, "§cPunisher: §7" + Bukkit.getOfflinePlayer(UUID.fromString(warn.punisherUUID())).getName());
+            String reason = warn.reason();
 
             if (reason.length() > 50) {
                 components = reason.split("§", 50);

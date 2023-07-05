@@ -12,7 +12,7 @@ import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.SwearHandler;
 import net.battle.core.sql.impl.PlayerInfoSql;
 import net.battle.core.sql.impl.PlayerSettingsSql;
-import net.battle.core.sql.pod.PlayerInfo;
+import net.battle.core.sql.records.PlayerInfo;
 import net.kyori.adventure.text.Component;
 
 public class ChatListener implements Listener {

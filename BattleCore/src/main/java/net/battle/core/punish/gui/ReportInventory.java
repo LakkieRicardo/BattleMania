@@ -17,8 +17,8 @@ import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 import net.kyori.adventure.text.Component;
 
 public class ReportInventory implements Listener {
@@ -78,7 +78,7 @@ public class ReportInventory implements Listener {
             String message = InventoryUtils.getItemName(item);
             pl.sendMessage(Prefixes.PUNISH + "You have reported §c" + reportedName + " §ffor: " + message);
             PlayerPunishInfo reportInfo = new PlayerPunishInfo(0, reportedUUID, pl.getUniqueId().toString(), null, true,
-                    PunishmentType.REPORT, message);
+                    PunishType.REPORT, message);
             PunishmentSql.insertNewPlayerPunishment(reportInfo);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 if (online == pl || RankHandler.helperPermission(online)) {

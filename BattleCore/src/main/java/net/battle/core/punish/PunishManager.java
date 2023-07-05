@@ -14,8 +14,8 @@ import net.battle.core.BMCorePlugin;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.punish.gui.ManageUserHandler;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 
 public class PunishManager {
     public static final int MUTE_SEVERITY_1 = 1;
@@ -31,12 +31,12 @@ public class PunishManager {
             "MMMM dd, yyyy");
     public static final SimpleDateFormat PUNISHMENT_TIME_FORMAT = new SimpleDateFormat("hh:mm:ss aa zzz");
 
-    public static void updatePlayerPunishments(String uuid, PunishmentType type) {
+    public static void updatePlayerPunishments(String uuid, PunishType type) {
         List<PlayerPunishInfo> punishments = PunishmentSql.getPlayerActivePunishments(uuid, type);
         for (PlayerPunishInfo punishment : punishments) {
-            if (punishment.getExpiration() != null
-                    && System.currentTimeMillis() > punishment.getExpiration().getTime()) {
-                PunishmentSql.updatePunishmentIsActive(punishment.getId(), false);
+            if (punishment.expiration() != null
+                    && System.currentTimeMillis() > punishment.expiration().getTime()) {
+                PunishmentSql.updatePunishmentIsActive(punishment.id(), false);
             }
         }
     }
@@ -45,12 +45,12 @@ public class PunishManager {
         List<String> lines = new ArrayList<>();
         lines.add("§a§l" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " §c§lPunishments");
         lines.add("§7You have been §c§lBANNED§7!");
-        lines.add("§7By: §c" + Bukkit.getOfflinePlayer(UUID.fromString(ban.getPunisherUUID())).getName());
-        lines.add("§7Reason: §c" + ban.getReason());
-        if (ban.getExpiration() == null) {
+        lines.add("§7By: §c" + Bukkit.getOfflinePlayer(UUID.fromString(ban.punisherUUID())).getName());
+        lines.add("§7Reason: §c" + ban.reason());
+        if (ban.expiration() == null) {
             lines.add("§7Ban duration: §c§lPERMANENT§7!");
         } else {
-            lines.add("§7Ban duration: §c§l" + PUNISHMENT_DATE_FORMAT.format(ban.getExpiration()) + " at " + PUNISHMENT_TIME_FORMAT.format(ban.getExpiration()));
+            lines.add("§7Ban duration: §c§l" + PUNISHMENT_DATE_FORMAT.format(ban.expiration()) + " at " + PUNISHMENT_TIME_FORMAT.format(ban.expiration()));
         }
         lines.add("");
         lines.add("§7Appeal at: §c" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("websiteurl") + "/appeal");
@@ -60,12 +60,12 @@ public class PunishManager {
     public static List<String> getMuteMessages(PlayerPunishInfo mute) {
         List<String> lines = new ArrayList<>();
         lines.add("§7You are muted!");
-        lines.add("§7Reason: §c" + mute.getReason());
-        lines.add("§7By: §c" + Bukkit.getOfflinePlayer(UUID.fromString(mute.getPunisherUUID())).getName());
-        if (mute.getExpiration() == null) {
+        lines.add("§7Reason: §c" + mute.reason());
+        lines.add("§7By: §c" + Bukkit.getOfflinePlayer(UUID.fromString(mute.punisherUUID())).getName());
+        if (mute.expiration() == null) {
             lines.add("§7Expiration: §cNever");
         } else {
-            lines.add("§7Expiration: §c" + PUNISHMENT_DATE_FORMAT.format(mute.getExpiration()) + " at " + PUNISHMENT_TIME_FORMAT.format(mute.getExpiration()));
+            lines.add("§7Expiration: §c" + PUNISHMENT_DATE_FORMAT.format(mute.expiration()) + " at " + PUNISHMENT_TIME_FORMAT.format(mute.expiration()));
         }
         lines.add("");
         lines.add("§7Appeal At: §c" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("websiteurl") + "/appeal");
@@ -81,7 +81,7 @@ public class PunishManager {
      * @param clickedItem
      * @return Whether the punishment was found and disabled
      */
-    public static boolean handleDisablePunishment(Player disabler, OfflinePlayer targetOffline, PunishmentType punishType, ItemStack clickedItem) {
+    public static boolean handleDisablePunishment(Player disabler, OfflinePlayer targetOffline, PunishType punishType, ItemStack clickedItem) {
         List<String> itemLore = InventoryUtils.getItemLore(clickedItem);
         boolean foundId = false;
         int punishmentId = 0;

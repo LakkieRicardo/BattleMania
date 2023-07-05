@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import net.battle.core.BMCorePlugin;
 import net.battle.core.handlers.ScoreboardHandler;
-import net.battle.core.sql.pod.PlayerInfo;
+import net.battle.core.sql.records.PlayerInfo;
 
 public class PlayerInfoSql {
 

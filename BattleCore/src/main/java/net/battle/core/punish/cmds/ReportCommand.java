@@ -10,8 +10,8 @@ import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 
 public class ReportCommand implements CommandBase {
     public String getLabel() {
@@ -41,7 +41,7 @@ public class ReportCommand implements CommandBase {
         String msg = CommandHandler.getSpacedArgument(args, " ", 1);
 
         PlayerPunishInfo reportInfo = new PlayerPunishInfo(0, target.getUniqueId().toString(),
-                pl.getUniqueId().toString(), null, true, PunishmentType.REPORT, msg);
+                pl.getUniqueId().toString(), null, true, PunishType.REPORT, msg);
         PunishmentSql.insertNewPlayerPunishment(reportInfo);
         pl.sendMessage(Prefixes.COMMAND + "You have reported §c" + target.getName() + "§f, Reason: §c" + msg);
         for (Player online : Bukkit.getOnlinePlayers()) {

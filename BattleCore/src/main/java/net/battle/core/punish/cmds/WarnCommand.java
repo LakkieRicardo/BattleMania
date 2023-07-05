@@ -10,8 +10,8 @@ import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 
 public class WarnCommand implements CommandBase {
     public String getLabel() {
@@ -55,7 +55,7 @@ public class WarnCommand implements CommandBase {
             }
         }
 
-        PlayerPunishInfo warnInfo = new PlayerPunishInfo(0, targetUUID, pl.getUniqueId().toString(), null, true, PunishmentType.WARN, reason);
+        PlayerPunishInfo warnInfo = new PlayerPunishInfo(0, targetUUID, pl.getUniqueId().toString(), null, true, PunishType.WARN, reason);
         PunishmentSql.insertNewPlayerPunishment(warnInfo);
 
         Player targetOnline = Bukkit.getPlayerExact(targetName);

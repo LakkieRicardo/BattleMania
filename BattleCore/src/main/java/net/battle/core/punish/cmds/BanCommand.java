@@ -14,8 +14,8 @@ import net.battle.core.handlers.RankHandler;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.punish.PunishManager;
 import net.battle.core.sql.impl.PunishmentSql;
-import net.battle.core.sql.pod.PlayerPunishInfo;
-import net.battle.core.sql.pod.PunishmentType;
+import net.battle.core.sql.records.PlayerPunishInfo;
+import net.battle.core.sql.records.PunishType;
 
 public class BanCommand implements CommandBase {
     public String getLabel() {
@@ -98,7 +98,7 @@ public class BanCommand implements CommandBase {
             pl.getUniqueId().toString(),
             permanent ? null : new Date(TimeUnit.DAYS.convert(dayCount, TimeUnit.MILLISECONDS) + System.currentTimeMillis()),
             true,
-            PunishmentType.BAN,
+            PunishType.BAN,
             reason
         );
         PunishmentSql.insertNewPlayerPunishment(banInfo);

@@ -1,4 +1,4 @@
-package net.battle.core.sql.pod;
+package net.battle.core.sql.records;
 
 public record PlayerInfo(String playerUUID, String sqlRank, int level, int ingot, int token, float ingameHours) {
 
