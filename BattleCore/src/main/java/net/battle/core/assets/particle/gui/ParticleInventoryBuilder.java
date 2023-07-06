@@ -7,6 +7,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.json.simple.JSONObject;
 
 import net.battle.core.assets.particle.BMParticle;
 import net.battle.core.handlers.InventoryUtils;
@@ -53,8 +54,9 @@ public class ParticleInventoryBuilder {
     }
 
     public static Inventory create(int page, Player viewer) {
-        NavigatorInvLayout navLayout = InvLayout.createNavigatorFromId(PARTICLES_LAYOUT_ID).orElseThrow(() -> new RuntimeException("Failed to find particle inventory ("
+        JSONObject layoutJSON = InvLayout.getLayoutJSONFromId(PARTICLES_LAYOUT_ID).orElseThrow(() -> new RuntimeException("Failed to find particle inventory ("
                 + PARTICLES_LAYOUT_ID + ")"));
+        NavigatorInvLayout navLayout = new NavigatorInvLayout(layoutJSON);
         navLayout.setContentList(getParticlesAsContentItems());
         navLayout.getEffects().add((inv, currentViewer, layout, meta) -> applyEffects(inv, currentViewer, (NavigatorInvLayout) navLayout, (NavigatorInvMeta) meta));
         Inventory inv = navLayout.createInventory(viewer, new NavigatorInvMeta(page));

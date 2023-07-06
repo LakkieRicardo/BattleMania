@@ -15,7 +15,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import net.battle.core.SettingsFiles;
-import net.battle.core.layouts.navinv.NavigatorInvLayout;
 import net.kyori.adventure.text.Component;
 
 /**
@@ -102,7 +101,13 @@ public abstract class InvLayout {
         INVENTORY_META_MAP.put(inventory, meta);
     }
 
-    public static Optional<NavigatorInvLayout> createNavigatorFromId(String particlesLayoutId) {
+    /**
+     * Finds the proper JSON object to be fed into the InvLayout sub-class constructor.
+     * 
+     * @param particlesLayoutId The id of the layout in the JSON file
+     * @return Optional for the JSON layout object
+     */
+    public static Optional<JSONObject> getLayoutJSONFromId(String particlesLayoutId) {
         if (root == null) {
             throw new IllegalStateException("Layout JSON must be initialized");
         }
@@ -110,7 +115,7 @@ public abstract class InvLayout {
         for (int i = 0; i < root.size(); i++) {
             JSONObject member = (JSONObject) root.get(i);
             if (((String) member.get("id")).equalsIgnoreCase(particlesLayoutId)) {
-                return Optional.of(new NavigatorInvLayout(member));
+                return Optional.of(member);
             }
         }
         return Optional.empty();
