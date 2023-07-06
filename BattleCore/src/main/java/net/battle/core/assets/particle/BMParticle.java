@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import net.battle.core.handlers.Prefixes;
-import net.battle.core.layouts.INavigatorContentItem;
+import net.battle.core.layouts.navinv.INavigatorContentItem;
 
 public abstract class BMParticle implements INavigatorContentItem {
     private static long updateCount;

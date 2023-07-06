@@ -42,7 +42,7 @@ public class AssetInventoryListener implements Listener {
             }
             if (item.getType() == Material.REDSTONE) {
                 pl.closeInventory();
-                pl.openInventory(ParticleInventoryBuilder.create(0, pl.getUniqueId()));
+                pl.openInventory(ParticleInventoryBuilder.create(0, pl));
                 return;
             }
         }

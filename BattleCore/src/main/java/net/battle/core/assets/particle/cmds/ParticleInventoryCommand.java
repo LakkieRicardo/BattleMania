@@ -21,7 +21,7 @@ public class ParticleInventoryCommand implements CommandBase {
     }
 
     public void onCommandExecute(Player pl, String[] args) {
-        pl.openInventory(ParticleInventoryBuilder.create(0, pl.getUniqueId()));
+        pl.openInventory(ParticleInventoryBuilder.create(0, pl));
         pl.sendMessage(Prefixes.COMMAND + "Opened §cparticle§f inventory");
     }
 

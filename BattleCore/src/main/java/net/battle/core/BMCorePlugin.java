@@ -63,9 +63,9 @@ import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.ScoreboardHandler;
 import net.battle.core.handlers.SwearSearchAlgorithm;
 import net.battle.core.handlers.TimeHandler;
-import net.battle.core.layouts.InventoryLayouts;
-import net.battle.core.layouts.NavigatorInventoryLayout;
-import net.battle.core.layouts.NavigatorInventoryListener;
+import net.battle.core.layouts.InvLayout;
+import net.battle.core.layouts.navinv.NavigatorInvLayout;
+import net.battle.core.layouts.navinv.NavigatorInvListener;
 import net.battle.core.listeners.BlockBreakListener;
 import net.battle.core.listeners.ChatListener;
 import net.battle.core.listeners.JoinLeaveListener;
@@ -116,8 +116,8 @@ public class BMCorePlugin extends JavaPlugin {
 
         BMLogger.info("Initializing InventoryLayouts.json file and listeners...");
         try {
-            InventoryLayouts.initializeLayoutsFile();
-            registerAndLogListener(new NavigatorInventoryListener());
+            InvLayout.initializeLayoutsFile();
+            registerAndLogListener(new NavigatorInvListener());
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
@@ -255,7 +255,7 @@ public class BMCorePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         BMLogger.info("Closing all navigator inventories...");
-        NavigatorInventoryLayout.closeAllInventories();
+        NavigatorInvLayout.closeAllInventories();
     }
 
     public void registerAndLogListener(Listener l) {

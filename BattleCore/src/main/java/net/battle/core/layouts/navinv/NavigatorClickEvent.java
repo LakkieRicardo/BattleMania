@@ -1,4 +1,4 @@
-package net.battle.core.layouts;
+package net.battle.core.layouts.navinv;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -9,14 +9,14 @@ public class NavigatorClickEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
-    private final NavigatorInventoryLayout layout;
+    private final NavigatorInvLayout layout;
     private final Player whoClicked;
     private final NavigatorClickType clickType;
     private final InventoryClickEvent clickEvent;
     private final INavigatorContentItem contentItem;
     private final int openPage;
 
-    public NavigatorClickEvent(NavigatorInventoryLayout layout, Player whoClicked, NavigatorClickType clickType, InventoryClickEvent clickEvent,
+    public NavigatorClickEvent(NavigatorInvLayout layout, Player whoClicked, NavigatorClickType clickType, InventoryClickEvent clickEvent,
             INavigatorContentItem contentItem, int openPage) {
         this.layout = layout;
         this.whoClicked = whoClicked;
@@ -26,7 +26,7 @@ public class NavigatorClickEvent extends Event {
         this.openPage = openPage;
     }
 
-    public NavigatorInventoryLayout getLayout() {
+    public NavigatorInvLayout getLayout() {
         return layout;
     }
 

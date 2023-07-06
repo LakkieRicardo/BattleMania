@@ -1,4 +1,4 @@
-package net.battle.core.layouts;
+package net.battle.core.layouts.navinv;
 
 import org.bukkit.inventory.ItemStack;
 
