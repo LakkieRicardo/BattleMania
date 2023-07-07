@@ -7,14 +7,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import net.battle.core.SettingsFiles;
+import net.battle.core.handlers.BMLogger;
+import net.battle.core.handlers.InventoryUtils;
 import net.kyori.adventure.text.Component;
 
 /**
@@ -61,6 +66,10 @@ public abstract class InvLayout {
         return effects;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     /**
      * Creates a new inventory based off this layout. The viewer is only used as additional information to generate the
      * inventory, not to open the inventory.
@@ -74,6 +83,23 @@ public abstract class InvLayout {
         updateInventoryMeta(inventory, viewer, meta);
         LAYOUT_MAP.put(inventory, this);
         return inventory;
+    }
+
+    protected ItemStack createItemFromJSON(JSONObject definition) {
+        ItemStack item = new ItemStack(Material.valueOf((String) definition.get("material")));
+        if (definition.containsKey("name")) {
+            InventoryUtils.renameItem(item, ((String) definition.get("name")).replaceAll("&", "§"));
+        }
+        if (definition.containsKey("lore")) {
+            JSONArray loreLines = (JSONArray) definition.get("lore");
+            List<Component> newLore = new ArrayList<>();
+            for (int loreIdx = 0; loreIdx < loreLines.size(); loreIdx++) {
+                newLore.add(Component.text(((String) loreLines.get(loreIdx)).replaceAll("&", "§")));
+            }
+            InventoryUtils.setItemLore(item, newLore);
+        }
+
+        return item;
     }
 
     /**
@@ -125,7 +151,7 @@ public abstract class InvLayout {
         root = (JSONArray) SettingsFiles.initializeJSONResource("/InventoryLayouts.json");
     }
 
-    public static boolean isInvFromLayout(Inventory inv) {
+    public static boolean IsInvLayoutGenerated(Inventory inv) {
         return LAYOUT_MAP.containsKey(inv);
     }
 
@@ -156,6 +182,35 @@ public abstract class InvLayout {
         if (LAYOUT_MAP.containsKey(inv)) {
             LAYOUT_MAP.remove(inv);
         }
+    }
+
+    /**
+     * Moves an inventory from one layout to another. There are, however, some pre-conditions required and will throw an
+     * exception if not met: <br/>
+     * <ol>
+     * <li>The inventory must be already registered into a layout</li>
+     * <li>The new layout must be the same size as the old layout</li>
+     * </ol>
+     * <br/>
+     * In addition to this, once the inventory is transferred the title of the inventory cannot be updated. A warning will
+     * be printed if the titles are different.
+     * 
+     * @param inv       The inventory to transfer
+     * @param viewer    The player who is viewing the inventory
+     * @param newLayout The new layout to transfer to
+     */
+    public static void transferInventoryLayout(Inventory inv, Player viewer, InvLayout newLayout) {
+        Validate.isTrue(LAYOUT_MAP.containsKey(inv));
+        InvLayout oldLayout = LAYOUT_MAP.get(inv);
+        Validate.isTrue(oldLayout.getLayout().length() == newLayout.getLayout().length());
+        Validate.isTrue(!oldLayout.getId().equals(newLayout.getId()));
+        if (!oldLayout.getTitle().equals(newLayout.getTitle())) {
+            BMLogger.warning("Attempting to transfer mismatching layout titles(old: \"" + oldLayout.getTitle() + "\", new: \"" + newLayout.getTitle()
+                    + "\"). The transfer will succeed but the title cannot be updated.");
+        }
+        INVENTORY_META_MAP.remove(inv);
+        LAYOUT_MAP.remove(inv);
+        newLayout.updateInventoryMeta(inv, viewer, newLayout);
     }
 
 }

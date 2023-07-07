@@ -1,45 +1,41 @@
 package net.battle.core.layouts.navinv;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import net.battle.core.handlers.InventoryUtils;
+import net.battle.core.handlers.BMLogger;
 import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.LayoutDefinitionType;
-import net.kyori.adventure.text.Component;
 
 /**
- * Represents a type of layout with a list of content items which allows for scrolling through pages.
- * <br/><br/>
+ * Represents a type of layout with a list of content items which allows for scrolling through pages. <br/>
+ * <br/>
  * In order to use a navigator layout, first define it in the InventoryLayouts.json. There is no special layout type,
- * the only special item type for this layout is NAVIGATOR_CONTENT, NAVIGATOR_PREVIOUS, and NAVIGATOR_NEXT.
- * <br/><br/>
+ * the only special item type for this layout is NAVIGATOR_CONTENT, NAVIGATOR_PREVIOUS, and NAVIGATOR_NEXT. <br/>
+ * <br/>
  * Once done, use the {@link InvLayout#getLayoutJSONFromId(String)} function and pass it to this constructor in order to
  * interpret the JSON at runtime. Then, when you are at the point you need the inventory you can call the
  * {@link #setContentList(List)} and define the inventory's content items. That way, when you call the
  * {@link #updateInventoryMeta(Inventory, Player, Object)} function it will dynamically generate the inventory
- * consisting of all the content items you need.
- * <br/><br/>
+ * consisting of all the content items you need. <br/>
+ * <br/>
  * Once you have the inventory open, you will want to listen to the NavigatorClickEvent in order to check when a player
  * is trying to select one of your content items, if they are trying to navigate, etc. and play sounds, do certain
- * actions, etc. depending on your needs.
- * <br/><br/>
+ * actions, etc. depending on your needs. <br/>
+ * <br/>
  * You can also write a function to implement the interface IInvLayoutEffect to add an additional effect onto your
  * inventory. This can be used to render things that may change player-to-player, and is done exclusively after the
  * inventory has already been created.
  */
 public class NavigatorInvLayout extends InvLayout {
 
-    private final Map<Character, JSONObject> itemDefines;
+    private final Map<Character, JSONObject> itemDefines = new HashMap<>();
 
     private List<INavigatorContentItem> contentList = null;
     private boolean hasCountedContentSlots = false;
@@ -48,7 +44,6 @@ public class NavigatorInvLayout extends InvLayout {
     public NavigatorInvLayout(JSONObject layoutJSON) {
         super(layoutJSON);
         JSONObject definesObject = (JSONObject) layoutJSON.get("definitions");
-        this.itemDefines = new HashMap<>();
         for (Object key : definesObject.keySet()) {
             JSONObject definition = (JSONObject) definesObject.get(key);
             char c = ((String) key).charAt(0);
@@ -86,23 +81,6 @@ public class NavigatorInvLayout extends InvLayout {
         return (int) Math.ceil((float) contentList.size() / getSlotsOfContent());
     }
 
-    private ItemStack createItemFromJSON(JSONObject definition) {
-        ItemStack item = new ItemStack(Material.valueOf((String) definition.get("material")));
-        if (definition.containsKey("name")) {
-            InventoryUtils.renameItem(item, ((String) definition.get("name")).replaceAll("&", "§"));
-        }
-        if (definition.containsKey("lore")) {
-            JSONArray loreLines = (JSONArray) definition.get("lore");
-            List<Component> newLore = new ArrayList<>();
-            for (int loreIdx = 0; loreIdx < loreLines.size(); loreIdx++) {
-                newLore.add(Component.text(((String) loreLines.get(loreIdx)).replaceAll("&", "§")));
-            }
-            InventoryUtils.setItemLore(item, newLore);
-        }
-
-        return item;
-    }
-
     public void doUpdateInventoryMeta(Inventory inventory, Player viewer, Object meta) {
         if (!(meta instanceof NavigatorInvMeta navMeta)) {
             throw new IllegalArgumentException("Navigator page meta must be NavigatorInvMeta!");
@@ -117,7 +95,8 @@ public class NavigatorInvLayout extends InvLayout {
             if (idxDefinition == null) {
                 throw new RuntimeException("Found character that has no definition in the layout (" + idxChar + ")");
             }
-            switch (LayoutDefinitionType.valueOf((String) idxDefinition.get("type"))) {
+            var definitionType = LayoutDefinitionType.valueOf((String) idxDefinition.get("type"));
+            switch (definitionType) {
             case PROP:
                 inventory.setItem(i, createItemFromJSON(idxDefinition));
                 break;
@@ -144,6 +123,9 @@ public class NavigatorInvLayout extends InvLayout {
                     content = contentList.get(contentIdx).getItem();
                 }
                 inventory.setItem(i, content);
+                break;
+            default:
+                BMLogger.warning("Navigator inventory layout has invalid definition type: " + definitionType.name());
                 break;
             }
         }

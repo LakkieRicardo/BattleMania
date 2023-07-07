@@ -5,10 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.json.simple.JSONObject;
 
+import net.battle.core.handlers.BMLogger;
 import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.LayoutDefinitionType;
 
@@ -21,11 +21,11 @@ public class NavigatorInvListener implements Listener {
             // Not a valid click
             return;
         }
-        if (!InvLayout.isInvFromLayout(inv) || !(InvLayout.getLayoutFromInv(inv) instanceof NavigatorInvLayout navLayout) || !InvLayout.doesInvHaveMeta(inv)
+        if (!InvLayout.IsInvLayoutGenerated(inv) || !(InvLayout.getLayoutFromInv(inv) instanceof NavigatorInvLayout navLayout) || !InvLayout.doesInvHaveMeta(inv)
                 || event.getClickedInventory() != event.getInventory()) {
             return;
         }
-        
+
         int openPage = ((NavigatorInvMeta) NavigatorInvLayout.getMetaFromInv(inv)).page();
         JSONObject definition = navLayout.getItemDefinitions().get(navLayout.getLayout().charAt(event.getSlot()));
         LayoutDefinitionType clickedType = LayoutDefinitionType.valueOf((String) definition.get("type"));
@@ -63,14 +63,12 @@ public class NavigatorInvListener implements Listener {
         case PROP:
             clickType = NavigatorClickType.PROP_CLICK;
             break;
+        default:
+            BMLogger.warning("Found invalid item type in navigator inventory: " + clickedType.name());
+            break;
         }
 
         Bukkit.getPluginManager().callEvent(new NavigatorClickEvent(navLayout, (Player) event.getWhoClicked(), clickType, event, contentItem, openPage));
-    }
-
-    @EventHandler
-    public void onInventoryClosed(InventoryCloseEvent event) {
-        NavigatorInvLayout.clearInventoryFromMaps(event.getInventory());
     }
 
 }

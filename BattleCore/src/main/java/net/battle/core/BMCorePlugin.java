@@ -64,8 +64,10 @@ import net.battle.core.handlers.ScoreboardHandler;
 import net.battle.core.handlers.SwearSearchAlgorithm;
 import net.battle.core.handlers.TimeHandler;
 import net.battle.core.layouts.InvLayout;
+import net.battle.core.layouts.InvLayoutListener;
 import net.battle.core.layouts.navinv.NavigatorInvLayout;
 import net.battle.core.layouts.navinv.NavigatorInvListener;
+import net.battle.core.layouts.plinv.PlayerInvListener;
 import net.battle.core.listeners.BlockBreakListener;
 import net.battle.core.listeners.ChatListener;
 import net.battle.core.listeners.JoinLeaveListener;
@@ -118,6 +120,8 @@ public class BMCorePlugin extends JavaPlugin {
         try {
             InvLayout.initializeLayoutsFile();
             registerAndLogListener(new NavigatorInvListener());
+            registerAndLogListener(new PlayerInvListener());
+            registerAndLogListener(new InvLayoutListener());
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }

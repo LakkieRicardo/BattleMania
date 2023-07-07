@@ -2,7 +2,6 @@
     {
         "id": "particles_manager",
         "title": "Particles",
-        "slots": 54,
         "layout_rows": [
             "D00000000",
             "000000000",
@@ -63,13 +62,12 @@
         }
     },
     {
-        "id": "settings",
-        "title": "Settings",
-        "slots": 27,
+        "id": "settings_home",
+        "title": "Player Settings",
         "layout_rows": [
-            "0000C0000",
-            "CCCCCCCCC",
-            "0000000PN"
+            "0000P0000",
+            "00H0G0U00",
+            "000000000"
         ],
         "definitions": {
             "0": {
@@ -77,40 +75,199 @@
                 "material": "GRAY_STAINED_GLASS_PANE",
                 "name": "&0"
             },
-            "C": {
-                "type": "NAVIGATOR_CONTENT",
-                "default": {
-                    "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "&0"
-                }
+            "P": {
+                "type": "TARGET_PLAYER_HEAD"
+            },
+            "H": {
+                "type": "PROP",
+                "material": "PAPER",
+                "name": "&aHub Settings",
+                "button_id": "hub"
+            },
+            "G": {
+                "type": "PROP",
+                "material": "G",
+                "name": "&aGame Settings",
+                "button_id": "game"
+            },
+            "U": {
+                "type": "PROP",
+                "material": "G",
+                "name": "&aPublic Settings",
+                "button_id": "public"
+            }
+        }
+    },
+    {
+        "id": "settings_hub",
+        "title": "Hub Settings",
+        "layout_rows": [
+            "0000P0000",
+            "V0L0F0A0S",
+            "H00000000"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "&0"
             },
             "P": {
-                "type": "NAVIGATOR_PREVIOUS",
-                "active": {
-                    "material": "STONE_BUTTON",
-                    "name": "&aGo to previous",
-                    "lore": [
-                        "&7Navigate to previous page"
-                    ]
-                },
-                "default": {
-                    "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "&0"
-                }
+                "type": "TARGET_PLAYER_HEAD"
             },
-            "N": {
-                "type": "NAVIGATOR_NEXT",
-                "active": {
-                    "material": "STONE_BUTTON",
-                    "name": "&aGo to next",
-                    "lore": [
-                        "&7Navigate to next page"
-                    ]
-                },
-                "default": {
-                    "material": "GRAY_STAINED_GLASS_PANE",
-                    "name": "&0"
-                }
+            "H": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aGo back",
+                "lore": [
+                    "Go back to the home page in settings"
+                ],
+                "button_id": "back"
+            },
+            "V": {
+                "type": "PROP",
+                "material": "ENDER_PEARL",
+                "lore": [
+                    "Toggle being able to see other players in Lobby"
+                ],
+                "button_id": "hub.showplayers"
+            },
+            "L": {
+                "type": "PROP",
+                "material": "FIREWORK_STAR",
+                "lore": [
+                    "Toggle player launching"
+                ],
+                "button_id": "hub.playerlaunch"
+            },
+            "F": {
+                "type": "PROP",
+                "material": "BARRIER",
+                "lore": [
+                    "Click to toggle force field"
+                ],
+                "button_id": "hub.forcefield"
+            },
+            "A": {
+                "type": "PROP",
+                "material": "FEATHER",
+                "lore": [
+                    "Toggle anti-velocity"
+                ],
+                "button_id": "hub.antivelocity"
+            },
+            "S": {
+                "type": "PROP",
+                "material": "FEATHER",
+                "lore": [
+                    "Toggle fast sprint"
+                ],
+                "button_id": "hub.fastsprint"
+            }
+        }
+    },
+    {
+        "id": "settings_game",
+        "title": "Game Settings",
+        "layout_rows": [
+            "0000P0000",
+            "000L0I000",
+            "H00000000"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "&0"
+            },
+            "P": {
+                "type": "TARGET_PLAYER_HEAD"
+            },
+            "H": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aGo back",
+                "lore": [
+                    "Go back to the home page in settings"
+                ],
+                "button_id": "back"
+            },
+            "L": {
+                "type": "PROP",
+                "material": "ENDER_PEARL",
+                "lore": [
+                    "Toggle leaving on player death"
+                ],
+                "button_id": "game.leaveondeath"
+            },
+            "I": {
+                "type": "PROP",
+                "material": "ENDER_PEARL",
+                "lore": [
+                    "Toggle if you want to show particles in-game"
+                ],
+                "button_id": "game.particles"
+            }
+        }
+    },
+    {
+        "id": "settings_public",
+        "title": "Public Settings",
+        "layout_rows": [
+            "0000P0000",
+            "0C0M0R0S0",
+            "H00000000"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "&0"
+            },
+            "P": {
+                "type": "TARGET_PLAYER_HEAD"
+            },
+            "H": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aGo back",
+                "lore": [
+                    "Go back to the home page in settings"
+                ],
+                "button_id": "back"
+            },
+            "C": {
+                "type": "PROP",
+                "material": "ENDER_PEARL",
+                "lore": [
+                    "Toggle seeing other players' messages"
+                ],
+                "button_id": "public.playerchat"
+            },
+            "M": {
+                "type": "PROP",
+                "material": "ENDER_PEARL",
+                "lore": [
+                    "Toggle receiving private messages"
+                ],
+                "button_id": "public.privatemsgs"
+            },
+            "R": {
+                "type": "PROP",
+                "material": "ENDER_PEARL",
+                "lore": [
+                    "Toggle receiving party requests"
+                ],
+                "button_id": "public.partyrequests"
+            },
+            "S": {
+                "type": "PROP",
+                "material": "ENDER_PEARL",
+                "lore": [
+                    "Disables or enables showing swear words",
+                    "&e&lWARN: &7You must have 5+ hours in-game to enable this."
+                ],
+                "button_id": "public.showswears"
             }
         }
     }

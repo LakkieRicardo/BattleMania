@@ -5,6 +5,7 @@ public enum LayoutDefinitionType {
     PROP,
     NAVIGATOR_CONTENT,
     NAVIGATOR_PREVIOUS,
-    NAVIGATOR_NEXT;
+    NAVIGATOR_NEXT,
+    TARGET_PLAYER_HEAD;
 
 }
