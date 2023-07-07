@@ -36,6 +36,7 @@ public abstract class InvLayout {
     protected final String layoutId;
     protected final String title;
     protected final String layout;
+    protected final Map<Character, JSONObject> itemDefines = new HashMap<>();
 
     protected final List<IInvLayoutEffect> effects = new ArrayList<>();
 
@@ -51,6 +52,13 @@ public abstract class InvLayout {
 
         if (layout.length() % 9 != 0) {
             throw new IllegalArgumentException("Layout size must be divisible by 9");
+        }
+
+        JSONObject definesObject = (JSONObject) layoutJSON.get("definitions");
+        for (Object key : definesObject.keySet()) {
+            JSONObject definition = (JSONObject) definesObject.get(key);
+            char c = ((String) key).charAt(0);
+            itemDefines.put(c, definition);
         }
     }
 
@@ -68,6 +76,10 @@ public abstract class InvLayout {
 
     public String getTitle() {
         return title;
+    }
+
+    public Map<Character, JSONObject> getItemDefines() {
+        return itemDefines;
     }
 
     /**

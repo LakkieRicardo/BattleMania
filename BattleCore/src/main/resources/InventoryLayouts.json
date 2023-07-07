@@ -100,7 +100,7 @@
     },
     {
         "id": "settings_hub",
-        "title": "Hub Settings",
+        "title": "Player Settings",
         "layout_rows": [
             "0000P0000",
             "V0L0F0A0S",
@@ -168,7 +168,7 @@
     },
     {
         "id": "settings_game",
-        "title": "Game Settings",
+        "title": "Player Settings",
         "layout_rows": [
             "0000P0000",
             "000L0I000",
@@ -212,7 +212,7 @@
     },
     {
         "id": "settings_public",
-        "title": "Public Settings",
+        "title": "Player Settings",
         "layout_rows": [
             "0000P0000",
             "0C0M0R0S0",
@@ -265,7 +265,7 @@
                 "material": "ENDER_PEARL",
                 "lore": [
                     "Disables or enables showing swear words",
-                    "&e&lWARN: &7You must have 5+ hours in-game to enable this."
+                    "&e&lWARN: &7This setting cannot be changed without 5+ hours in-game."
                 ],
                 "button_id": "public.showswears"
             }

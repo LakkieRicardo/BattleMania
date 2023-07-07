@@ -10,7 +10,7 @@ public class PlayerSettingsSql {
 
     public static synchronized void updateSetting(String uuid, String name, boolean value) {
         BMLogger.info("Updating player setting " + uuid + "#" + name + " to " + value);
-        if (!doesSettingExist(uuid, name)) {
+        if (!playerHasSetting(uuid, name)) {
             insertSetting(uuid, name, value);
             return;
         }
@@ -22,7 +22,7 @@ public class PlayerSettingsSql {
         BMCorePlugin.ACTIVE_PLUGIN.sqlConn.execute("INSERT INTO player_settings (uuid, setting_name, flag_value) VALUES (?, ?, ?)", uuid, name, value);
     }
 
-    public static synchronized boolean doesSettingExist(String uuid, String name) {
+    public static synchronized boolean playerHasSetting(String uuid, String name) {
         try {
             ResultSet rs = BMCorePlugin.ACTIVE_PLUGIN.sqlConn.queryAndFetch("SELECT * FROM player_settings WHERE uuid=? AND setting_name=?", uuid, name);
             return rs.next();

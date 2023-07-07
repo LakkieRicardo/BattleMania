@@ -1,6 +1,5 @@
 package net.battle.core.layouts.navinv;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,20 +34,12 @@ import net.battle.core.layouts.LayoutDefinitionType;
  */
 public class NavigatorInvLayout extends InvLayout {
 
-    private final Map<Character, JSONObject> itemDefines = new HashMap<>();
-
     private List<INavigatorContentItem> contentList = null;
     private boolean hasCountedContentSlots = false;
     private int contentSlotCount = 0;
 
     public NavigatorInvLayout(JSONObject layoutJSON) {
         super(layoutJSON);
-        JSONObject definesObject = (JSONObject) layoutJSON.get("definitions");
-        for (Object key : definesObject.keySet()) {
-            JSONObject definition = (JSONObject) definesObject.get(key);
-            char c = ((String) key).charAt(0);
-            itemDefines.put(c, definition);
-        }
     }
 
     public void setContentList(List<INavigatorContentItem> content) {

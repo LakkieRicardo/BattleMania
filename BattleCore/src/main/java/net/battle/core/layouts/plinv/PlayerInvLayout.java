@@ -1,8 +1,5 @@
 package net.battle.core.layouts.plinv;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -23,20 +20,8 @@ import net.battle.core.layouts.LayoutDefinitionType;
  */
 public class PlayerInvLayout extends InvLayout {
 
-    private final Map<Character, JSONObject> itemDefines = new HashMap<>();
-
     public PlayerInvLayout(JSONObject layoutJSON) {
         super(layoutJSON);
-        JSONObject definesObject = (JSONObject) layoutJSON.get("definitions");
-        for (Object key : definesObject.keySet()) {
-            JSONObject definition = (JSONObject) definesObject.get(key);
-            char c = ((String) key).charAt(0);
-            itemDefines.put(c, definition);
-        }
-    }
-
-    public Map<Character, JSONObject> getItemDefines() {
-        return itemDefines;
     }
 
     @Override

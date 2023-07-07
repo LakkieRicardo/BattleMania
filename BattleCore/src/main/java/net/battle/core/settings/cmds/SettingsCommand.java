@@ -7,7 +7,7 @@ import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
-import net.battle.core.settings.SettingHandler;
+import net.battle.core.layouts.plinv.PlayerInvMeta;
 import net.battle.core.sql.impl.PlayerSettingsSql;
 
 public class SettingsCommand implements CommandBase {
@@ -40,8 +40,7 @@ public class SettingsCommand implements CommandBase {
                 }
                 String defaultValue;
                 if (BMCorePlugin.ACTIVE_PLUGIN.getSettingsContains("settingDefaults." + setting)) {
-                    defaultValue = Boolean
-                            .toString(BMCorePlugin.ACTIVE_PLUGIN.getSettingsBoolean("settingDefaults." + setting));
+                    defaultValue = Boolean.toString(BMCorePlugin.ACTIVE_PLUGIN.getSettingsBoolean("settingDefaults." + setting));
                 } else {
                     defaultValue = "<missing>";
                 }
@@ -68,12 +67,12 @@ public class SettingsCommand implements CommandBase {
             pl.sendMessage(Prefixes.COMMAND + "Updated setting §c" + setting + "§f to §c" + value);
             return;
         }
-        pl.openInventory(SettingHandler.getSettingsInventory(pl.getName()));
+        pl.openInventory(BMCorePlugin.ACTIVE_PLUGIN.settingsHandler.getHomeLayout().createInventory(pl, new PlayerInvMeta(pl)));
         pl.sendMessage(Prefixes.COMMAND + "Opened settings");
     }
 
     @Override
     public String getUsage() {
-        return "/settings <setting/list> [value(true/false)]";
+        return "/settings [setting/list] [value(true/false)]";
     }
 }

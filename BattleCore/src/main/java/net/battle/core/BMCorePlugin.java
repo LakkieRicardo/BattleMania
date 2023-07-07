@@ -89,7 +89,8 @@ import net.battle.core.punish.gui.ReportInventory;
 import net.battle.core.punish.listeners.PlayerPunishmentListener;
 import net.battle.core.punish.listeners.PlayerFreezeListener;
 import net.battle.core.settings.cmds.SettingsCommand;
-import net.battle.core.settings.gui.SettingListener;
+import net.battle.core.settings.inv.SettingInvHandler;
+import net.battle.core.settings.inv.SettingListener;
 import net.battle.core.sql.ConnectionSQL;
 import net.battle.core.supplydrop.cmds.SupplyDropCommand;
 import net.battle.core.supplydrop.listeners.SupplyDropHandler;
@@ -101,6 +102,7 @@ public class BMCorePlugin extends JavaPlugin {
 
     public ConnectionSQL sqlConn = null;
     public Random random;
+    public SettingInvHandler settingsHandler;
     // TODO: Move this to Bungee
     private YamlConfiguration settingsFile = null;
 
@@ -116,12 +118,10 @@ public class BMCorePlugin extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
 
-        BMLogger.info("Initializing InventoryLayouts.json file and listeners...");
+        BMLogger.info("Initializing InventoryLayouts.json file...");
         try {
             InvLayout.initializeLayoutsFile();
-            registerAndLogListener(new NavigatorInvListener());
-            registerAndLogListener(new PlayerInvListener());
-            registerAndLogListener(new InvLayoutListener());
+            settingsHandler = new SettingInvHandler();
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
@@ -198,9 +198,8 @@ public class BMCorePlugin extends JavaPlugin {
         registerAndLogListener(new ManageUserListener());
         registerAndLogListener(new ReportInventory());
         registerAndLogListener(new PlayerPunishmentListener());
-        registerAndLogListener(new SettingListener());
         registerAndLogListener(new PlayerFreezeListener());
-
+        
         BMLogger.info("Initializing asset command listeners...");
         registerAndLogListener(new AssetChestListener());
         registerAndLogListener(new AssetInventoryListener());
@@ -209,6 +208,12 @@ public class BMCorePlugin extends JavaPlugin {
         registerAndLogListener(new ParticleInventoryListener());
         registerAndLogListener(new GadgetInventoryListener());
         registerAndLogListener(new HatLeaveListener());
+        
+        BMLogger.info("Initializing layouts listeners...");
+        registerAndLogListener(new NavigatorInvListener());
+        registerAndLogListener(new PlayerInvListener());
+        registerAndLogListener(new InvLayoutListener());
+        registerAndLogListener(new SettingListener(settingsHandler));
 
         BMLogger.info("Initializing assets...");
         // Constructors will register them under the "particles" list

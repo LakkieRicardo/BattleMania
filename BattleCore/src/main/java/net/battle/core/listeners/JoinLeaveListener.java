@@ -8,7 +8,7 @@ import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.ScoreboardHandler;
 import net.battle.core.handlers.TempHandler;
-import net.battle.core.settings.SettingHandler;
+import net.battle.core.settings.inv.SettingInvHandler;
 import net.battle.core.sql.impl.PlayerInfoSql;
 import net.battle.core.sql.records.PlayerInfo;
 import net.kyori.adventure.text.Component;
@@ -31,9 +31,9 @@ public class JoinLeaveListener implements Listener {
         String playerUUID = pl.getUniqueId().toString();
 
         // Initialize player settings if needed
-        List<String> missingPlayerSettings = SettingHandler.getPlayerMissingSettings(playerUUID);
+        List<String> missingPlayerSettings = SettingInvHandler.getPlayerMissingSettings(playerUUID);
         if (missingPlayerSettings.size() > 0) {
-            SettingHandler.insertPlayerDefaultSettings(playerUUID, missingPlayerSettings);
+            SettingInvHandler.insertPlayerDefaultSettings(playerUUID, missingPlayerSettings);
         }
 
         // Initialize player info

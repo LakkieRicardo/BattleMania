@@ -54,6 +54,18 @@ public class InventoryUtils {
         return item;
     }
 
+    public static ItemStack insertItemLore(ItemStack item, String lore, int idx) {
+        ItemMeta meta = item.getItemMeta();
+        List<Component> newLore = meta.lore();
+        if (newLore == null) {
+            newLore = new ArrayList<>();
+        }
+        newLore.add(idx, Component.text(lore));
+        meta.lore(newLore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public static ItemStack editItem(ItemStack item, Component name, List<Component> lore) {
         return setItemLore(renameItem(item, name), lore);
     }

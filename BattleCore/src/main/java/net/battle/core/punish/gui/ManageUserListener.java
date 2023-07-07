@@ -19,6 +19,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import net.battle.core.BMCorePlugin;
 import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.InventoryUtils;
@@ -26,9 +27,9 @@ import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.StringUtility;
 import net.battle.core.handlers.TempHandler;
+import net.battle.core.layouts.plinv.PlayerInvMeta;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.punish.PunishManager;
-import net.battle.core.settings.SettingHandler;
 import net.battle.core.sql.impl.PunishmentSql;
 import net.battle.core.sql.records.PlayerPunishInfo;
 import net.battle.core.sql.records.PunishType;
@@ -100,7 +101,7 @@ public class ManageUserListener implements Listener {
                     return;
                 }
                 pl.closeInventory();
-                pl.openInventory(SettingHandler.getSettingsInventory(targetName));
+                pl.openInventory(BMCorePlugin.ACTIVE_PLUGIN.settingsHandler.getHomeLayout().createInventory(pl, new PlayerInvMeta(targetOffline)));
                 return;
             }
             if (m == Material.PISTON) {
