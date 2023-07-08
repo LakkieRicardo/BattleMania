@@ -15,7 +15,7 @@ import net.battle.core.sql.records.PunishType;
 import net.kyori.adventure.text.Component;
 
 public class PlayerPunishmentListener implements Listener {
-    
+
     @EventHandler
     public void onPlayerChateMute(AsyncChatEvent e) {
         Player pl = e.getPlayer();
@@ -39,16 +39,8 @@ public class PlayerPunishmentListener implements Listener {
         if (punishments == null || punishments.size() == 0) {
             return;
         }
-        
-        Component fullMsgComp = null;
-        for (String s : PunishManager.getBanMessage(punishments.get(0))) {
-            if (fullMsgComp == null ){
-                fullMsgComp = Component.text(s);
-            } else {
-                fullMsgComp = fullMsgComp.appendNewline().append(Component.text(s));
-            }
-        }
 
+        Component fullMsgComp = Component.text("\n" + String.join("\n", PunishManager.getBanMessage(punishments.get(0))));
         e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, fullMsgComp);
     }
 }

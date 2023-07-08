@@ -76,7 +76,11 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD"
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&a<Target.Username>",
+                "lore": [
+                    "&7Player settings"
+                ]
             },
             "H": {
                 "type": "PROP",
@@ -86,13 +90,12 @@
             },
             "G": {
                 "type": "PROP",
-                "material": "G",
+                "material": "REPEATER",
                 "name": "&aGame Settings",
                 "button_id": "game"
             },
             "U": {
-                "type": "PROP",
-                "material": "G",
+                "type": "TARGET_PLAYER_HEAD",
                 "name": "&aPublic Settings",
                 "button_id": "public"
             }
@@ -113,14 +116,18 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD"
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&a<Target.Username>",
+                "lore": [
+                    "&7Player settings"
+                ]
             },
             "H": {
                 "type": "PROP",
                 "material": "STONE_BUTTON",
                 "name": "&aGo back",
                 "lore": [
-                    "Go back to the home page in settings"
+                    "&7Go back to the home page in settings"
                 ],
                 "button_id": "back"
             },
@@ -128,7 +135,7 @@
                 "type": "PROP",
                 "material": "ENDER_PEARL",
                 "lore": [
-                    "Toggle being able to see other players in Lobby"
+                    "&7Toggle being able to see other players in Lobby"
                 ],
                 "button_id": "hub.showplayers"
             },
@@ -136,7 +143,7 @@
                 "type": "PROP",
                 "material": "FIREWORK_STAR",
                 "lore": [
-                    "Toggle player launching"
+                    "&7Toggle player launching"
                 ],
                 "button_id": "hub.playerlaunch"
             },
@@ -144,7 +151,7 @@
                 "type": "PROP",
                 "material": "BARRIER",
                 "lore": [
-                    "Click to toggle force field"
+                    "&7Click to toggle force field"
                 ],
                 "button_id": "hub.forcefield"
             },
@@ -152,7 +159,7 @@
                 "type": "PROP",
                 "material": "FEATHER",
                 "lore": [
-                    "Toggle anti-velocity"
+                    "&7Toggle anti-velocity"
                 ],
                 "button_id": "hub.antivelocity"
             },
@@ -160,7 +167,7 @@
                 "type": "PROP",
                 "material": "FEATHER",
                 "lore": [
-                    "Toggle fast sprint"
+                    "&7Toggle fast sprint"
                 ],
                 "button_id": "hub.fastsprint"
             }
@@ -181,14 +188,18 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD"
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&a<Target.Username>",
+                "lore": [
+                    "&7Player settings"
+                ]
             },
             "H": {
                 "type": "PROP",
                 "material": "STONE_BUTTON",
                 "name": "&aGo back",
                 "lore": [
-                    "Go back to the home page in settings"
+                    "&7Go back to the home page in settings"
                 ],
                 "button_id": "back"
             },
@@ -196,7 +207,7 @@
                 "type": "PROP",
                 "material": "ENDER_PEARL",
                 "lore": [
-                    "Toggle leaving on player death"
+                    "&7Toggle leaving on player death"
                 ],
                 "button_id": "game.leaveondeath"
             },
@@ -204,7 +215,7 @@
                 "type": "PROP",
                 "material": "ENDER_PEARL",
                 "lore": [
-                    "Toggle if you want to show particles in-game"
+                    "&7Toggle if you want to show particles in-game"
                 ],
                 "button_id": "game.particles"
             }
@@ -225,14 +236,18 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD"
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&a<Target.Username>",
+                "lore": [
+                    "&7Player settings"
+                ]
             },
             "H": {
                 "type": "PROP",
                 "material": "STONE_BUTTON",
                 "name": "&aGo back",
                 "lore": [
-                    "Go back to the home page in settings"
+                    "&7Go back to the home page in settings"
                 ],
                 "button_id": "back"
             },
@@ -240,7 +255,7 @@
                 "type": "PROP",
                 "material": "ENDER_PEARL",
                 "lore": [
-                    "Toggle seeing other players' messages"
+                    "&7Toggle seeing other players' messages"
                 ],
                 "button_id": "public.playerchat"
             },
@@ -248,7 +263,7 @@
                 "type": "PROP",
                 "material": "ENDER_PEARL",
                 "lore": [
-                    "Toggle receiving private messages"
+                    "&7Toggle receiving private messages"
                 ],
                 "button_id": "public.privatemsgs"
             },
@@ -256,7 +271,7 @@
                 "type": "PROP",
                 "material": "ENDER_PEARL",
                 "lore": [
-                    "Toggle receiving party requests"
+                    "&7Toggle receiving party requests"
                 ],
                 "button_id": "public.partyrequests"
             },
@@ -264,7 +279,7 @@
                 "type": "PROP",
                 "material": "ENDER_PEARL",
                 "lore": [
-                    "Disables or enables showing swear words",
+                    "&7Disables or enables showing swear words",
                     "&e&lWARN: &7This setting cannot be changed without 5+ hours in-game."
                 ],
                 "button_id": "public.showswears"

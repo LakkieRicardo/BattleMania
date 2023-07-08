@@ -48,17 +48,17 @@ public class BanCommand implements CommandBase {
         try {
             permanent = Boolean.parseBoolean(args[1]);
         } catch (Exception e) {
-            pl.sendMessage(Prefixes.ERROR + "Invalid permanent ban value.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid permanent ban value");
             return;
         }
         try {
             dayCount = Integer.parseInt(args[0]);
         } catch (Exception e) {
-            pl.sendMessage(Prefixes.ERROR + "Invalid amount of days.");
+            pl.sendMessage(Prefixes.ERROR + "Invalid amount of days");
             return;
         }
         if (dayCount < 1) {
-            pl.sendMessage(Prefixes.ERROR + "The ban must last for at least 1 day.");
+            pl.sendMessage(Prefixes.ERROR + "The ban must last for at least 1 day");
             return;
         }
 

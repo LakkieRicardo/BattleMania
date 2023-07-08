@@ -1,13 +1,22 @@
 package net.battle.core.layouts.plinv;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import net.battle.core.handlers.ItemStackBuilder;
+import net.battle.core.handlers.BMLogger;
+import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.LayoutDefinitionType;
+import net.kyori.adventure.text.Component;
 
 /**
  * This is an inventory layout which is generated with a specific target player. It uses the PlayerInvMeta as its meta
@@ -24,10 +33,23 @@ public class PlayerInvLayout extends InvLayout {
         super(layoutJSON);
     }
 
+    public String replaceKeywords(String text, Player viewer, PlayerInvMeta meta) {
+        var mappings = new HashMap<String, String>();
+        mappings.put("<Target.Username>", meta.target().getName());
+        mappings.put("<Target.UUID>", meta.target().getUniqueId().toString());
+        mappings.put("<Viewer.Username>", viewer.getName());
+        mappings.put("<Viewer.UUID>", viewer.getUniqueId().toString());
+        for (String keyword : mappings.keySet()) {
+            text = text.replaceAll(keyword, mappings.get(keyword));
+        }
+        return text;
+    }
+
     @Override
     protected void doUpdateInventoryMeta(Inventory inventory, Player viewer, Object meta) {
         if (!(meta instanceof PlayerInvMeta plMeta)) {
-            throw new IllegalArgumentException("Navigator page meta must be PlayerInvMeta!");
+            BMLogger.severe(meta.getClass().getSimpleName());
+            throw new IllegalArgumentException("Player inventory meta must be PlayerInvMeta!");
         }
         for (int i = 0; i < layout.length(); i++) {
             char idxChar = layout.charAt(i);
@@ -40,7 +62,23 @@ public class PlayerInvLayout extends InvLayout {
                 inventory.setItem(i, createItemFromJSON(idxDefinition));
                 break;
             case TARGET_PLAYER_HEAD:
-                inventory.setItem(i, new ItemStackBuilder(Material.PLAYER_HEAD).withSkullOwner(plMeta.target()).build());
+                ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+                if (idxDefinition.containsKey("name")) {
+                    String newName = replaceKeywords(((String) idxDefinition.get("name")).replaceAll("&", "§"), viewer, plMeta);
+                    InventoryUtils.renameItem(item, newName);
+                }
+                if (idxDefinition.containsKey("lore")) {
+                    JSONArray loreLines = (JSONArray) idxDefinition.get("lore");
+                    List<Component> newLore = new ArrayList<>();
+                    for (int loreIdx = 0; loreIdx < loreLines.size(); loreIdx++) {
+                        newLore.add(Component.text(replaceKeywords(((String) loreLines.get(loreIdx)).replaceAll("&", "§"), viewer, plMeta)));
+                    }
+                    InventoryUtils.setItemLore(item, newLore);
+                }
+                SkullMeta skull = (SkullMeta) item.getItemMeta();
+                skull.setOwningPlayer(plMeta.target());
+                item.setItemMeta(skull);
+                inventory.setItem(i, item);
                 break;
             default:
                 break;

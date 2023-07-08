@@ -45,16 +45,14 @@ public class KickCommand implements CommandBase {
         String reason = CommandHandler.getSpacedArgument(args, " ", 1);
         if (reason.length() < 4) {
             executor.sendMessage(Prefixes.ERROR + "Please enter a more detailed reason");
-
             return;
         }
-        ProxyHandler.kickPlayer(executor, targetName, formatKickMessage(targetName, reason, executor.getName()));
+        ProxyHandler.kickPlayer(executor, target.getUniqueId().toString(), formatKickMessage(targetName, reason, executor.getName()));
     }
 
     public static String formatKickMessage(String player, String reason, String kicker) {
-        return "§a§l" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle")
-                + " §c§lPunishments\n\n§7You have" + " been §c§lKICKED!\n§7Reason: §c" + reason + "\n§7By: §c"
-                + kicker;
+        return BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " §c§lPunishments\n\n§7You have" + " been §c§lKICKED!\n§7Reason: §c" + reason
+                + "\n§7By: §c" + kicker;
     }
 
     @Override

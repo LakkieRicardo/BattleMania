@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.sql.Types;
 
 public class ConnectionSQL {
 
@@ -17,8 +18,7 @@ public class ConnectionSQL {
 
     public void openConnection(String ip, String password) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
-        conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/battlemania?autoReconnect=true&useUnicode=true",
-                    "root", password);
+        conn = DriverManager.getConnection("jdbc:mysql://" + ip + "/battlemania?autoReconnect=true&useUnicode=true", "root", password);
     }
 
     public void closeConnection() {
@@ -81,6 +81,13 @@ public class ConnectionSQL {
                     // Weird issue caused by java.sql.Date
                     // https://stackoverflow.com/questions/2400955/how-to-store-java-date-to-mysql-datetime-with-jpa
                     statement.setTimestamp(sqlIdx, new Timestamp(argDate.getTime()));
+                    continue;
+                }
+
+                if (currentArg == null) {
+                    // Currently we only use null for java.sql.Date
+                    // This may cause problems in the future if we use null for more types
+                    statement.setNull(sqlIdx, Types.DATE);
                     continue;
                 }
 

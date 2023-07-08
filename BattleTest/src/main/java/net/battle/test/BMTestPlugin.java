@@ -11,7 +11,6 @@ import net.battle.test.cmds.HungerCommand;
 import net.battle.test.cmds.LobbyCommand;
 import net.battle.test.cmds.LockdownCommand;
 import net.battle.test.cmds.NewsCommand;
-import net.battle.test.cmds.ShutdownCommand;
 import net.battle.test.cmds.TeleportAllCommand;
 import net.battle.test.cmds.ToggleFadeCommand;
 import net.battle.test.cmds.UtilityCommand;
@@ -59,7 +58,6 @@ public class BMTestPlugin extends JavaPlugin {
         CommandHandler.registerCommand(new HungerCommand());
         CommandHandler.registerCommand(new LockdownCommand());
         CommandHandler.registerCommand(new ClearDropsCommand());
-        CommandHandler.registerCommand(new ShutdownCommand());
         CommandHandler.registerCommand(new UtilityCommand());
         CommandHandler.registerCommand(new HealCommand());
         CommandHandler.registerCommand(new AllowCommand());

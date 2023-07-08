@@ -297,7 +297,7 @@ public class BMCorePlugin extends JavaPlugin {
     }
 
     public synchronized boolean getSettingsContains(String key) {
-        return getSettingsContains(key);
+        return settingsFile.contains(key);
     }
 
     public synchronized List<String> getSettingsStringList(String key) {

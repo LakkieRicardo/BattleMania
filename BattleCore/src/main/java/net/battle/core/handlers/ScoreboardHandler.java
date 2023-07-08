@@ -46,7 +46,7 @@ public class ScoreboardHandler {
         Scoreboard board = setScoreboard(pl);
         String objName = genRandomString(14);
         Objective obj = board.registerNewObjective(objName, Criteria.DUMMY,
-                Component.text("§a§l" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " Test"));
+                Component.text(BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " §c" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("instancetitle")));
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         Team rank = board.registerNewTeam("%rankname");
         Team level = board.registerNewTeam("%level");

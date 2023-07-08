@@ -1,11 +1,12 @@
 lobbyplayerlimit: 24
 gameplayerlimit: 12
 pmresetinterval: 4
-servertitle: BattleMania
+servertitle: '§a§lBattleMania'
+instancetitle: 'TestServer'
 serverip: play.battlemania.net
 websiteurl: web.battlemania.net
 version: '8.1'
-news: 'Upgraded to 1.19'
+news: 'Upgraded to 1.20.1'
 playerCount: 0 # TODO: what is this used for
 
 settingList: ['public.showswears', 'public.partyrequests', 'public.privatemsgs', 'public.playerchat', 'game.leaveondeath', 'game.particles', 'hub.showplayers', 'hub.playerlaunch', 'hub.forcefield', 'hub.antivelocity', 'hub.fastsprint']

@@ -98,7 +98,12 @@ public abstract class InvLayout {
     }
 
     protected ItemStack createItemFromJSON(JSONObject definition) {
-        ItemStack item = new ItemStack(Material.valueOf((String) definition.get("material")));
+        ItemStack item;
+        if (definition.containsKey("material")) {
+            item = new ItemStack(Material.valueOf((String) definition.get("material")));
+        } else {
+            item = new ItemStack(Material.STONE);
+        }
         if (definition.containsKey("name")) {
             InventoryUtils.renameItem(item, ((String) definition.get("name")).replaceAll("&", "§"));
         }
@@ -135,6 +140,9 @@ public abstract class InvLayout {
         doUpdateInventoryMeta(inventory, viewer, meta);
         for (IInvLayoutEffect effect : effects) {
             effect.applyEffect(inventory, viewer, this, meta);
+        }
+        if (!LAYOUT_MAP.containsKey(inventory)) {
+            LAYOUT_MAP.put(inventory, this);
         }
         INVENTORY_META_MAP.put(inventory, meta);
     }
@@ -197,7 +205,7 @@ public abstract class InvLayout {
     }
 
     /**
-     * Moves an inventory from one layout to another. There are, however, some pre-conditions required and will throw an
+     * Moves an inventory from one layout to another. The metadata object will be transferred directly. There are, however, some pre-conditions required and will throw an
      * exception if not met: <br/>
      * <ol>
      * <li>The inventory must be already registered into a layout</li>
@@ -220,9 +228,10 @@ public abstract class InvLayout {
             BMLogger.warning("Attempting to transfer mismatching layout titles(old: \"" + oldLayout.getTitle() + "\", new: \"" + newLayout.getTitle()
                     + "\"). The transfer will succeed but the title cannot be updated.");
         }
+        Object oldMeta = INVENTORY_META_MAP.get(inv);
         INVENTORY_META_MAP.remove(inv);
         LAYOUT_MAP.remove(inv);
-        newLayout.updateInventoryMeta(inv, viewer, newLayout);
+        newLayout.updateInventoryMeta(inv, viewer, oldMeta);
     }
 
 }

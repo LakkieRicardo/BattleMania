@@ -42,16 +42,20 @@ public class InventoryUtils {
         return setItemLore(item, Arrays.asList(new Component[] { Component.text(lore) }));
     }
 
-    public static ItemStack addItemLore(ItemStack item, String lore) {
+    public static ItemStack addItemLore(ItemStack item, Component lore) {
         ItemMeta meta = item.getItemMeta();
         List<Component> newLore = meta.lore();
         if (newLore == null) {
             newLore = new ArrayList<>();
         }
-        newLore.add(Component.text(lore));
+        newLore.add(lore);
         meta.lore(newLore);
         item.setItemMeta(meta);
         return item;
+    }
+
+    public static ItemStack addItemLore(ItemStack item, String lore) {
+        return addItemLore(item, Component.text(lore));
     }
 
     public static ItemStack insertItemLore(ItemStack item, String lore, int idx) {
@@ -111,8 +115,8 @@ public class InventoryUtils {
         if (!item.getItemMeta().hasDisplayName() || !item2.getItemMeta().hasDisplayName()) {
             return false;
         }
-        return (item.getType() == item2.getType() && BMTextConvert.CTS.serialize(item.getItemMeta().displayName())
-                .equalsIgnoreCase(BMTextConvert.CTS.serialize(item2.getItemMeta().displayName())));
+        return (item.getType() == item2.getType()
+                && BMTextConvert.CTS.serialize(item.getItemMeta().displayName()).equalsIgnoreCase(BMTextConvert.CTS.serialize(item2.getItemMeta().displayName())));
     }
 
     public static Inventory fillBlanks(Inventory inv) {

@@ -45,7 +45,7 @@ public class ManageUserCommand implements CommandBase {
         String reason = CommandHandler.getSpacedArgument(args, " ", 1);
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-        executor.sendMessage(Prefixes.COMMAND + "You are now managing §c" + target);
+        executor.sendMessage(Prefixes.COMMAND + "You are now managing §c" + target.getName());
         BMLogger.info("Opening manager user for " + target);
         executor.openInventory(ManageUserHandler.getMain(executor, target));
         ManageUserListener.REASONS.put(executor.getName(), reason);

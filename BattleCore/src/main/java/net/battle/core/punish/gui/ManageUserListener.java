@@ -22,6 +22,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import net.battle.core.BMCorePlugin;
 import net.battle.core.BMTextConvert;
 import net.battle.core.command.CommandHandler;
+import net.battle.core.handlers.BMLogger;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
@@ -175,7 +176,11 @@ public class ManageUserListener implements Listener {
 
             if (m == Material.REDSTONE_BLOCK) {
                 if (InventoryUtils.loreContainsString(clicked.getItemMeta(), "§cActivity: §7Active")) {
-                    PunishManager.handleDisablePunishment(pl, targetOffline, PunishType.BAN, e.getCurrentItem());
+                    if (!PunishManager.handleDisablePunishment(pl, targetOffline, PunishType.BAN, e.getCurrentItem())) {
+                        BMLogger.severe("Failed to disable ban for " + targetOffline.getName());
+                        pl.sendMessage(Prefixes.PUNISH + "The system failed to disable the ban.");
+                        return;
+                    }
                     pl.sendMessage(Prefixes.PUNISH + "The user §c" + t + "§f has been unbanned.");
                     pl.closeInventory();
                     return;
@@ -186,7 +191,11 @@ public class ManageUserListener implements Listener {
 
             if (m == Material.BARRIER) {
                 if (InventoryUtils.loreContainsString(clicked.getItemMeta(), "§cActivity: §7Active")) {
-                    PunishManager.handleDisablePunishment(pl, targetOffline, PunishType.MUTE, e.getCurrentItem());
+                    if (!PunishManager.handleDisablePunishment(pl, targetOffline, PunishType.MUTE, e.getCurrentItem())) {
+                        BMLogger.severe("Failed to disable mute for " + targetOffline.getName());
+                        pl.sendMessage(Prefixes.PUNISH + "The system failed to disable the mute.");
+                        return;
+                    }
                     pl.sendMessage(Prefixes.PUNISH + "The user §c" + t + "§f has been unmuted.");
                     if (!pl.getUniqueId().equals(targetOffline.getUniqueId()) && targetOffline.isOnline()) {
                         Player targetOnline = Bukkit.getPlayer(targetOffline.getUniqueId());
@@ -287,6 +296,7 @@ public class ManageUserListener implements Listener {
                     PlayerPunishInfo banInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), new Date(System.currentTimeMillis()
                             + TimeUnit.DAYS.toMillis(dayCount)), true, PunishType.BAN, reason);
                     PunishmentSql.insertNewPlayerPunishment(banInfo);
+                    ProxyHandler.kickPlayer(pl, targetOffline.getUniqueId().toString(), String.join("\n", PunishManager.getBanMessage(banInfo)));
                     String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been banned for §c§l" + dayCount + " DAYS§f by §c" + pl.getName();
                     for (Player foo : Bukkit.getOnlinePlayers()) {
                         if (RankHandler.helperPermission(foo)) {
@@ -300,14 +310,16 @@ public class ManageUserListener implements Listener {
                     PlayerPunishInfo muteInfo = new PlayerPunishInfo(0, targetOffline.getUniqueId().toString(), pl.getUniqueId().toString(), new Date(System.currentTimeMillis()
                             + TimeUnit.DAYS.toMillis(dayCount)), true, PunishType.MUTE, reason);
                     PunishmentSql.insertNewPlayerPunishment(muteInfo);
+                    if (targetOffline.isOnline()) {
+                        Player player = Bukkit.getPlayer(targetOffline.getUniqueId());
+                        for (String str : PunishManager.getMuteMessages(muteInfo)) {
+                            player.sendMessage(str);
+                        }
+                    }
                     String msg = Prefixes.PUNISH + "The user §c" + targetName + "§f has been muted for §c§l" + dayCount + " DAYS§f by §c" + pl.getName();
                     for (Player foo : Bukkit.getOnlinePlayers()) {
                         if (RankHandler.helperPermission(foo)) {
                             foo.sendMessage(msg);
-                        }
-                        if (foo.getName().equalsIgnoreCase(targetName)) {
-                            foo.sendMessage(Prefixes.PUNISH + "You have been muted for §c§l" + dayCount + " DAYS§f by §c" + pl.getName() + "§f Reason: §c"
-                                    + reason);
                         }
                     }
                     pl.closeInventory();

@@ -8,6 +8,7 @@ import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.Prefixes;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 
 public class GetUUIDCommand implements CommandBase {
@@ -30,12 +31,11 @@ public class GetUUIDCommand implements CommandBase {
             return;
         }
         String targetUUID = Bukkit.getOfflinePlayer(args[0]).getUniqueId().toString();
-        pl.sendMessage(Component.text(Prefixes.COMMAND + "§c" + args[0] + "§f's UUID is §c")
-                .append(Component.text(targetUUID).clickEvent(ClickEvent.copyToClipboard(targetUUID)))
-                .append(Component.text(".").color(NamedTextColor.WHITE)));
+        pl.sendMessage(Component.text(Prefixes.COMMAND + "§c" + args[0]
+                + "§f's UUID is §c").append(Component.text(targetUUID).clickEvent(ClickEvent.copyToClipboard(targetUUID)).hoverEvent(HoverEvent.showText(Component.text("Click to copy!")))).append(Component.text(".").color(NamedTextColor.WHITE)));
     }
 
     public String getUsage() {
-        return "/uuid <player";
+        return "/uuid <player>";
     }
 }

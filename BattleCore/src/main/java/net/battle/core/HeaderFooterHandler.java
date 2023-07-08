@@ -14,7 +14,7 @@ public class HeaderFooterHandler {
     }
 
     public static void updateHeaderFooter(Player pl) {
-        pl.sendPlayerListHeader(Component.text(BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle")));
+        pl.sendPlayerListHeader(Component.text(BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " §c" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("instancetitle")));
         pl.sendPlayerListFooter(Component.text(BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("serverip"))
                 .color(NamedTextColor.RED).append(Component.text(" - ").color(NamedTextColor.GRAY))
                 .append(Component.text(BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("websiteurl"))

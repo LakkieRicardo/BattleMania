@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import net.battle.core.BMCorePlugin;
+import net.battle.core.handlers.BMLogger;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.punish.gui.ManageUserHandler;
 import net.battle.core.sql.impl.PunishmentSql;
@@ -27,15 +28,13 @@ public class PunishManager {
     public static final int CLIENT_SEVERITY_3 = 31;
     public static final int PERMANENT_SEVERITY = -1;
 
-    public static final SimpleDateFormat PUNISHMENT_DATE_FORMAT = new SimpleDateFormat(
-            "MMMM dd, yyyy");
+    public static final SimpleDateFormat PUNISHMENT_DATE_FORMAT = new SimpleDateFormat("MMMM dd, yyyy");
     public static final SimpleDateFormat PUNISHMENT_TIME_FORMAT = new SimpleDateFormat("hh:mm:ss aa zzz");
 
     public static void updatePlayerPunishments(String uuid, PunishType type) {
         List<PlayerPunishInfo> punishments = PunishmentSql.getPlayerActivePunishments(uuid, type);
         for (PlayerPunishInfo punishment : punishments) {
-            if (punishment.expiration() != null
-                    && System.currentTimeMillis() > punishment.expiration().getTime()) {
+            if (punishment.expiration() != null && System.currentTimeMillis() > punishment.expiration().getTime()) {
                 PunishmentSql.updatePunishmentIsActive(punishment.id(), false);
             }
         }
@@ -43,7 +42,7 @@ public class PunishManager {
 
     public static List<String> getBanMessage(PlayerPunishInfo ban) {
         List<String> lines = new ArrayList<>();
-        lines.add("§a§l" + BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " §c§lPunishments");
+        lines.add(BMCorePlugin.ACTIVE_PLUGIN.getSettingsString("servertitle") + " §c§lPunishments");
         lines.add("§7You have been §c§lBANNED§7!");
         lines.add("§7By: §c" + Bukkit.getOfflinePlayer(UUID.fromString(ban.punisherUUID())).getName());
         lines.add("§7Reason: §c" + ban.reason());
@@ -75,7 +74,7 @@ public class PunishManager {
     /**
      * Handles disabling a punishment in SQL
      * 
-     * @param disabler The player who is disabling the punishment (will be sent the message)
+     * @param disabler      The player who is disabling the punishment (will be sent the message)
      * @param targetOffline The player whose punishment is being disabled
      * @param punishType
      * @param clickedItem
@@ -89,6 +88,7 @@ public class PunishManager {
             if (lore.startsWith(ManageUserHandler.PUNISH_ID_FIELD_PREFIX)) {
                 try {
                     punishmentId = Integer.parseInt(lore.substring(ManageUserHandler.PUNISH_ID_FIELD_PREFIX.length()));
+                    foundId = true;
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     return false;
@@ -96,6 +96,7 @@ public class PunishManager {
             }
         }
         if (!foundId) {
+            BMLogger.warning("Could not find ID for " + targetOffline.getName() + "'s punishment");
             return false;
         }
         try {

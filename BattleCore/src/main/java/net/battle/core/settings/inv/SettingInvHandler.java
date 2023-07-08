@@ -75,12 +75,16 @@ public class SettingInvHandler {
      */
     public static void insertPlayerDefaultSettings(String playerUUID, List<String> missingPlayerSettings) {
         for (String setting : missingPlayerSettings) {
-            String defaultValueKey = "settingDefaults." + setting;
-            if (!BMCorePlugin.ACTIVE_PLUGIN.getSettingsContains(defaultValueKey)) {
-                throw new RuntimeException("Could not find default setting for " + setting + " using BMSettings key \"" + defaultValueKey + "\"");
-            }
-            boolean defaultValue = BMCorePlugin.ACTIVE_PLUGIN.getSettingsBoolean(defaultValueKey);
+            boolean defaultValue = getDefaultSettingValue(setting);
             PlayerSettingsSql.insertSetting(playerUUID, setting, defaultValue);
         }
+    }
+
+    public static boolean getDefaultSettingValue(String setting) {
+        String defaultValueKey = "settingDefaults." + setting;
+        if (!BMCorePlugin.ACTIVE_PLUGIN.getSettingsContains(defaultValueKey)) {
+            throw new RuntimeException("Could not find default setting for " + setting + " using BMSettings key \"" + defaultValueKey + "\"");
+        }
+        return BMCorePlugin.ACTIVE_PLUGIN.getSettingsBoolean(defaultValueKey);
     }
 }

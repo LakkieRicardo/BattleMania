@@ -60,7 +60,7 @@ public class MuteCommand implements CommandBase {
 
             if (targetOnline != null) {
                 targetOnline
-                        .sendMessage(Prefixes.PUNISH + "You've been muted by: §c" + pl.getName() + "§f §c§lPERMANENTLY");
+                        .sendMessage(Prefixes.PUNISH + "You have been muted by §c" + pl.getName() + "§f permanently");
                 targetOnline.sendMessage(Prefixes.PUNISH + "Reason: " + reason);
             }
 
@@ -98,8 +98,8 @@ public class MuteCommand implements CommandBase {
             }
 
             if (targetOnline != null) {
-                targetOnline.sendMessage(Prefixes.PUNISH + "You've been muted by: §c" + pl.getName() + "§f for §c§l"
-                        + dayCount + " DAYS");
+                targetOnline.sendMessage(Prefixes.PUNISH + "You have been muted by §c" + pl.getName() + "§f for §c§l"
+                        + dayCount + "§f days");
                 targetOnline.sendMessage(Prefixes.PUNISH + "Reason: " + reason);
             }
 

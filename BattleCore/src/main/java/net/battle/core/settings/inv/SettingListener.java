@@ -22,10 +22,10 @@ public class SettingListener implements Listener {
 
     @EventHandler
     public void onPlayerInventoryLayoutClicked(PlayerInvClickEvent event) {
+        event.getClickEvent().setCancelled(true);
         if (event.getButtonId() == null) {
             return;
         }
-        event.getClickEvent().setCancelled(true);
 
         Player player = (Player) event.getClickEvent().getWhoClicked();
         String invId = event.getLayout().getId();

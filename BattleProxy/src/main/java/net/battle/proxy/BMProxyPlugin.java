@@ -21,7 +21,6 @@ import net.battle.proxy.cmds.PrivateMessageCommand;
 import net.battle.proxy.cmds.PingCommand;
 import net.battle.proxy.cmds.ReplyCommand;
 import net.battle.proxy.listeners.PluginMessageListener;
-import net.battle.proxy.listeners.ServerKickListener;
 
 @Plugin(id = "bm-proxy-plugin", name = "BMProxyPlugin", version = "1", authors = { "Lakkie" })
 public class BMProxyPlugin {
@@ -39,7 +38,6 @@ public class BMProxyPlugin {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         logger.info("Registering listeners...");
-        registerListener(new ServerKickListener(this));
 
         logger.info("Registering commands...");
         registerCommand(new PingCommand(this));
