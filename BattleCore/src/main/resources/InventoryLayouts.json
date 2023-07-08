@@ -285,5 +285,499 @@
                 "button_id": "public.showswears"
             }
         }
+    },
+    {
+        "id": "manage_home",
+        "title": "Manage User",
+        "layout_rows": [
+            "000R0T000",
+            "000000000",
+            "00P000C00",
+            "000000000",
+            "00E000M00",
+            "000000000"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "&0"
+            },
+            "T": {
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&aManaging <Target.Username>",
+                "lore": [
+                    "&7UUID: &c<Target.UUID>",
+                    "&7Online: &7&l<Target.Online>",
+                    "&7Ingots: &c<Target.Ingots>",
+                    "&7Tokens: &c<Target.Tokens>",
+                    "&7Time: &c<Target.IngameHours> hours",
+                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Server: &c<Target.Server>"
+                ]
+            },
+            "R": {
+                "type": "VIEWER_PLAYER_HEAD",
+                "name": "&aYou (Punisher)",
+                "lore": [
+                    "&7You will be credited with all punishments",
+                    "&7and Helper+ will be notified of the punishment."
+                ]
+            },
+            "P": {
+                "type": "PROP",
+                "name": "&aPunish",
+                "lore": [
+                    "&7Click to assign a punishment"
+                ],
+                "button_id": "AssignPunishment",
+                "add_flags": true
+            },
+            "C": {
+                "type": "PROP",
+                "name": "&aCheck Punishments",
+                "lore": [
+                    "&7Click to view punishments"
+                ],
+                "button_id": "ViewPunishment"
+            },
+            "E": {
+                "type": "PROP",
+                "name": "&aSettings",
+                "lore": [
+                    "&7Click to view or edit",
+                    "&7<Target.Username>'s settings"
+                ],
+                "button_id": "OpenTargetSettings"
+            },
+            "M": {
+                "type": "PROP",
+                "name": "&aMove to a Server",
+                "lore": [
+                    "&7Click to move player",
+                    "&7to a new server"
+                ],
+                "button_id": "MoveServer"
+            }
+        }
+    },
+    {
+        "id": "manage_punish_temp",
+        "title": "Manage User",
+        "layout_rows": [
+            "M00R0T000",
+            "0C00E00L0",
+            "010040060",
+            "020050070",
+            "030000000",
+            "B0000000N"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "&0"
+            },
+            "T": {
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&aManaging <Target.Username>",
+                "lore": [
+                    "&7UUID: &c<Target.UUID>",
+                    "&7Online: &7&l<Target.Online>",
+                    "&7Ingots: &c<Target.Ingots>",
+                    "&7Tokens: &c<Target.Tokens>",
+                    "&7Time: &c<Target.IngameHours> hours",
+                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Server: &c<Target.Server>"
+                ]
+            },
+            "R": {
+                "type": "VIEWER_PLAYER_HEAD",
+                "name": "&aYou (Punisher)",
+                "lore": [
+                    "&7You will be credited with all punishments",
+                    "&7and Helper+ will be notified of the punishment."
+                ]
+            },
+            "C": {
+                "type": "PROP",
+                "material": "LIME_STAINED_GLASS_PANE",
+                "name": "&aChat Punishments",
+                "lore": [
+                    "&7These punishments are applied for breaking",
+                    "&7chat-specific rules."
+                ]
+            },
+            "E": {
+                "type": "PROP",
+                "material": "YELLOW_STAINED_GLASS_PANE",
+                "name": "&aExploit Punishments",
+                "lore": [
+                    "&7These punishments are applied if the",
+                    "&7user is abusing a typically simpler",
+                    "&7unfair gameplay mechanic to ruin the",
+                    "&7experience of other players."
+                ]
+            },
+            "L": {
+                "type": "PROP",
+                "material": "RED_STAINED_GLASS_PANE",
+                "name": "&aClient Punishments",
+                "lore": [
+                    "&7These punishments are applied if the",
+                    "&7user has downloaded/made a modded client",
+                    "&7and is actively using it to cheat."
+                ]
+            },
+            "N": {
+                "type": "PROP",
+                "material": "REDSTONE_BLOCK",
+                "name": "&aGo to Permanent",
+                "lore": [
+                    "&7View permanent punishments"
+                ]
+            },
+            "M": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aTemporary Punishments",
+                "lore": [
+                    "&7You are currently viewing temporary punish",
+                    "&7Click the bottom-right button to go to",
+                    "&7permanent punish."
+                ]
+            },
+            "1": {
+                "type": "PROP",
+                "material": "GREEN_CONCRETE",
+                "name": "&aMute Severity 1",
+                "button_id": "Mute",
+                "punish_days": 1,
+                "lore": [
+                    "&7This is for someone who is ruining gameplay for other players",
+                    "&7either by posting spam, being toxic, etc. However, this",
+                    "&7contrasts with joining the server without playing with the",
+                    "&7intent to harass, spam, etc. Those are a higher severity.",
+                    "&eNote: &7If this player has not been punished before, use a warning.",
+                    "&cMute Duration: &c&l1 day"
+                ]
+            },
+            "2": {
+                "type": "PROP",
+                "material": "YELLOW_CONCRETE",
+                "name": "&aMute Severity 2",
+                "button_id": "Mute",
+                "punish_days": 7,
+                "lore": [
+                    "&7This is for a player who has been muted for similar reasons",
+                    "&7as Mute Severity 1, but has done it consistently. Use this",
+                    "&7as a sign to tell them to take a break from chat.",
+                    "&eNote: &7Do not apply this punishment unless severity 1",
+                    "&7has been used before.",
+                    "&cMute Duration: &c&l7 days"
+                ]
+            },
+            "3": {
+                "type": "PROP",
+                "material": "RED_CONCRETE",
+                "name": "&aMute Severity 3",
+                "button_id": "Mute",
+                "punish_days": 30,
+                "lore": [
+                    "&7This is someone who joined the server with the intent to",
+                    "&7to ruin the usability of chat for other players. However,",
+                    "&7this player is not violating any gameplay rules.",
+                    "&eNote: &7This is a significantly longer punishment. Think",
+                    "&7before punishing.",
+                    "&cMute duration: &c&l30 days"
+                ]
+            },
+            "4": {
+                "type": "PROP",
+                "material": "GREEN_CONCRETE",
+                "name": "&aBan Severity 1",
+                "button_id": "Ban",
+                "punish_days": 1,
+                "lore": [
+                    "&7This is for someone who is abusing a simple loophole or",
+                    "&7some sort of bug in order to gain an advantage. This is",
+                    "&7for someone who only being doing this occasionally.",
+                    "&eNote: &7As always, warn before a ban. Think about banning",
+                    "&7before you go through with it. Do not ban players",
+                    "&7unnecessarily.",
+                    "&cBan duration: &c&l1 day"
+                ]
+            },
+            "5": {
+                "type": "PROP",
+                "material": "YELLOW_CONCRETE",
+                "name": "&aBan Severity 2",
+                "button_id": "Ban",
+                "punish_days": 14,
+                "lore": [
+                    "&7This is for someone who is consistently abusing exploits",
+                    "&7to gain a gameplay advantage. This is someone who has been",
+                    "&7warned and/or banned before, and needs a longer punishment.",
+                    "&eNote: &7Check punishment history before applying.",
+                    "&cBan duration: &c&l14 days"
+                ]
+            },
+            "6": {
+                "type": "PROP",
+                "material": "GREEN_CONCRETE",
+                "name": "&aBan Severity 1",
+                "button_id": "Ban",
+                "punish_days": 21,
+                "lore": [
+                    "&7This applies to someone using an obviously modded client",
+                    "&7in a way which does not involve combat. This is against",
+                    "&7the rules, but will likely not harm other players' game-",
+                    "&7play directly.",
+                    "&eNote: Check punishment history before applying.",
+                    "&cBan duration: &c&l7 days"
+                ]
+            },
+            "7": {
+                "type": "PROP",
+                "material": "YELLOW_CONCRETE",
+                "name": "&aBan Severity 2",
+                "button_id": "Ban",
+                "punish_days": 60,
+                "lore": [
+                    "&7This is someone who is using an obviously modded client",
+                    "&7but in a manner which directly affects other players'",
+                    "&7gameplay (ex: combat hacks like regen and reach)",
+                    "&cBan duration: &c&l60 days"
+                ]
+            },
+            "B": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aGo to Home",
+                "lore": [
+                    "&7Go back to the home page in Manage User"
+                ]
+            }
+        }
+    },
+    {
+        "id": "manage_punish_perm",
+        "title": "Manage User",
+        "layout_rows": [
+            "M00R0T000",
+            "0C00E00L0",
+            "010020030",
+            "000000000",
+            "000000000",
+            "N00000000"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "&0"
+            },
+            "T": {
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&aManaging <Target.Username>",
+                "lore": [
+                    "&7UUID: &c<Target.UUID>",
+                    "&7Online: &7&l<Target.Online>",
+                    "&7Ingots: &c<Target.Ingots>",
+                    "&7Tokens: &c<Target.Tokens>",
+                    "&7Time: &c<Target.IngameHours> hours",
+                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Server: &c<Target.Server>"
+                ]
+            },
+            "R": {
+                "type": "VIEWER_PLAYER_HEAD",
+                "name": "&aYou (Punisher)",
+                "lore": [
+                    "&7You will be credited with all punishments",
+                    "&7and Helper+ will be notified of the punishment."
+                ]
+            },
+            "C": {
+                "type": "PROP",
+                "material": "LIME_STAINED_GLASS_PANE",
+                "name": "&aChat Punishments",
+                "lore": [
+                    "&7These punishments are applied for breaking",
+                    "&7chat-specific rules."
+                ]
+            },
+            "E": {
+                "type": "PROP",
+                "material": "YELLOW_STAINED_GLASS_PANE",
+                "name": "&aExploit Punishments",
+                "lore": [
+                    "&7These punishments are applied if the",
+                    "&7user is abusing a typically simpler",
+                    "&7unfair gameplay mechanic to ruin the",
+                    "&7experience of other players."
+                ]
+            },
+            "L": {
+                "type": "PROP",
+                "material": "RED_STAINED_GLASS_PANE",
+                "name": "&aClient Punishments",
+                "lore": [
+                    "&7These punishments are applied if the",
+                    "&7user has downloaded/made a modded client",
+                    "&7and is actively using it to cheat."
+                ]
+            },
+            "N": {
+                "type": "PROP",
+                "material": "REDSTONE_BLOCK",
+                "name": "&aGo to Temporary",
+                "lore": [
+                    "&7View permanent punishments"
+                ]
+            },
+            "M": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aPermanent Punishments",
+                "lore": [
+                    "&7You are currently viewing permanent punish",
+                    "&7Click the bottom-left button to go to",
+                    "&7temporary punish."
+                ]
+            },
+            "B": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aGo to Home",
+                "lore": [
+                    "&7Go back to the home page in Manage User"
+                ]
+            },
+            "1": {
+                "type": "PROP",
+                "material": "RED_CONCRETE",
+                "name": "&aPermanent Mute",
+                "button_id": "Mute",
+                "punish_days": -1,
+                "lore": [
+                    "&7This is someone who consistently has wanted to ruin chat.",
+                    "&7Ex: someone who mass spams after getting unmuted multiple",
+                    "&7times.",
+                    "&eNote: &7Check mute history. These will likely be audited",
+                    "&7in the future in addition to permanent bans.",
+                    "&cMute Duration: &c&lpermanent"
+                ]
+            },
+            "2": {
+                "type": "PROP",
+                "material": "RED_CONCRETE",
+                "name": "&aPermanent Ban",
+                "button_id": "Ban",
+                "punish_days": -1,
+                "lore": [
+                    "&7This is someone who has a long history of consistently",
+                    "&7exploiting the game in order to ruin peoples' gameplay",
+                    "&7in this server.",
+                    "&eNote: &7This only comes after multiple temporary bans",
+                    "&7for exploiting.",
+                    "&cBan duration: &c&lPermanent"
+                ]
+            },
+            "3": {
+                "type": "PROP",
+                "material": "RED_CONCRETE",
+                "name": "&aPermanent Ban",
+                "button_id": "Ban",
+                "punish_days": -1,
+                "lore": [
+                    "&7This is someone who has used modded clients to hack in",
+                    "&7many ways over 2+ instances.",
+                    "&eNote: &7Check history before banning. Permanent bans",
+                    "&7will likely be audited in the future.",
+                    "&cBan duration: &c&lPermanent"
+                ]
+            }
+        }
+    },
+    {
+        "id": "manage_view_punishments",
+        "title": "Manage User",
+        "layout_rows": [
+            "M00R0T000",
+            "000000000",
+            "EEEEEEEEE",
+            "EEEEEEEEE",
+            "EEEEEEEEE",
+            "B000000PN"
+        ],
+        "definitions": {
+            "0": {
+                "type": "PROP",
+                "material": "GRAY_STAINED_GLASS_PANE",
+                "name": "&0"
+            },
+            "B": {
+                "type": "PROP",
+                "material": "STONE_BUTTON",
+                "name": "&aGo back"
+            },
+            "R": {
+                "type": "VIEWER_PLAYER_HEAD",
+                "name": "&aYou (Punisher)",
+                "lore": [
+                    "&7You will be credited with all punishments",
+                    "&7and Helper+ will be notified of the punishment."
+                ]
+            },
+            "T": {
+                "type": "TARGET_PLAYER_HEAD",
+                "name": "&aManaging <Target.Username>",
+                "lore": [
+                    "&7UUID: &c<Target.UUID>",
+                    "&7Online: &7&l<Target.Online>",
+                    "&7Ingots: &c<Target.Ingots>",
+                    "&7Tokens: &c<Target.Tokens>",
+                    "&7Time: &c<Target.IngameHours> hours",
+                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Server: &c<Target.Server>"
+                ]
+            },
+            "E": {
+                "type": "NAVIGATOR_CONTENT",
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "&0"
+                }
+            },
+            "P": {
+                "type": "NAVIGATOR_PREVIOUS",
+                "active": {
+                    "material": "STONE_BUTTON",
+                    "name": "&aGo to previous",
+                    "lore": [
+                        "&7Navigate to previous page"
+                    ]
+                },
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "&0"
+                }
+            },
+            "N": {
+                "type": "NAVIGATOR_NEXT",
+                "active": {
+                    "material": "STONE_BUTTON",
+                    "name": "&aGo to next",
+                    "lore": [
+                        "&7Navigate to next page"
+                    ]
+                },
+                "default": {
+                    "material": "GRAY_STAINED_GLASS_PANE",
+                    "name": "&0"
+                }
+            }
+        }
     }
 ]
