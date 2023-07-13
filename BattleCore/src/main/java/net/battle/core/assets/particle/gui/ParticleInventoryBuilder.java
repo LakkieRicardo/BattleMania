@@ -29,13 +29,20 @@ public class ParticleInventoryBuilder {
         return result;
     }
 
-    public static void applyEffects(Inventory inv, Player viewer, NavigatorInvLayout layout, NavigatorInvData meta) {
-        BMParticle selected = BMParticle.getPlayerParticle(viewer.getUniqueId());
-        int page = meta.page();
+    /**
+     * Shows the selected particle with durability 1 enchant, but with enchantment lore hidden. This assumes that the
+     * inventory is of the particle inventory layout.
+     */
+    public static void applySelectedParticleEffect(Inventory inv, Player viewer) {
+        var holder = (LayoutHolder) inv.getHolder();
+        var layout = (NavigatorInvLayout) holder.getLayout();
+        var meta = (NavigatorInvData) holder.getData();
+        var selected = BMParticle.getPlayerParticle(viewer.getUniqueId());
+        var page = meta.page();
         if (selected != null) {
             int contentIdx = -1;
             for (int i = 0; i < layout.getContentList().size(); i++) {
-                BMParticle particle = (BMParticle) layout.getContentList().get(i);
+                var particle = (BMParticle) layout.getContentList().get(i);
                 if (particle.getName().equals(selected.getName())) {
                     contentIdx = i;
                     break;
@@ -59,7 +66,7 @@ public class ParticleInventoryBuilder {
                 + PARTICLES_LAYOUT_ID + ")"));
         NavigatorInvLayout navLayout = new NavigatorInvLayout(layoutJSON);
         navLayout.setContentList(getParticlesAsContentItems());
-        navLayout.getEffects().add((inv, currentViewer) -> applyEffects(inv, currentViewer, navLayout, (NavigatorInvData) ((LayoutHolder) inv.getHolder()).getData()));
+        navLayout.getEffects().add(ParticleInventoryBuilder::applySelectedParticleEffect);
         return InvLayout.initializeInventory(navLayout, new NavigatorInvData(page), viewer).getInventory();
     }
 }
