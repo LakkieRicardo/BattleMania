@@ -17,7 +17,7 @@ This core plugin includes an inventory API which currently only contains a "Navi
  * Once done, use the {@link InvLayout#getLayoutJSONFromId(String)} function and pass it to this constructor in order to
  * interpret the JSON at runtime. Then, when you are at the point you need the inventory you can call the
  * {@link #setContentList(List)} and define the inventory's content items. That way, when you call the
- * {@link #updateInventory(Inventory, Player)} function it will dynamically generate the inventory consisting of all
+ * {@link #doUpdateInventory(Inventory, Player)} function it will dynamically generate the inventory consisting of all
  * the content items you need. <br/>
  * <br/>
  * Once you have the inventory open, you will want to listen to the NavigatorClickEvent in order to check when a player
