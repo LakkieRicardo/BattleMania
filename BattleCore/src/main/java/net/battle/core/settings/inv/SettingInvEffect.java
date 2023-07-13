@@ -13,8 +13,9 @@ import org.json.simple.JSONObject;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.layouts.IInvLayoutEffect;
-import net.battle.core.layouts.InvLayout;
-import net.battle.core.layouts.plinv.PlayerInvMeta;
+import net.battle.core.layouts.LayoutHolder;
+import net.battle.core.layouts.plinv.PlayerInvData;
+import net.battle.core.layouts.plinv.PlayerInvLayout;
 import net.battle.core.sql.impl.PlayerInfoSql;
 import net.battle.core.sql.impl.PlayerSettingsSql;
 import net.kyori.adventure.text.Component;
@@ -28,12 +29,12 @@ public class SettingInvEffect implements IInvLayoutEffect {
     }
 
     @Override
-    public void applyEffect(Inventory inv, Player viewer, InvLayout layout, Object meta) {
-        if (!(meta instanceof PlayerInvMeta plMeta)) {
-            throw new IllegalArgumentException("Setting inventory must use PlayerInvMeta meta type!");
-        }
+    public void applyEffect(Inventory inv, Player viewer) {
+        var holder = (LayoutHolder) inv.getHolder();
+        var layout = (PlayerInvLayout) holder.getLayout();
+        var data = (PlayerInvData) holder.getData();
 
-        OfflinePlayer targetPlayer = plMeta.target();
+        OfflinePlayer targetPlayer = data.target();
         for (int i = 0; i < layout.getLayout().length(); i++) {
             char current = layout.getLayout().charAt(i);
             JSONObject definition = layout.getItemDefines().get(current);

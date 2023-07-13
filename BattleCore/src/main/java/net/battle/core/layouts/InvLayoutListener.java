@@ -8,7 +8,7 @@ public class InvLayoutListener implements Listener {
     
     @EventHandler
     public void onInventoryClosed(InventoryCloseEvent event) {
-        InvLayout.clearInventoryFromMaps(event.getInventory());
+        InvLayout.registerInventoryClosed(event.getInventory());
     }
 
 }

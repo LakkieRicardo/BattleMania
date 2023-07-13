@@ -5,6 +5,6 @@ import org.bukkit.inventory.Inventory;
 
 public interface IInvLayoutEffect {
     
-    void applyEffect(Inventory inv, Player viewer, InvLayout layout, Object meta);
+    void applyEffect(Inventory inv, Player viewer);
 
 }

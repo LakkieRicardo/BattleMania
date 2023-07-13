@@ -9,8 +9,8 @@ import org.bukkit.inventory.Inventory;
 import org.json.simple.JSONObject;
 
 import net.battle.core.handlers.BMLogger;
-import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.LayoutDefinitionType;
+import net.battle.core.layouts.LayoutHolder;
 
 public class NavigatorInvListener implements Listener {
 
@@ -21,13 +21,14 @@ public class NavigatorInvListener implements Listener {
             // Not a valid click
             return;
         }
-        if (!InvLayout.IsInvLayoutGenerated(inv) || !(InvLayout.getLayoutFromInv(inv) instanceof NavigatorInvLayout navLayout) || !InvLayout.doesInvHaveMeta(inv)
-                || event.getClickedInventory() != event.getInventory()) {
+        if (event.getClickedInventory() != event.getInventory() || !(inv.getHolder() instanceof LayoutHolder holder)
+                || !(holder.getLayout() instanceof NavigatorInvLayout navLayout)) {
             return;
         }
+        var data = (NavigatorInvData) holder.getData();
+        int openPage = data.page();
 
-        int openPage = ((NavigatorInvMeta) NavigatorInvLayout.getMetaFromInv(inv)).page();
-        JSONObject definition = navLayout.getItemDefinitions().get(navLayout.getLayout().charAt(event.getSlot()));
+        JSONObject definition = navLayout.getItemDefines().get(navLayout.getLayout().charAt(event.getSlot()));
         LayoutDefinitionType clickedType = LayoutDefinitionType.valueOf((String) definition.get("type"));
 
         INavigatorContentItem contentItem = null;

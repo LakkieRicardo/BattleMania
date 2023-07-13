@@ -12,15 +12,15 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import net.battle.core.handlers.BMLogger;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.LayoutDefinitionType;
+import net.battle.core.layouts.LayoutHolder;
 import net.kyori.adventure.text.Component;
 
 /**
- * This is an inventory layout which is generated with a specific target player. It uses the PlayerInvMeta as its meta
- * object, and will not work with any other meta type. The target player in the meta object can be used in conjunction
+ * This is an inventory layout which is generated with a specific target player. It uses the PlayerInvData as its data
+ * object, and will not work with any other data type. The target player in the data object can be used in conjunction
  * with the <code>TARGET_PLAYER_HEAD</code> item definition type to create a skull head with that target player. <br/>
  * <br/>
  * This layout can be used in conjunction with the PlayInvClickEvent in order to listen for button clicks. In addition,
@@ -33,10 +33,10 @@ public class PlayerInvLayout extends InvLayout {
         super(layoutJSON);
     }
 
-    public String replaceKeywords(String text, Player viewer, PlayerInvMeta meta) {
+    public String replaceKeywords(String text, Player viewer, PlayerInvData data) {
         var mappings = new HashMap<String, String>();
-        mappings.put("<Target.Username>", meta.target().getName());
-        mappings.put("<Target.UUID>", meta.target().getUniqueId().toString());
+        mappings.put("<Target.Username>", data.target().getName());
+        mappings.put("<Target.UUID>", data.target().getUniqueId().toString());
         mappings.put("<Viewer.Username>", viewer.getName());
         mappings.put("<Viewer.UUID>", viewer.getUniqueId().toString());
         for (String keyword : mappings.keySet()) {
@@ -46,10 +46,9 @@ public class PlayerInvLayout extends InvLayout {
     }
 
     @Override
-    protected void doUpdateInventoryMeta(Inventory inventory, Player viewer, Object meta) {
-        if (!(meta instanceof PlayerInvMeta plMeta)) {
-            BMLogger.severe(meta.getClass().getSimpleName());
-            throw new IllegalArgumentException("Player inventory meta must be PlayerInvMeta!");
+    protected void doUpdateInventory(Inventory inventory, Player viewer, LayoutHolder holder) {
+        if (!(holder.getData() instanceof PlayerInvData data)) {
+            throw new IllegalArgumentException("The data of a PlayerInvLayout inventory must be PlayerInvData!");
         }
         for (int i = 0; i < layout.length(); i++) {
             char idxChar = layout.charAt(i);
@@ -64,19 +63,19 @@ public class PlayerInvLayout extends InvLayout {
             case TARGET_PLAYER_HEAD:
                 ItemStack item = new ItemStack(Material.PLAYER_HEAD);
                 if (idxDefinition.containsKey("name")) {
-                    String newName = replaceKeywords(((String) idxDefinition.get("name")).replaceAll("&", "§"), viewer, plMeta);
+                    String newName = replaceKeywords(((String) idxDefinition.get("name")).replaceAll("&", "§"), viewer, data);
                     InventoryUtils.renameItem(item, newName);
                 }
                 if (idxDefinition.containsKey("lore")) {
                     JSONArray loreLines = (JSONArray) idxDefinition.get("lore");
                     List<Component> newLore = new ArrayList<>();
                     for (int loreIdx = 0; loreIdx < loreLines.size(); loreIdx++) {
-                        newLore.add(Component.text(replaceKeywords(((String) loreLines.get(loreIdx)).replaceAll("&", "§"), viewer, plMeta)));
+                        newLore.add(Component.text(replaceKeywords(((String) loreLines.get(loreIdx)).replaceAll("&", "§"), viewer, data)));
                     }
                     InventoryUtils.setItemLore(item, newLore);
                 }
                 SkullMeta skull = (SkullMeta) item.getItemMeta();
-                skull.setOwningPlayer(plMeta.target());
+                skull.setOwningPlayer(data.target());
                 item.setItemMeta(skull);
                 inventory.setItem(i, item);
                 break;

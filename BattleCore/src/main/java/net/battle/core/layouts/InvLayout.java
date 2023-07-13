@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.Validate;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -27,9 +26,7 @@ import net.kyori.adventure.text.Component;
  */
 public abstract class InvLayout {
 
-    // This is the best way I've come up with to store metadata about a certain inventory using the Bukkit API
-    private static final Map<Inventory, InvLayout> LAYOUT_MAP = new HashMap<>();
-    private static final Map<Inventory, Object> INVENTORY_META_MAP = new HashMap<>();
+    static final List<Inventory> LAYOUT_INVENTORIES = new ArrayList<>();
 
     private static JSONArray root = null;
 
@@ -82,21 +79,6 @@ public abstract class InvLayout {
         return itemDefines;
     }
 
-    /**
-     * Creates a new inventory based off this layout. The viewer is only used as additional information to generate the
-     * inventory, not to open the inventory.
-     * 
-     * @param viewer The player who is opening this inventory.
-     * @param meta   The meta object - could be any type (ex: NavigatorInvMeta)
-     * @return An inventory that is filled based on the layout and meta
-     */
-    public Inventory createInventory(Player viewer, Object meta) {
-        Inventory inventory = Bukkit.createInventory(null, layout.length(), Component.text(title.replaceAll("&", "§")));
-        updateInventoryMeta(inventory, viewer, meta);
-        LAYOUT_MAP.put(inventory, this);
-        return inventory;
-    }
-
     protected ItemStack createItemFromJSON(JSONObject definition) {
         ItemStack item;
         if (definition.containsKey("material")) {
@@ -125,26 +107,24 @@ public abstract class InvLayout {
      * 
      * @param inventory The inventory to update
      * @param viewer    The player who is viewing the inventory
-     * @param meta      The updated metadata for this inventory
+     * @param holder    The layout information for this inventory
      */
-    protected abstract void doUpdateInventoryMeta(Inventory inventory, Player viewer, Object meta);
+    protected abstract void doUpdateInventory(Inventory inventory, Player viewer, LayoutHolder holder);
 
     /**
-     * Updates an inventory's metadata by overwriting all of its items.
+     * Updates inventory data using the current LayoutHolder's data object.
      * 
-     * @param inventory The inventory to update
-     * @param viewer    The player who is viewing the inventory
-     * @param meta      The updated metadata for this inventory
+     * @param inventory The inventory whose contents to update
+     * @param viewer    The player viewing this inventory
      */
-    public void updateInventoryMeta(Inventory inventory, Player viewer, Object meta) {
-        doUpdateInventoryMeta(inventory, viewer, meta);
-        for (IInvLayoutEffect effect : effects) {
-            effect.applyEffect(inventory, viewer, this, meta);
+    public void updateInventory(Inventory inventory, Player viewer) {
+        if (!(inventory.getHolder() instanceof LayoutHolder holder)) {
+            throw new IllegalArgumentException("Layout inventory holder must be of type LayoutHolder!");
         }
-        if (!LAYOUT_MAP.containsKey(inventory)) {
-            LAYOUT_MAP.put(inventory, this);
+        if (inventory.getViewers().size() > 1) {
+            throw new InventoryViewerStateException("More than 1 player is viewing a layout inventory! Each player must have their own layout inventory.");
         }
-        INVENTORY_META_MAP.put(inventory, meta);
+        doUpdateInventory(inventory, viewer, holder);
     }
 
     /**
@@ -171,42 +151,33 @@ public abstract class InvLayout {
         root = (JSONArray) SettingsFiles.initializeJSONResource("/InventoryLayouts.json");
     }
 
-    public static boolean IsInvLayoutGenerated(Inventory inv) {
-        return LAYOUT_MAP.containsKey(inv);
+    public static boolean isInvLayoutGenerated(Inventory inv) {
+        return inv.getHolder() instanceof LayoutHolder;
+    }
+
+    public static LayoutHolder getLayoutHolder(Inventory inv) {
+        Validate.isTrue(isInvLayoutGenerated(inv));
+        return (LayoutHolder) inv.getHolder();
     }
 
     public static InvLayout getLayoutFromInv(Inventory inv) {
-        return LAYOUT_MAP.get(inv);
+        return getLayoutHolder(inv).getLayout();
     }
 
     public static void closeAllInventories() {
-        for (Inventory inv : LAYOUT_MAP.keySet()) {
+        for (Inventory inv : LAYOUT_INVENTORIES) {
             inv.close();
         }
-        LAYOUT_MAP.clear();
-        INVENTORY_META_MAP.clear();
+        LAYOUT_INVENTORIES.clear();
     }
 
-    public static boolean doesInvHaveMeta(Inventory inv) {
-        return INVENTORY_META_MAP.containsKey(inv);
-    }
-
-    public static Object getMetaFromInv(Inventory inv) {
-        return INVENTORY_META_MAP.get(inv);
-    }
-
-    public static void clearInventoryFromMaps(Inventory inv) {
-        if (INVENTORY_META_MAP.containsKey(inv)) {
-            INVENTORY_META_MAP.remove(inv);
-        }
-        if (LAYOUT_MAP.containsKey(inv)) {
-            LAYOUT_MAP.remove(inv);
-        }
+    public static void registerInventoryClosed(Inventory inv) {
+        LAYOUT_INVENTORIES.remove(inv);
     }
 
     /**
-     * Moves an inventory from one layout to another. The metadata object will be transferred directly. There are, however, some pre-conditions required and will throw an
-     * exception if not met: <br/>
+     * Moves an inventory from one layout to another. The metadata object will be transferred directly. There are, however,
+     * some pre-conditions required and will throw an exception if not met: <br/>
      * <ol>
      * <li>The inventory must be already registered into a layout</li>
      * <li>The new layout must be the same size as the old layout</li>
@@ -218,20 +189,44 @@ public abstract class InvLayout {
      * @param inv       The inventory to transfer
      * @param viewer    The player who is viewing the inventory
      * @param newLayout The new layout to transfer to
+     * @param newData   The new inventory data to update to
      */
-    public static void transferInventoryLayout(Inventory inv, Player viewer, InvLayout newLayout) {
-        Validate.isTrue(LAYOUT_MAP.containsKey(inv));
-        InvLayout oldLayout = LAYOUT_MAP.get(inv);
+    public static void transferInventoryLayout(Inventory inv, Player viewer, InvLayout newLayout, Object newData) {
+        Validate.isTrue(LAYOUT_INVENTORIES.contains(inv));
+        LayoutHolder holder = getLayoutHolder(inv);
+        InvLayout oldLayout = holder.getLayout();
         Validate.isTrue(oldLayout.getLayout().length() == newLayout.getLayout().length());
         Validate.isTrue(!oldLayout.getId().equals(newLayout.getId()));
         if (!oldLayout.getTitle().equals(newLayout.getTitle())) {
             BMLogger.warning("Attempting to transfer mismatching layout titles(old: \"" + oldLayout.getTitle() + "\", new: \"" + newLayout.getTitle()
                     + "\"). The transfer will succeed but the title cannot be updated.");
         }
-        Object oldMeta = INVENTORY_META_MAP.get(inv);
-        INVENTORY_META_MAP.remove(inv);
-        LAYOUT_MAP.remove(inv);
-        newLayout.updateInventoryMeta(inv, viewer, oldMeta);
+        holder.setLayout(newLayout);
+        holder.setData(newData);
+        newLayout.updateInventory(inv, viewer);
+    }
+
+    /**
+     * Updates the data of an inventory. This will throw an IllegalArgumentException if the inventory does not have a holder
+     * of type LayoutHolder. If there is an exception with the data type, it will be thrown when calling
+     * {@link #updateInventory(Inventory, Player)}
+     * 
+     * @param inv  The inventory to update
+     * @param data The new data to update to
+     */
+    public static void updateInventoryData(Inventory inv, Object data) {
+        getLayoutHolder(inv).setData(data);
+    }
+
+    /**
+     * Creates a holder and updates an inventory based n the data object.
+     * 
+     * @return The newly created LayoutHolder with prepared inventory
+     */
+    public static LayoutHolder initializeInventory(InvLayout layout, Object data, Player viewer) {
+        LayoutHolder holder = new LayoutHolder(layout, data);
+        layout.updateInventory(holder.getInventory(), viewer);
+        return holder;
     }
 
 }

@@ -52,7 +52,7 @@ public class NavigatorClickEvent extends Event {
     }
 
     @Override
-    public  @NotNull HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 

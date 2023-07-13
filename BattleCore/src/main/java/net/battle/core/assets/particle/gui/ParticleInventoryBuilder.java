@@ -12,9 +12,10 @@ import org.json.simple.JSONObject;
 import net.battle.core.assets.particle.BMParticle;
 import net.battle.core.handlers.InventoryUtils;
 import net.battle.core.layouts.InvLayout;
+import net.battle.core.layouts.LayoutHolder;
 import net.battle.core.layouts.navinv.INavigatorContentItem;
 import net.battle.core.layouts.navinv.NavigatorInvLayout;
-import net.battle.core.layouts.navinv.NavigatorInvMeta;
+import net.battle.core.layouts.navinv.NavigatorInvData;
 
 public class ParticleInventoryBuilder {
     public static final String PARTICLES_LAYOUT_ID = "particles_manager";
@@ -28,7 +29,7 @@ public class ParticleInventoryBuilder {
         return result;
     }
 
-    public static void applyEffects(Inventory inv, Player viewer, NavigatorInvLayout layout, NavigatorInvMeta meta) {
+    public static void applyEffects(Inventory inv, Player viewer, NavigatorInvLayout layout, NavigatorInvData meta) {
         BMParticle selected = BMParticle.getPlayerParticle(viewer.getUniqueId());
         int page = meta.page();
         if (selected != null) {
@@ -58,9 +59,7 @@ public class ParticleInventoryBuilder {
                 + PARTICLES_LAYOUT_ID + ")"));
         NavigatorInvLayout navLayout = new NavigatorInvLayout(layoutJSON);
         navLayout.setContentList(getParticlesAsContentItems());
-        navLayout.getEffects().add((inv, currentViewer, layout, meta) -> applyEffects(inv, currentViewer, (NavigatorInvLayout) navLayout, (NavigatorInvMeta) meta));
-        Inventory inv = navLayout.createInventory(viewer, new NavigatorInvMeta(page));
-        return inv;
-
+        navLayout.getEffects().add((inv, currentViewer) -> applyEffects(inv, currentViewer, navLayout, (NavigatorInvData) ((LayoutHolder) inv.getHolder()).getData()));
+        return InvLayout.initializeInventory(navLayout, new NavigatorInvData(page), viewer).getInventory();
     }
 }

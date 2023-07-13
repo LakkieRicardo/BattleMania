@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 import net.battle.core.handlers.BMLogger;
 import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.LayoutDefinitionType;
+import net.battle.core.layouts.LayoutHolder;
 
 /**
  * Represents a type of layout with a list of content items which allows for scrolling through pages. <br/>
@@ -21,8 +22,8 @@ import net.battle.core.layouts.LayoutDefinitionType;
  * Once done, use the {@link InvLayout#getLayoutJSONFromId(String)} function and pass it to this constructor in order to
  * interpret the JSON at runtime. Then, when you are at the point you need the inventory you can call the
  * {@link #setContentList(List)} and define the inventory's content items. That way, when you call the
- * {@link #updateInventoryMeta(Inventory, Player, Object)} function it will dynamically generate the inventory
- * consisting of all the content items you need. <br/>
+ * {@link #doUpdateInventory(Inventory, Player)} function it will dynamically generate the inventory consisting of all
+ * the content items you need. <br/>
  * <br/>
  * Once you have the inventory open, you will want to listen to the NavigatorClickEvent in order to check when a player
  * is trying to select one of your content items, if they are trying to navigate, etc. and play sounds, do certain
@@ -72,12 +73,13 @@ public class NavigatorInvLayout extends InvLayout {
         return (int) Math.ceil((float) contentList.size() / getSlotsOfContent());
     }
 
-    public void doUpdateInventoryMeta(Inventory inventory, Player viewer, Object meta) {
-        if (!(meta instanceof NavigatorInvMeta navMeta)) {
-            throw new IllegalArgumentException("Navigator page meta must be NavigatorInvMeta!");
+    @Override
+    protected void doUpdateInventory(Inventory inventory, Player viewer, LayoutHolder holder) {
+        if (!(holder.getData() instanceof NavigatorInvData data)) {
+            throw new IllegalArgumentException("NavigatorInvLayout data must be of type NavigatorInvData!");
         }
-        if (navMeta.page() < 0 || navMeta.page() >= getPageCount()) {
-            throw new IllegalArgumentException("Attempted to access page " + navMeta.page() + " which is not accessible");
+        if (data.page() < 0 || data.page() >= getPageCount()) {
+            throw new IllegalArgumentException("Attempted to access page " + data.page() + " which is not accessible");
         }
         int contentPlaced = 0;
         for (int i = 0; i < layout.length(); i++) {
@@ -92,21 +94,21 @@ public class NavigatorInvLayout extends InvLayout {
                 inventory.setItem(i, createItemFromJSON(idxDefinition));
                 break;
             case NAVIGATOR_NEXT:
-                if (navMeta.page() < getPageCount() - 1) {
+                if (data.page() < getPageCount() - 1) {
                     inventory.setItem(i, createItemFromJSON((JSONObject) idxDefinition.get("active")));
                 } else {
                     inventory.setItem(i, createItemFromJSON((JSONObject) idxDefinition.get("default")));
                 }
                 break;
             case NAVIGATOR_PREVIOUS:
-                if (navMeta.page() > 0) {
+                if (data.page() > 0) {
                     inventory.setItem(i, createItemFromJSON((JSONObject) idxDefinition.get("active")));
                 } else {
                     inventory.setItem(i, createItemFromJSON((JSONObject) idxDefinition.get("default")));
                 }
                 break;
             case NAVIGATOR_CONTENT:
-                int contentIdx = navMeta.page() * getSlotsOfContent() + contentPlaced++;
+                int contentIdx = data.page() * getSlotsOfContent() + contentPlaced++;
                 ItemStack content;
                 if (contentIdx >= contentList.size() || contentList.get(contentIdx) == null) {
                     content = createItemFromJSON((JSONObject) idxDefinition.get("default"));

@@ -65,7 +65,6 @@ import net.battle.core.handlers.SwearSearchAlgorithm;
 import net.battle.core.handlers.TimeHandler;
 import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.InvLayoutListener;
-import net.battle.core.layouts.navinv.NavigatorInvLayout;
 import net.battle.core.layouts.navinv.NavigatorInvListener;
 import net.battle.core.layouts.plinv.PlayerInvListener;
 import net.battle.core.listeners.BlockBreakListener;
@@ -264,7 +263,7 @@ public class BMCorePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         BMLogger.info("Closing all navigator inventories...");
-        NavigatorInvLayout.closeAllInventories();
+        InvLayout.closeAllInventories();
     }
 
     public void registerAndLogListener(Listener l) {

@@ -7,7 +7,8 @@ import net.battle.core.command.CommandBase;
 import net.battle.core.command.CommandHandler;
 import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
-import net.battle.core.layouts.plinv.PlayerInvMeta;
+import net.battle.core.layouts.InvLayout;
+import net.battle.core.layouts.plinv.PlayerInvData;
 import net.battle.core.sql.impl.PlayerSettingsSql;
 
 public class SettingsCommand implements CommandBase {
@@ -67,7 +68,8 @@ public class SettingsCommand implements CommandBase {
             pl.sendMessage(Prefixes.COMMAND + "Updated setting §c" + setting + "§f to §c" + value);
             return;
         }
-        pl.openInventory(BMCorePlugin.ACTIVE_PLUGIN.settingsHandler.getHomeLayout().createInventory(pl, new PlayerInvMeta(pl)));
+
+        pl.openInventory(InvLayout.initializeInventory(BMCorePlugin.ACTIVE_PLUGIN.settingsHandler.getHomeLayout(), new PlayerInvData(pl), pl).getInventory());
         pl.sendMessage(Prefixes.COMMAND + "Opened settings");
     }
 

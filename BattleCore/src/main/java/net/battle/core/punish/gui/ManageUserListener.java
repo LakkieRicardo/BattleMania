@@ -28,7 +28,8 @@ import net.battle.core.handlers.Prefixes;
 import net.battle.core.handlers.RankHandler;
 import net.battle.core.handlers.StringUtility;
 import net.battle.core.handlers.TempHandler;
-import net.battle.core.layouts.plinv.PlayerInvMeta;
+import net.battle.core.layouts.InvLayout;
+import net.battle.core.layouts.plinv.PlayerInvData;
 import net.battle.core.proxy.ProxyHandler;
 import net.battle.core.punish.PunishManager;
 import net.battle.core.sql.impl.PunishmentSql;
@@ -102,7 +103,7 @@ public class ManageUserListener implements Listener {
                     return;
                 }
                 pl.closeInventory();
-                pl.openInventory(BMCorePlugin.ACTIVE_PLUGIN.settingsHandler.getHomeLayout().createInventory(pl, new PlayerInvMeta(targetOffline)));
+                pl.openInventory(InvLayout.initializeInventory(BMCorePlugin.ACTIVE_PLUGIN.settingsHandler.getHomeLayout(), new PlayerInvData(targetOffline), pl).getInventory());
                 return;
             }
             if (m == Material.PISTON) {
