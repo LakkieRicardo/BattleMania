@@ -85,6 +85,7 @@ import net.battle.core.punish.cmds.VanishCommand;
 import net.battle.core.punish.cmds.WarnCommand;
 import net.battle.core.punish.gui.ManageUserListener;
 import net.battle.core.punish.gui.ReportInventory;
+import net.battle.core.punish.inv.ManageUserInvHandler;
 import net.battle.core.punish.listeners.PlayerPunishmentListener;
 import net.battle.core.punish.listeners.PlayerFreezeListener;
 import net.battle.core.settings.cmds.SettingsCommand;
@@ -102,6 +103,7 @@ public class BMCorePlugin extends JavaPlugin {
     public ConnectionSQL sqlConn = null;
     public Random random;
     public SettingInvHandler settingsHandler;
+    public ManageUserInvHandler manageHandler;
     // TODO: Move this to Bungee
     private YamlConfiguration settingsFile = null;
 
@@ -121,6 +123,7 @@ public class BMCorePlugin extends JavaPlugin {
         try {
             InvLayout.initializeLayoutsFile();
             settingsHandler = new SettingInvHandler();
+            manageHandler = new ManageUserInvHandler();
         } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
@@ -136,8 +139,7 @@ public class BMCorePlugin extends JavaPlugin {
         }
 
         BMLogger.info("Creating player online time handler...");
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(ACTIVE_PLUGIN, TimeHandler::updateTime, 20 * 60 * 6,
-                20 * 60 * 6); // 20 ticks, 60 seconds, 6 minutes
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(ACTIVE_PLUGIN, TimeHandler::updateTime, 20 * 60 * 6, 20 * 60 * 6); // 20 ticks, 60 seconds, 6 minutes
 
         BMLogger.info("Initializing CommandHandler");
         Bukkit.getPluginManager().registerEvents(new CommandHandler(), this);
@@ -198,7 +200,7 @@ public class BMCorePlugin extends JavaPlugin {
         registerAndLogListener(new ReportInventory());
         registerAndLogListener(new PlayerPunishmentListener());
         registerAndLogListener(new PlayerFreezeListener());
-        
+
         BMLogger.info("Initializing asset command listeners...");
         registerAndLogListener(new AssetChestListener());
         registerAndLogListener(new AssetInventoryListener());
@@ -207,7 +209,7 @@ public class BMCorePlugin extends JavaPlugin {
         registerAndLogListener(new ParticleInventoryListener());
         registerAndLogListener(new GadgetInventoryListener());
         registerAndLogListener(new HatLeaveListener());
-        
+
         BMLogger.info("Initializing layouts listeners...");
         registerAndLogListener(new NavigatorInvListener());
         registerAndLogListener(new PlayerInvListener());

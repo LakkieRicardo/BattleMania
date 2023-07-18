@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 
 import net.battle.core.handlers.Prefixes;
+import net.battle.core.handlers.RankHandler;
 import net.battle.core.layouts.InvLayout;
 import net.battle.core.layouts.LayoutHolder;
 import net.battle.core.layouts.plinv.PlayerInvClickEvent;
@@ -71,7 +72,12 @@ public class SettingListener implements Listener {
             boolean currentValue = PlayerSettingsSql.getSetting(event.getTargetPlayer().getUniqueId().toString(), settingId);
             PlayerSettingsSql.updateSetting(event.getTargetPlayer().getUniqueId().toString(), settingId, !currentValue);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5.0F, 0.5F);
-            player.sendMessage(Prefixes.UPDATE + "Updated setting §c" + settingId + "§f to §c" + !currentValue + "§f.");
+            String settingName = SettingInvHandler.getSettingDisplayName(settingId);
+            if (RankHandler.developerPermission(player)) {
+                player.sendMessage(Prefixes.UPDATE + "Updated setting §c" + settingName + " (" + settingId + ")§f to §c" + !currentValue + "§f.");
+            } else {
+                player.sendMessage(Prefixes.UPDATE + "Updated setting §c" + settingName + "§f to §c" + !currentValue + "§f.");
+            }
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5.0F, 0.5F);
             event.getLayout().updateInventory(inv, player);
         }

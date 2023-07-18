@@ -22,8 +22,8 @@ import net.battle.core.layouts.LayoutHolder;
  * Once done, use the {@link InvLayout#getLayoutJSONFromId(String)} function and pass it to this constructor in order to
  * interpret the JSON at runtime. Then, when you are at the point you need the inventory you can call the
  * {@link #setContentList(List)} and define the inventory's content items. That way, when you call the
- * {@link #updateInventory(Inventory, Object)} function it will dynamically generate the inventory consisting of all
- * the content items you need. <br/>
+ * {@link #updateInventory(Inventory, Object)} function it will dynamically generate the inventory consisting of all the
+ * content items you need. <br/>
  * <br/>
  * Once you have the inventory open, you will want to listen to the NavigatorClickEvent in order to check when a player
  * is trying to select one of your content items, if they are trying to navigate, etc. and play sounds, do certain
@@ -35,20 +35,11 @@ import net.battle.core.layouts.LayoutHolder;
  */
 public class NavigatorInvLayout extends InvLayout {
 
-    private List<INavigatorContentItem> contentList = null;
     private boolean hasCountedContentSlots = false;
     private int contentSlotCount = 0;
 
     public NavigatorInvLayout(JSONObject layoutJSON) {
         super(layoutJSON);
-    }
-
-    public void setContentList(List<INavigatorContentItem> content) {
-        this.contentList = content;
-    }
-
-    public List<INavigatorContentItem> getContentList() {
-        return contentList;
     }
 
     public Map<Character, JSONObject> getItemDefinitions() {
@@ -69,7 +60,11 @@ public class NavigatorInvLayout extends InvLayout {
         return contentSlotCount;
     }
 
-    public int getPageCount() {
+    public int getPageCount(Inventory inv) {
+        return (int) Math.ceil((float) getContentList(inv).size() / getSlotsOfContent());
+    }
+
+    public int getPageCount(Inventory inv, List<INavigatorContentItem> contentList) {
         return (int) Math.ceil((float) contentList.size() / getSlotsOfContent());
     }
 
@@ -78,7 +73,8 @@ public class NavigatorInvLayout extends InvLayout {
         if (!(holder.getData() instanceof NavigatorInvData data)) {
             throw new IllegalArgumentException("NavigatorInvLayout data must be of type NavigatorInvData!");
         }
-        if (data.page() < 0 || data.page() >= getPageCount()) {
+        var contentList = getContentList(inventory);
+        if (data.page() < 0 || data.page() >= getPageCount(inventory, contentList)) {
             throw new IllegalArgumentException("Attempted to access page " + data.page() + " which is not accessible");
         }
         int contentPlaced = 0;
@@ -94,7 +90,7 @@ public class NavigatorInvLayout extends InvLayout {
                 inventory.setItem(i, createItemFromJSON(idxDefinition));
                 break;
             case NAVIGATOR_NEXT:
-                if (data.page() < getPageCount() - 1) {
+                if (data.page() < getPageCount(inventory, contentList) - 1) {
                     inventory.setItem(i, createItemFromJSON((JSONObject) idxDefinition.get("active")));
                 } else {
                     inventory.setItem(i, createItemFromJSON((JSONObject) idxDefinition.get("default")));
@@ -171,6 +167,15 @@ public class NavigatorInvLayout extends InvLayout {
         }
 
         return -1;
+    }
+
+    public static List<INavigatorContentItem> getContentList(Inventory inv) {
+        var holder = InvLayout.getLayoutHolder(inv);
+        if (!(holder.getLayout() instanceof NavigatorInvLayout)) {
+            throw new IllegalArgumentException("Content list can only be retrieved from a NavigatorInvLayout inventory!");
+        }
+        NavigatorInvData data = (NavigatorInvData) holder.getData();
+        return data.contentList();
     }
 
 }

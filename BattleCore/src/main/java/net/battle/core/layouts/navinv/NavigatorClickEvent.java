@@ -1,5 +1,7 @@
 package net.battle.core.layouts.navinv;
 
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,15 +17,17 @@ public class NavigatorClickEvent extends Event {
     private final NavigatorClickType clickType;
     private final InventoryClickEvent clickEvent;
     private final INavigatorContentItem contentItem;
+    private final List<INavigatorContentItem> contentList;
     private final int openPage;
 
     public NavigatorClickEvent(NavigatorInvLayout layout, Player whoClicked, NavigatorClickType clickType, InventoryClickEvent clickEvent,
-            INavigatorContentItem contentItem, int openPage) {
+            INavigatorContentItem contentItem, List<INavigatorContentItem> contentList, int openPage) {
         this.layout = layout;
         this.whoClicked = whoClicked;
         this.clickType = clickType;
         this.clickEvent = clickEvent;
         this.contentItem = contentItem;
+        this.contentList = contentList;
         this.openPage = openPage;
     }
 
@@ -45,6 +49,10 @@ public class NavigatorClickEvent extends Event {
 
     public INavigatorContentItem getContentItem() {
         return contentItem;
+    }
+
+    public List<INavigatorContentItem> getContentList() {
+        return contentList;
     }
 
     public int getOpenPage() {

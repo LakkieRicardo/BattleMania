@@ -76,7 +76,8 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&a<Target.Username>",
                 "lore": [
                     "&7Player settings"
@@ -95,7 +96,8 @@
                 "button_id": "game"
             },
             "U": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&aPublic Settings",
                 "button_id": "public"
             }
@@ -116,7 +118,8 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&a<Target.Username>",
                 "lore": [
                     "&7Player settings"
@@ -188,7 +191,8 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&a<Target.Username>",
                 "lore": [
                     "&7Player settings"
@@ -236,7 +240,8 @@
                 "name": "&0"
             },
             "P": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&a<Target.Username>",
                 "lore": [
                     "&7Player settings"
@@ -304,20 +309,22 @@
                 "name": "&0"
             },
             "T": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&aManaging <Target.Username>",
                 "lore": [
                     "&7UUID: &c<Target.UUID>",
-                    "&7Online: &7&l<Target.Online>",
+                    "&7Online: &7&l<Target.Online.YesNo>",
                     "&7Ingots: &c<Target.Ingots>",
                     "&7Tokens: &c<Target.Tokens>",
                     "&7Time: &c<Target.IngameHours> hours",
-                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Rank: &c<Target.Rank.DisplayName>",
                     "&7Server: &c<Target.Server>"
                 ]
             },
             "R": {
-                "type": "VIEWER_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Viewer",
                 "name": "&aYou (Punisher)",
                 "lore": [
                     "&7You will be credited with all punishments",
@@ -379,20 +386,22 @@
                 "name": "&0"
             },
             "T": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&aManaging <Target.Username>",
                 "lore": [
                     "&7UUID: &c<Target.UUID>",
-                    "&7Online: &7&l<Target.Online>",
+                    "&7Online: &7&l<Target.Online.YesNo>",
                     "&7Ingots: &c<Target.Ingots>",
                     "&7Tokens: &c<Target.Tokens>",
                     "&7Time: &c<Target.IngameHours> hours",
-                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Rank: &c<Target.Rank.DisplayName>",
                     "&7Server: &c<Target.Server>"
                 ]
             },
             "R": {
-                "type": "VIEWER_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Viewer",
                 "name": "&aYou (Punisher)",
                 "lore": [
                     "&7You will be credited with all punishments",
@@ -458,8 +467,7 @@
                     "&7either by posting spam, being toxic, etc. However, this",
                     "&7contrasts with joining the server without playing with the",
                     "&7intent to harass, spam, etc. Those are a higher severity.",
-                    "&eNote: &7If this player has not been punished before, use a warning.",
-                    "&cMute Duration: &c&l1 day"
+                    "&eNote: &7If this player has not been punished before, use a warning."
                 ]
             },
             "2": {
@@ -473,8 +481,7 @@
                     "&7as Mute Severity 1, but has done it consistently. Use this",
                     "&7as a sign to tell them to take a break from chat.",
                     "&eNote: &7Do not apply this punishment unless severity 1",
-                    "&7has been used before.",
-                    "&cMute Duration: &c&l7 days"
+                    "&7has been used before."
                 ]
             },
             "3": {
@@ -488,8 +495,7 @@
                     "&7to ruin the usability of chat for other players. However,",
                     "&7this player is not violating any gameplay rules.",
                     "&eNote: &7This is a significantly longer punishment. Think",
-                    "&7before punishing.",
-                    "&cMute duration: &c&l30 days"
+                    "&7before punishing."
                 ]
             },
             "4": {
@@ -504,8 +510,7 @@
                     "&7for someone who only being doing this occasionally.",
                     "&eNote: &7As always, warn before a ban. Think about banning",
                     "&7before you go through with it. Do not ban players",
-                    "&7unnecessarily.",
-                    "&cBan duration: &c&l1 day"
+                    "&7unnecessarily."
                 ]
             },
             "5": {
@@ -518,8 +523,7 @@
                     "&7This is for someone who is consistently abusing exploits",
                     "&7to gain a gameplay advantage. This is someone who has been",
                     "&7warned and/or banned before, and needs a longer punishment.",
-                    "&eNote: &7Check punishment history before applying.",
-                    "&cBan duration: &c&l14 days"
+                    "&eNote: &7Check punishment history before applying."
                 ]
             },
             "6": {
@@ -533,8 +537,7 @@
                     "&7in a way which does not involve combat. This is against",
                     "&7the rules, but will likely not harm other players' game-",
                     "&7play directly.",
-                    "&eNote: Check punishment history before applying.",
-                    "&cBan duration: &c&l7 days"
+                    "&eNote: Check punishment history before applying."
                 ]
             },
             "7": {
@@ -546,8 +549,7 @@
                 "lore": [
                     "&7This is someone who is using an obviously modded client",
                     "&7but in a manner which directly affects other players'",
-                    "&7gameplay (ex: combat hacks like regen and reach)",
-                    "&cBan duration: &c&l60 days"
+                    "&7gameplay (ex: combat hacks like regen and reach)"
                 ]
             },
             "B": {
@@ -578,20 +580,22 @@
                 "name": "&0"
             },
             "T": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&aManaging <Target.Username>",
                 "lore": [
                     "&7UUID: &c<Target.UUID>",
-                    "&7Online: &7&l<Target.Online>",
+                    "&7Online: &7&l<Target.Online.YesNo>",
                     "&7Ingots: &c<Target.Ingots>",
                     "&7Tokens: &c<Target.Tokens>",
                     "&7Time: &c<Target.IngameHours> hours",
-                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Rank: &c<Target.Rank.DisplayName>",
                     "&7Server: &c<Target.Server>"
                 ]
             },
             "R": {
-                "type": "VIEWER_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Viewer",
                 "name": "&aYou (Punisher)",
                 "lore": [
                     "&7You will be credited with all punishments",
@@ -665,8 +669,7 @@
                     "&7Ex: someone who mass spams after getting unmuted multiple",
                     "&7times.",
                     "&eNote: &7Check mute history. These will likely be audited",
-                    "&7in the future in addition to permanent bans.",
-                    "&cMute Duration: &c&lpermanent"
+                    "&7in the future in addition to permanent bans."
                 ]
             },
             "2": {
@@ -680,8 +683,7 @@
                     "&7exploiting the game in order to ruin peoples' gameplay",
                     "&7in this server.",
                     "&eNote: &7This only comes after multiple temporary bans",
-                    "&7for exploiting.",
-                    "&cBan duration: &c&lPermanent"
+                    "&7for exploiting."
                 ]
             },
             "3": {
@@ -694,8 +696,7 @@
                     "&7This is someone who has used modded clients to hack in",
                     "&7many ways over 2+ instances.",
                     "&eNote: &7Check history before banning. Permanent bans",
-                    "&7will likely be audited in the future.",
-                    "&cBan duration: &c&lPermanent"
+                    "&7will likely be audited in the future."
                 ]
             }
         }
@@ -723,7 +724,8 @@
                 "name": "&aGo back"
             },
             "R": {
-                "type": "VIEWER_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Viewer",
                 "name": "&aYou (Punisher)",
                 "lore": [
                     "&7You will be credited with all punishments",
@@ -731,15 +733,16 @@
                 ]
             },
             "T": {
-                "type": "TARGET_PLAYER_HEAD",
+                "type": "PLAYER_HEAD",
+                "owner": "$Target",
                 "name": "&aManaging <Target.Username>",
                 "lore": [
                     "&7UUID: &c<Target.UUID>",
-                    "&7Online: &7&l<Target.Online>",
+                    "&7Online: &7&l<Target.Online.YesNo>",
                     "&7Ingots: &c<Target.Ingots>",
                     "&7Tokens: &c<Target.Tokens>",
                     "&7Time: &c<Target.IngameHours> hours",
-                    "&7Rank: &c<Target.RankDisplayName>",
+                    "&7Rank: &c<Target.Rank.DisplayName>",
                     "&7Server: &c<Target.Server>"
                 ]
             },

@@ -41,8 +41,8 @@ public class ParticleInventoryBuilder {
         var page = meta.page();
         if (selected != null) {
             int contentIdx = -1;
-            for (int i = 0; i < layout.getContentList().size(); i++) {
-                var particle = (BMParticle) layout.getContentList().get(i);
+            for (int i = 0; i < meta.contentList().size(); i++) {
+                var particle = (BMParticle) meta.contentList().get(i);
                 if (particle.getName().equals(selected.getName())) {
                     contentIdx = i;
                     break;
@@ -65,8 +65,7 @@ public class ParticleInventoryBuilder {
         JSONObject layoutJSON = InvLayout.getLayoutJSONFromId(PARTICLES_LAYOUT_ID).orElseThrow(() -> new RuntimeException("Failed to find particle inventory ("
                 + PARTICLES_LAYOUT_ID + ")"));
         NavigatorInvLayout navLayout = new NavigatorInvLayout(layoutJSON);
-        navLayout.setContentList(getParticlesAsContentItems());
         navLayout.getEffects().add(ParticleInventoryBuilder::applySelectedParticleEffect);
-        return InvLayout.initializeInventory(navLayout, new NavigatorInvData(page), viewer).getInventory();
+        return InvLayout.initializeInventory(navLayout, new NavigatorInvData(page, getParticlesAsContentItems()), viewer).getInventory();
     }
 }

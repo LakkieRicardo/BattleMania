@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.json.simple.JSONObject;
 
 import net.battle.core.handlers.BMLogger;
 import net.battle.core.layouts.LayoutDefinitionType;
@@ -28,19 +27,20 @@ public class NavigatorInvListener implements Listener {
         var data = (NavigatorInvData) holder.getData();
         int openPage = data.page();
 
-        JSONObject definition = navLayout.getItemDefines().get(navLayout.getLayout().charAt(event.getSlot()));
-        LayoutDefinitionType clickedType = LayoutDefinitionType.valueOf((String) definition.get("type"));
+        var definition = navLayout.getItemDefines().get(navLayout.getLayout().charAt(event.getSlot()));
+        var clickedType = LayoutDefinitionType.valueOf((String) definition.get("type"));
+        var contentList = NavigatorInvLayout.getContentList(inv);
 
         INavigatorContentItem contentItem = null;
         NavigatorClickType clickType = null;
         switch (clickedType) {
         case NAVIGATOR_CONTENT:
             int contentIdx = navLayout.getContentIndex(openPage, event.getSlot());
-            if (contentIdx >= navLayout.getContentList().size()) {
+            if (contentIdx >= contentList.size()) {
                 clickType = NavigatorClickType.INVALID_CLICK;
                 break;
             }
-            contentItem = navLayout.getContentList().get(contentIdx);
+            contentItem = contentList.get(contentIdx);
             if (contentItem == null) {
                 clickType = NavigatorClickType.INVALID_CLICK;
                 break;
@@ -48,7 +48,7 @@ public class NavigatorInvListener implements Listener {
             clickType = NavigatorClickType.CONTENT_CLICK;
             break;
         case NAVIGATOR_NEXT:
-            if (openPage < navLayout.getPageCount() - 1) {
+            if (openPage < navLayout.getPageCount(inv, contentList) - 1) {
                 clickType = NavigatorClickType.NEXT_CLICK;
             } else {
                 clickType = NavigatorClickType.INVALID_CLICK;
@@ -69,7 +69,7 @@ public class NavigatorInvListener implements Listener {
             break;
         }
 
-        Bukkit.getPluginManager().callEvent(new NavigatorClickEvent(navLayout, (Player) event.getWhoClicked(), clickType, event, contentItem, openPage));
+        Bukkit.getPluginManager().callEvent(new NavigatorClickEvent(navLayout, (Player) event.getWhoClicked(), clickType, event, contentItem, contentList, openPage));
     }
 
 }

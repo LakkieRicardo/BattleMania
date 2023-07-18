@@ -42,12 +42,12 @@ public class ParticleInventoryListener implements Listener {
             break;
         case NEXT_CLICK:
             pl.playSound(pl.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5.0F, 0.5F);
-            InvLayout.updateInventoryData(inv, new NavigatorInvData(e.getOpenPage() + 1));
+            InvLayout.updateInventoryData(inv, new NavigatorInvData(e.getOpenPage() + 1, e.getContentList()));
             navLayout.updateInventory(inv, pl);
             break;
         case PREVIOUS_CLICK:
             pl.playSound(pl.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 5.0F, 0.5F);
-            InvLayout.updateInventoryData(inv, new NavigatorInvData(e.getOpenPage() - 1));
+            InvLayout.updateInventoryData(inv, new NavigatorInvData(e.getOpenPage() - 1, e.getContentList()));
             navLayout.updateInventory(inv, pl);
             break;
         case INVALID_CLICK:

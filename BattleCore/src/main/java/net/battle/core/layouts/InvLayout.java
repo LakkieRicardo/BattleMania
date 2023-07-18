@@ -125,6 +125,9 @@ public abstract class InvLayout {
             throw new InventoryViewerStateException("More than 1 player is viewing a layout inventory! Each player must have their own layout inventory.");
         }
         doUpdateInventory(inventory, viewer, holder);
+        for (var effect : effects) {
+            effect.applyEffect(inventory, viewer);
+        }
     }
 
     /**
